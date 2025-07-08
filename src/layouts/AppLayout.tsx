@@ -11,6 +11,7 @@ import {
   LogOut,
 } from "lucide-react";
 import { useAuthStore } from "@/stores/authStore";
+import DashboardHeader from '@/layouts/DashboardHeader'
 import { Button } from "@/components/ui/button";
 
 const links = [
@@ -69,7 +70,10 @@ export default function AppLayout() {
       </aside>
 
       <main className="flex-1 max-h-screen min-h-screen p-6 overflow-y-auto">
-        <Outlet />
+        <DashboardHeader />
+        <div className="mb-6 flex-1 ">
+          <Outlet />
+        </div>
       </main>
     </div>
   );
