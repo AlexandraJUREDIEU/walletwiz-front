@@ -1,69 +1,98 @@
-# React + TypeScript + Vite
+# 💸 WalletWiz - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**WalletWiz** est une application budgétaire permettant à l’utilisateur de saisir ses revenus et charges fixes, puis de répartir automatiquement le reste de son budget dans plusieurs catégories personnalisables :
+- 🛒 Vital (alimentaire, médical…)
+- 🚗 Voiture (essence, parking, péages…)
+- 🎉 Loisirs (sorties, restaurants, shopping…)
+- 💰 Épargne (trésorerie, projets, vacances…)
 
-Currently, two official plugins are available:
+Ce dépôt contient le **frontend** du projet, développé avec **React**, **TypeScript**, **Vite**, **Tailwind CSS** et **shadcn/ui**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## ⚙️ Stack technique
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- [React](https://reactjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vitejs.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [shadcn/ui](https://ui.shadcn.com/)
+- [Zustand](https://zustand-demo.pmnd.rs/) – Gestion d’état
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## 🚀 Démarrage rapide
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 1. Cloner le repo
+
+```bash
+git clone https://github.com/AlexandraJUREDIEU/walletwiz-front.git
+cd walletwiz-front
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Installer les dépendances
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
+
+### 3. Lancer le projet en dev
+
+```bash
+npm run dev
+```
+
+---
+
+## 🌱 Structure du projet
+
+```bash
+walletwiz-front/
+├── public/             # Fichiers statiques
+├── src/
+│   ├── components/     # Composants réutilisables (UI)
+│   ├── pages/          # Pages principales (accueil, dashboard, etc.)
+│   ├── state/          # Stores Zustand (état global)
+│   ├── styles/         # Fichiers CSS/Tailwind personnalisés
+│   ├── App.tsx         # App principale
+│   └── main.tsx        # Point d'entrée Vite
+├── tailwind.config.js
+├── postcss.config.js
+├── tsconfig.json
+└── vite.config.ts
+```
+
+---
+
+## 🛠 En cours de développement
+
+* [ ] Setup complet Tailwind + shadcn/ui
+* [ ] Mise en place du design système
+* [ ] Routing des pages (React Router)
+* [ ] Création du store global avec Zustand
+* [ ] Connexion au backend (NestJS)
+* [ ] Responsive & accessibilité
+
+---
+
+## 📦 Commandes utiles
+
+```bash
+npm run dev       # Lancer en mode développement
+npm run build     # Build de production
+npm run preview   # Prévisualisation du build
+```
+
+---
+
+## ✍️ Auteure
+
+Développé par [Alexandra JUREDIEU](https://www.linkedin.com/in/alexandra-theuleau-803b4918a/)
+Projet open-source pour une gestion budgétaire simple, claire et efficace.
+
+---
+
+## 📝 Licence
+
+Ce projet est sous licence [MIT](./LICENSE).
+
