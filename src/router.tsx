@@ -6,7 +6,7 @@ import {
 
 import { ProtectedRoute } from '@/lib/ProtectedRoute'
 import LoginPage from '@/pages/login'
-import DashboardPage from '@/pages/dashboard' // à créer après
+import DashboardPage from '@/pages/dashboard'
 
 
 export const router = createBrowserRouter(
