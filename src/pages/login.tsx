@@ -13,7 +13,7 @@ export default function LoginPage() {
     e.preventDefault();
     if (!email) return ;
     login(email);
-    navigate("/dashboard");
+    navigate("/dashboard/home");
   };
 
   return (
