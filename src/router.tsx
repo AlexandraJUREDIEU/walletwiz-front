@@ -16,7 +16,7 @@ import IncomesPage from '@/pages/incomes'
 import RecurringsPage from '@/pages/recurrings'
 import SettingsPage from '@/pages/settings'
 import BudgetsPage from '@/pages/budgets'
-import DashboardPage from './pages/dashboard'
+import DashboardPage from '@/pages/dashboard'
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
