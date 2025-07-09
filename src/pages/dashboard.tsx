@@ -1,3 +1,5 @@
+import { MemberSummary } from "@/components/widgets/MemberSummary";
+
 export default function DashboardPage() {
 
 return (
@@ -35,6 +37,11 @@ return (
         <button className="bg-muted px-4 py-2 rounded-lg text-sm">
           Ajouter une charge
         </button>
+      </div>
+      {/* Widgets */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <MemberSummary />
+        {/* Other widgets can be added here */}
       </div>
     </section>
   )
