@@ -1,4 +1,6 @@
+import BankSummary from "@/components/widgets/BankSummary";
 import { MemberSummary } from "@/components/widgets/MemberSummary";
+
 
 export default function DashboardPage() {
 
@@ -41,6 +43,7 @@ return (
       {/* Widgets */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <MemberSummary />
+        <BankSummary />
         {/* Other widgets can be added here */}
       </div>
     </section>
