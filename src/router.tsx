@@ -17,6 +17,7 @@ import ExpensesPage from '@/pages/expenses'
 import SettingsPage from '@/pages/settings'
 import BudgetsPage from '@/pages/budgets'
 import DashboardPage from '@/pages/dashboard'
+import BudgetInitPage from './pages/budgetInitPage'
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -39,6 +40,7 @@ export const router = createBrowserRouter(
         <Route path="expenses" element={<ExpensesPage />} />
         <Route path="settings" element={<SettingsPage />} />
         <Route path="budgets" element={<BudgetsPage />} />
+        <Route path="budgets/init" element={<BudgetInitPage />} />
       </Route>
     </>
   )

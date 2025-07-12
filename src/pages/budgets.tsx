@@ -1,3 +1,11 @@
+import { UpcomingBudgetAlert } from "@/components/specifics/UpcomingBudgetAlert";
+
 export default function BudgetsPage() {
-  return <h1 className="text-2xl font-bold">Budgets mensuels</h1>
+  return (
+    <div className="space-y-8">
+      <h1 className="text-2xl font-semibold">Mes budgets</h1>
+      <UpcomingBudgetAlert />
+      {/* Les autres sections viendront ici */}
+    </div>
+  )
 }
