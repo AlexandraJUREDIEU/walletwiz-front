@@ -1,4 +1,5 @@
 import BankSummary from "@/components/widgets/BankSummary";
+import { IncomesSummary } from "@/components/widgets/IncomesSummary";
 import { MemberSummary } from "@/components/widgets/MemberSummary";
 
 
@@ -44,6 +45,7 @@ return (
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <MemberSummary />
         <BankSummary />
+        <IncomesSummary />
         {/* Other widgets can be added here */}
       </div>
     </section>
