@@ -1,4 +1,5 @@
 import BankSummary from "@/components/widgets/BankSummary";
+import { ExpensesSummary } from "@/components/widgets/ExpensesSummary";
 import { IncomesSummary } from "@/components/widgets/IncomesSummary";
 import { MemberSummary } from "@/components/widgets/MemberSummary";
 
@@ -43,9 +44,12 @@ return (
       </div>
       {/* Widgets */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <MemberSummary />
+        <div className="space-y-4">
+          <IncomesSummary />
+          <ExpensesSummary />
+        </div>
         <BankSummary />
-        <IncomesSummary />
+        <MemberSummary />
         {/* Other widgets can be added here */}
       </div>
     </section>
