@@ -1,8 +1,13 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useExpenseStore } from "@/stores/expenseStore";
 import { useMemberStore } from "@/stores/memberStore";
 import { useBankStore } from "@/stores/bankStore";
-import type { ExpenseCategory, ExpenseFrequency } from "@/types/expenses";
+import type {
+  Expense,
+  ExpenseCategory,
+  ExpenseFrequency,
+} from "@/types/expenses";
 import type { BankAccount } from "@/types/banks";
 import type { Member } from "@/types/members";
 import { Button } from "@/components/ui/button";
@@ -39,21 +44,44 @@ const defaultValues: FormValues = {
 };
 
 export function ExpenseForm({
+  expenseToEdit,
   onSuccess,
 }: {
+  expenseToEdit?: Expense;
   onSuccess?: (shouldClose: boolean) => void;
 }) {
   const { register, handleSubmit, reset, setValue, watch } =
     useForm<FormValues>({ defaultValues });
   const addExpense = useExpenseStore((s) => s.addExpense);
+  const updateExpense = useExpenseStore((s) => s.updateExpense);
 
   const members = useMemberStore((s) => s.members);
   const banks = useBankStore((s) => s.banks);
   const memberIds = watch("memberIds");
 
+  useEffect(() => {
+    if (expenseToEdit) {
+      reset({
+        label: expenseToEdit.label,
+        amount: expenseToEdit.amount,
+        dueDay: expenseToEdit.dueDay,
+        frequency: expenseToEdit.frequency,
+        category: expenseToEdit.category,
+        memberIds: expenseToEdit.memberIds,
+        bankId: expenseToEdit.bankId,
+      });
+    }
+  }, [expenseToEdit, reset]);
+
   const submit = (data: FormValues, shouldClose: boolean) => {
-    addExpense(data);
-    toast.success(`Charge "${data.label}" ajoutée avec succès`);
+    if (expenseToEdit) {
+      updateExpense(expenseToEdit.id, { ...expenseToEdit, ...data });
+      toast.success(`Charge "${data.label}" modifiée`);
+    } else {
+      addExpense(data);
+      toast.success(`Charge "${data.label}" ajoutée`);
+    }
+
     reset();
     if (onSuccess) onSuccess(shouldClose);
   };
@@ -149,11 +177,13 @@ export function ExpenseForm({
       <div>
         <Label className="pb-2">Bank</Label>
         <Select
+          value={watch("bankId")}
           onValueChange={(val) => setValue("bankId", val)}
-          defaultValue=""
         >
           <SelectTrigger>
-            <SelectValue placeholder="Select bank" />
+            <SelectValue
+              placeholder={banks.find((b) => b.id === watch("bankId"))?.name ?? "Sélectionner une banque"}
+            />
           </SelectTrigger>
           <SelectContent>
             {banks.map((bank: BankAccount) => (
@@ -171,13 +201,13 @@ export function ExpenseForm({
           type="button"
           onClick={() => handleSubmit((d) => submit(d, false))()}
         >
-          Ajouter & continuer
+          {expenseToEdit ? "Modifier & continuer" : "Ajouter & continuer"}
         </Button>
         <Button
           type="button"
           onClick={() => handleSubmit((d) => submit(d, true))()}
         >
-          Ajouter
+          {expenseToEdit ? "Modifier" : "Ajouter"}
         </Button>
       </div>
     </form>
