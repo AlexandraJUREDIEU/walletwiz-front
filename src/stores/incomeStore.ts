@@ -10,7 +10,7 @@ interface IncomesState {
   getTotal: () => number;
 }
 
-export const useIncomesStore = create<IncomesState>()(
+export const useIncomeStore = create<IncomesState>()(
   persist(
     (set, get) => ({
       incomes: [],
