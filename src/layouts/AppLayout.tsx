@@ -20,7 +20,7 @@ const links = [
   { to: "/dashboard/members", label: "Membres", icon: Users },
   { to: "/dashboard/banks", label: "Banques", icon: Banknote },
   { to: "/dashboard/incomes", label: "Revenus", icon: Coins },
-  { to: "/dashboard/recurrings", label: "Charges fixes", icon: FileBarChart },
+  { to: "/dashboard/expenses", label: "Charges fixes", icon: FileBarChart },
   { to: "/dashboard/settings", label: "Paramètres", icon: Settings },
   { to: "/dashboard/budgets", label: "Budgets", icon: CalendarCheck },
 ];

@@ -13,7 +13,7 @@ import ProfilePage from '@/pages/profile'
 import MembersPage from '@/pages/members'
 import BanksPage from '@/pages/banks'
 import IncomesPage from '@/pages/incomes'
-import RecurringsPage from '@/pages/recurrings'
+import ExpensesPage from '@/pages/expenses'
 import SettingsPage from '@/pages/settings'
 import BudgetsPage from '@/pages/budgets'
 import DashboardPage from '@/pages/dashboard'
@@ -36,7 +36,7 @@ export const router = createBrowserRouter(
         <Route path="members" element={<MembersPage />} />
         <Route path="banks" element={<BanksPage />} />
         <Route path="incomes" element={<IncomesPage />} />
-        <Route path="recurrings" element={<RecurringsPage />} />
+        <Route path="expenses" element={<ExpensesPage />} />
         <Route path="settings" element={<SettingsPage />} />
         <Route path="budgets" element={<BudgetsPage />} />
       </Route>
