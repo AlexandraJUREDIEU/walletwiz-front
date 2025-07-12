@@ -1,30 +1,10 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { v4 as uuidv4 } from 'uuid'
+import type { Allocation, Budget } from '@/types/budgets'
+import type { Transaction } from '@/types/transactions'
 
-// 🧾 Types
-export type BudgetCategory = 'vital' | 'car' | 'leisure' | 'savings'
 
-export type Allocation = {
-  category: BudgetCategory
-  amount: number
-}
-
-export type Transaction = {
-  id: string
-  category: BudgetCategory
-  label: string
-  amount: number
-  date: string // ISO string
-}
-
-export type Budget = {
-  id: string
-  month: string // format '2025-07'
-  createdAt: string
-  allocations: Allocation[]
-  transactions: Transaction[]
-}
 
 type BudgetStore = {
   budgets: Budget[]

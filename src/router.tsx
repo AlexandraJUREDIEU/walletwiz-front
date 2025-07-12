@@ -15,9 +15,9 @@ import BanksPage from '@/pages/banks'
 import IncomesPage from '@/pages/incomes'
 import ExpensesPage from '@/pages/expenses'
 import SettingsPage from '@/pages/settings'
-import BudgetsPage from '@/pages/budgets'
+import BudgetsPage from '@/pages/budgets/budgets'
 import DashboardPage from '@/pages/dashboard'
-import BudgetInitPage from './pages/budgetInitPage'
+import BudgetInitPage from './pages/budgets/init/budgetInitPage'
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
