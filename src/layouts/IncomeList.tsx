@@ -3,6 +3,7 @@ import { useMemberStore } from '@/stores/memberStore';
 import { useBankStore } from '@/stores/bankStore';
 import { Button } from '@/components/ui/button';
 import type { Income } from '@/types/incomes';
+import { DialogEditIncome } from '@/components/dialog/DialogEditIncome';
 
 export const IncomesList = () => {
   const incomes = useIncomeStore((s) => s.incomes);
@@ -37,6 +38,8 @@ export const IncomesList = () => {
               Compte : <strong>{getBankName(income.bankId)}</strong>
             </p>
           </div>
+          <div className="flex items-center gap-2">
+            <DialogEditIncome income={income} />
           <Button
             variant="destructive"
             size="sm"
@@ -44,6 +47,7 @@ export const IncomesList = () => {
           >
             Supprimer
           </Button>
+          </div>
         </div>
       ))}
     </div>

@@ -4,10 +4,18 @@ import { useIncomeStore } from '@/stores/incomeStore';
 import { useMemberStore } from '@/stores/memberStore';
 import { useBankStore } from '@/stores/bankStore';
 import { v4 as uuidv4 } from 'uuid';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import type { Income } from '@/types/incomes';
 
-export const IncomesForm = () => {
+
+
+interface IncomeFormProps {
+  initial?: Income;
+  onSubmitCallback?: () => void;
+}
+export const IncomesForm = ({ initial, onSubmitCallback }: IncomeFormProps) => {
   const addIncome = useIncomeStore((s) => s.addIncome);
+  const updateIncome = useIncomeStore((s) => s.updateIncome);
   const members = useMemberStore((s) => s.members);
   const banks = useBankStore((s) => s.banks);
 
@@ -19,7 +27,19 @@ export const IncomesForm = () => {
     bankId: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+  if (initial) {
+    setForm({
+      label: initial.label,
+      amount: initial.amount.toString(),
+      day: initial.day.toString(),
+      memberId: initial.memberId,
+      bankId: initial.bankId,
+    });
+  }
+}, [initial]);
+
+    const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!form.bankId) {
@@ -27,16 +47,26 @@ export const IncomesForm = () => {
       return;
     }
 
-    addIncome({
-      id: uuidv4(),
+    const income = {
+      id: initial?.id || uuidv4(),
       label: form.label,
       amount: parseFloat(form.amount),
       day: parseInt(form.day),
       memberId: form.memberId,
       bankId: form.bankId,
-    });
+    };
 
-    setForm({ label: '', amount: '', day: '', memberId: 'self', bankId: '' });
+    if (initial) {
+      updateIncome(income.id, income);
+    } else {
+      addIncome(income);
+    }
+
+    if (onSubmitCallback) onSubmitCallback();
+
+    if (!initial) {
+      setForm({ label: '', amount: '', day: '', memberId: 'self', bankId: '' });
+    }
   };
 
   return (
@@ -93,7 +123,7 @@ export const IncomesForm = () => {
         ))}
       </select>
 
-      <Button type="submit">Ajouter</Button>
+      <Button type="submit">{initial ? 'Modifier' : 'Ajouter'}</Button>
     </form>
   );
 };
