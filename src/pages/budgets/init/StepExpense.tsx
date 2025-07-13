@@ -6,7 +6,7 @@ import type { Expense } from "@/types/expenses";
 import { v4 as uuidv4 } from "uuid";
 
 type StepExpenseProps = {
-  onUpdate: (partial: Partial<{ expenses: Expense[] }>) => void;
+  onUpdate: (partial: Partial<{ expenses: number }>) => void;
   onPrev: () => void;
   onNext: () => void;
 };
@@ -52,8 +52,8 @@ export default function StepExpense({
   const total = expenses.reduce((sum, e) => sum + (e.amount || 0), 0);
 
   useEffect(() => {
-    onUpdate({ expenses });
-  }, [expenses]);
+    onUpdate({ expenses: total });
+  }, [total]);
 
   return (
     <div className="p-4">
