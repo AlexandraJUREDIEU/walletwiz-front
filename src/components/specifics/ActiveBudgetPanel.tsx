@@ -25,11 +25,11 @@ export function ActiveBudgetPanel() {
   const nextBudget = budgets.find((b) => b.month === nextMonthKey);
 
   const nextMonthLabel = getMonthLabel(nextMonthKey);
-  console.log("Mois courant attendu :", currentMonthKey);
-  console.log(
-    "Budgets en mémoire :",
-    budgets.map((b) => b.month)
-  );
+  
+  
+  
+  
+  
   if (!currentBudget) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
