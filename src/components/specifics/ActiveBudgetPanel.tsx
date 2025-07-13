@@ -7,19 +7,24 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  getMonthKey,
+  getNextMonthKey,
+  getMonthLabel
+} from "@/lib/dateUtils"
 import { Button } from "@/components/ui/button";
-import dayjs from "@/lib/dayjs";
+
 
 export function ActiveBudgetPanel() {
   const navigate = useNavigate();
   const budgets = useBudgetStore((s) => s.budgets);
-  const currentMonthKey = dayjs().format("YYYY-MM");
-  const nextMonthKey = dayjs().add(1, "month").format("YYYY-MM");
+  const currentMonthKey = getMonthKey();
+  const nextMonthKey = getNextMonthKey();
 
   const currentBudget = budgets.find((b) => b.month === currentMonthKey);
   const nextBudget = budgets.find((b) => b.month === nextMonthKey);
 
-  const nextMonthLabel = dayjs().add(1, "month").format("MMMM YYYY");
+  const nextMonthLabel = getMonthLabel(nextMonthKey);
   console.log("Mois courant attendu :", currentMonthKey);
   console.log(
     "Budgets en mémoire :",
@@ -41,7 +46,7 @@ export function ActiveBudgetPanel() {
                 navigate(`/dashboard/budgets/init?month=${currentMonthKey}`)
               }
             >
-              ➕ Créer le budget de {dayjs().format("MMMM YYYY")}
+              ➕ Créer le budget de {getMonthLabel(currentMonthKey)}
             </Button>
           </CardContent>
         </Card>
