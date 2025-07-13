@@ -1,6 +1,7 @@
 import { useBudgetStore } from "@/stores/budgetStore";
 import { Button } from "@/components/ui/button";
 import type { Allocation } from "@/types/budgets";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   data: {
@@ -13,6 +14,7 @@ type Props = {
 };
 
 export default function StepSummary({ data, onPrev }: Props) {
+  const navigate = useNavigate();
   const create = useBudgetStore((s) => s.initNewBudget);
   const available = data.incomes - data.expenses;
 
@@ -21,7 +23,7 @@ export default function StepSummary({ data, onPrev }: Props) {
 
   const handleValidate = () => {
     create(data.month, data.allocations);
-    window.location.href = "/dashboard/budgets";
+    navigate("/dashboard/budgets", { replace: true })
   };
 
   return (
