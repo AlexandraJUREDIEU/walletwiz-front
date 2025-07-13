@@ -1,11 +1,12 @@
-import { format } from 'date-fns'
 import { useProfileStore } from '@/stores/profileStore'
 import { useAuthStore } from '@/stores/authStore'
+import { getMonthKey, getMonthLabel } from '@/lib/dateUtils'
 
 export default function DashboardHeader() {
+  const currentMonthKey = getMonthKey();
   const user = useAuthStore((state) => state.user)
   const profile = useProfileStore((state) => state.profile)
-  const mois = format(new Date(), "MMMM yyyy")
+  
 
   // Détermination du nom à afficher
   const displayName =
@@ -19,7 +20,7 @@ export default function DashboardHeader() {
         <p className="text-sm text-muted-foreground">
           Bonjour {displayName}
         </p>
-        <h1 className="text-xl font-bold">Budget de {mois}</h1>
+        <h1 className="text-xl font-bold">Budget de {getMonthLabel(currentMonthKey)}</h1>
       </div>
     </header>
   )
