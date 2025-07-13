@@ -32,6 +32,7 @@ export default function BudgetInitPage() {
       navigate("/dashboard/budgets");
     }
   }, [month, navigate]);
+  if (!month) return null;
 
   const nextStep = () => setStep((s) => Math.min(s + 1, 3));
   const prevStep = () => setStep((s) => Math.max(s - 1, 0));

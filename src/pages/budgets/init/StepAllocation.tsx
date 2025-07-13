@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { getMonthKey, getMonthLabel } from "@/lib/dateUtils";
 import type { Allocation } from "@/types/budgets";
 import { useEffect, useState } from "react";
 
@@ -23,7 +24,8 @@ export default function StepAllocation({
   onPrev,
   onNext,
 }: StepAllocationProps) {
- const available = incomes - expenses
+  const available = incomes - expenses
+  const currentMonthKey = getMonthKey();
 
   const [percentages, setPercentages] = useState<Record<Allocation["category"], number>>(
     allocations.length === 4
@@ -54,7 +56,7 @@ export default function StepAllocation({
     <div className="p-4">
       <h2 className="text-lg font-semibold mb-4">Étape 3 : Répartition</h2>
       <p className="mb-2">
-        Indiquez vos allocations budgétaires pour le mois de (mois).
+        Indiquez vos allocations budgétaires pour le mois de {getMonthLabel(currentMonthKey)}.
       </p>
       <div className="bg-muted p-4 rounded">
         <p><strong>Disponible :</strong> {available.toFixed(2)} €</p>

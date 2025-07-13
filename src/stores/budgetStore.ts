@@ -3,6 +3,8 @@ import { persist } from 'zustand/middleware'
 import { v4 as uuidv4 } from 'uuid'
 import type { Allocation, Budget } from '@/types/budgets'
 import type { Transaction } from '@/types/transactions'
+import type { Income } from '@/types/incomes'
+import type { Expense } from '@/types/expenses'
 
 
 
@@ -10,7 +12,7 @@ type BudgetStore = {
   budgets: Budget[]
   getCurrentBudget: () => Budget | undefined
   getLastBudgets: (count: number) => Budget[]
-  initNewBudget: (month: string, allocations: Allocation[]) => void
+  initNewBudget: (month: string, allocations: Allocation[], incomes?: Income[], expenses?: Expense[]) => void
   addTransaction: (month: string, transaction: Transaction) => void
   removeTransaction: (month: string, transactionId: string) => void
 }
@@ -42,6 +44,8 @@ export const useBudgetStore = create<BudgetStore>()(
           month,
           createdAt: new Date().toISOString(),
           allocations,
+          incomes: [],
+          expenses: [],
           transactions: []
         }
 
