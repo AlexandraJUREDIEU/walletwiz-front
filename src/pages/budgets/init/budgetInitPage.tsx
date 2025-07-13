@@ -1,51 +1,72 @@
-import { useSearchParams, useNavigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import StepIncome from './StepIncome'
-import StepExpense from './StepExpense'
-import StepAllocation from './StepAllocation'
-import StepSummary from './StepSummary'
-import type { Allocation } from '@/types/budgets'
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import StepIncome from "./StepIncome";
+import StepExpense from "./StepExpense";
+import StepAllocation from "./StepAllocation";
+import StepSummary from "./StepSummary";
+import type { Allocation } from "@/types/budgets";
 
 type BudgetInitData = {
-  month: string
-  incomes: number
-  expenses: number
-  allocations: Allocation[]
-}
+  month: string;
+  incomes: number;
+  expenses: number;
+  allocations: Allocation[];
+};
 
 export default function BudgetInitPage() {
-  const [searchParams] = useSearchParams()
-  const navigate = useNavigate()
-  const month = searchParams.get('month')
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const month = searchParams.get("month");
 
-  const [step, setStep] = useState(0)
+  const [step, setStep] = useState(0);
   const [data, setData] = useState<BudgetInitData>({
-    month: month ?? '',
+    month: month ?? "",
     incomes: 0,
     expenses: 0,
-    allocations: []
-  })
+    allocations: [],
+  });
 
   useEffect(() => {
     if (!month) {
-      alert('Aucun mois précisé')
-      navigate('/dashboard/budgets')
+      alert("Aucun mois précisé");
+      navigate("/dashboard/budgets");
     }
-  }, [month, navigate])
+  }, [month, navigate]);
 
-  const nextStep = () => setStep((s) => Math.min(s + 1, 3))
-  const prevStep = () => setStep((s) => Math.max(s - 1, 0))
+  const nextStep = () => setStep((s) => Math.min(s + 1, 3));
+  const prevStep = () => setStep((s) => Math.max(s - 1, 0));
 
   const updateData = (partial: Partial<BudgetInitData>) => {
-    setData((prev) => ({ ...prev, ...partial }))
-  }
+    setData((prev) => ({ ...prev, ...partial }));
+  };
 
   return (
     <div className="p-4 max-w-xl mx-auto space-y-6">
       <h1 className="text-xl font-bold">Initialisation du budget de {month}</h1>
-
+      <div className="flex justify-between text-sm text-muted-foreground mb-4">
+        {["Revenus", "Dépenses", "Répartition", "Récapitulatif"].map(
+          (label, index) => (
+            <div
+              key={index}
+              className={`flex-1 text-center py-2 border-b-2 transition-colors duration-200 ${
+                step === index
+                  ? "border-primary text-primary font-semibold"
+                  : "border-muted"
+              }`}
+            >
+              {label}
+            </div>
+          )
+        )}
+      </div>
       {step === 0 && <StepIncome onNext={nextStep} onUpdate={updateData} />}
-      {step === 1 && <StepExpense onNext={nextStep} onPrev={prevStep} onUpdate={updateData} />}
+      {step === 1 && (
+        <StepExpense
+          onNext={nextStep}
+          onPrev={prevStep}
+          onUpdate={updateData}
+        />
+      )}
       {step === 2 && (
         <StepAllocation
           incomes={data.incomes}
@@ -56,12 +77,7 @@ export default function BudgetInitPage() {
           onUpdate={updateData}
         />
       )}
-      {step === 3 && (
-        <StepSummary
-          data={data}
-          onPrev={prevStep}
-        />
-      )}
+      {step === 3 && <StepSummary data={data} onPrev={prevStep} />}
     </div>
-  )
+  );
 }
