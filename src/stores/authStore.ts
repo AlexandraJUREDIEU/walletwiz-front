@@ -4,7 +4,8 @@ import { persist } from 'zustand/middleware'
 
 type AuthState = {
   user: User | null
-  setUser: (user: User) => void
+  token: string | null
+  setAuth: (user: User, token: string) => void
   logout: () => void
 }
 
@@ -12,11 +13,18 @@ export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
       user: null,
-      setUser: (user) => set({ user }),
-      logout: () => set({ user: null }),
+      token: null,
+      setAuth: (user, token) => {
+        localStorage.setItem('walletwiz-token', token) // optionnel si tu veux doubler
+        set({ user, token })
+      },
+      logout: () => {
+        localStorage.removeItem('walletwiz-token')
+        set({ user: null, token: null })
+      },
     }),
     {
-      name: 'walletwiz-auth', 
+      name: 'walletwiz-auth', // stockage global
     }
   )
 )
