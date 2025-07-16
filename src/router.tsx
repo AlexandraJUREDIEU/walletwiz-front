@@ -18,6 +18,7 @@ import SettingsPage from '@/pages/settings'
 import BudgetsPage from '@/pages/budgets/budgets'
 import DashboardPage from '@/pages/dashboard'
 import BudgetInitPage from '@/pages/budgets/init/budgetInitPage'
+import CurrentBudgetPage from './pages/budgets/currentBudgetPage'
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -41,6 +42,7 @@ export const router = createBrowserRouter(
         <Route path="settings" element={<SettingsPage />} />
         <Route path="budgets" element={<BudgetsPage />} />
         <Route path="budgets/init" element={<BudgetInitPage />} />
+        <Route path="/dashboard/budgets/:budgetMonth" element={<CurrentBudgetPage />} />
       </Route>
     </>
   )
