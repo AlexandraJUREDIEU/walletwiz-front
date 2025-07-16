@@ -10,6 +10,8 @@ import type { Expense } from '@/types/expenses'
 
 type BudgetStore = {
   budgets: Budget[]
+  getBudgetByMonth: (month: string) => Budget | undefined
+  getAvailableByCategory: (month: string) => Record<string, number>
   getCurrentBudget: () => Budget | undefined
   getLastBudgets: (count: number) => Budget[]
   initNewBudget: (month: string, allocations: Allocation[], incomes?: Income[], expenses?: Expense[]) => void
@@ -22,6 +24,30 @@ export const useBudgetStore = create<BudgetStore>()(
   persist(
     (set, get) => ({
       budgets: [],
+
+      getBudgetByMonth: (month) => {
+        return get().budgets.find((b) => b.month === month)
+      },
+
+      getAvailableByCategory: (month) => {
+        const budget = get().budgets.find((b) => b.month === month)
+        if (!budget) return {}
+
+        const totals: Record<string, number> = {}
+        const initial = budget.allocations.reduce((acc, a) => {
+          acc[a.category] = a.amount
+          return acc
+        }, {} as Record<string, number>)
+
+        for (const a of budget.allocations) {
+          const spent = budget.transactions
+            .filter((t) => t.category === a.category && t.type === 'expense')
+            .reduce((sum, t) => sum + t.amount, 0)
+          totals[a.category] = initial[a.category] - spent
+        }
+
+        return totals
+      },
 
       getCurrentBudget: () => {
         const today = new Date()
