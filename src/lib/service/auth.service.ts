@@ -20,7 +20,7 @@ export function useAuthService() {
 
   // 🔹 Service pour la vérification de l'OTP
   const verifyOtp = async (payload: OtpPayload) => {
-    return await request<AuthResponse>('/auth/verify-otp', {
+    return await request<AuthResponse>('/auth/verify', {
       method: 'POST',
       data: payload,
     })

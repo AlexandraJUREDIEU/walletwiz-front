@@ -15,16 +15,19 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       token: null,
       setAuth: (user, token) => {
-        localStorage.setItem('walletwiz-token', token) // optionnel si tu veux doubler
+        console.log('✅ setAuth called with:', user, token)
         set({ user, token })
       },
       logout: () => {
-        localStorage.removeItem('walletwiz-token')
         set({ user: null, token: null })
       },
     }),
     {
-      name: 'walletwiz-auth', // stockage global
+      name: 'walletwiz-auth',
+      partialize: (state) => ({
+        user: state.user,
+        token: state.token,
+      }),
     }
   )
 )

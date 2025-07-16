@@ -7,6 +7,9 @@ type ProtectedRouteProps = {
 }
 
 export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+  const token = useAuthStore((state) => state.token)
   const user = useAuthStore((state) => state.user)
-  return user ? children : <Navigate to="/login" replace />
+  console.log('🧠 user in store:', user)
+  return token ? children : <Navigate to="/auth/login" replace />
 }
+export default ProtectedRoute

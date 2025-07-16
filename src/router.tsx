@@ -4,8 +4,9 @@ import {
   Route,
 } from 'react-router-dom'
 
-import { ProtectedRoute } from '@/lib/ProtectedRoute'
-import LoginPage from '@/pages/login'
+import ProtectedRoute from '@/lib/ProtectedRoute'
+import LoginPage from '@/pages/auth/LoginPage'
+import RegisterPage from '@/pages/auth/RegisterPage'
 import AppLayout from '@/layouts/AppLayout'
 
 // pages dashboard
@@ -23,11 +24,14 @@ import CurrentBudgetPage from './pages/budgets/currentBudgetPage'
 export const router = createBrowserRouter(
   createRoutesFromElements(
     <>
+      {/* Public routes */}
       <Route path="/" element={<LoginPage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route
-        path="/dashboard"
-        element={
+      <Route path="auth/register" element={<RegisterPage />} />
+      <Route path="auth/login" element={<LoginPage />} />
+
+      {/* Protected routes */}
+      <Route path="/dashboard" 
+      element={
           <ProtectedRoute>
             <AppLayout />
           </ProtectedRoute>
