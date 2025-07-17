@@ -10,6 +10,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function RegisterForm() {
   //* Hooks
@@ -20,6 +21,7 @@ export default function RegisterForm() {
   //* State management
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [otp, setOtp] = useState("");
   const [step, setStep] = useState<"register" | "otp">("register");
   const [loading, setLoading] = useState(false);
@@ -75,12 +77,25 @@ export default function RegisterForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+            <div className="relative">
             <Input
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="Mot de passe"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary"
+            >
+              {showPassword ? (
+                <EyeOff className="h-4 w-4" />
+              ) : (
+                <Eye className="h-4 w-4" />
+              )}
+            </button>
+          </div>
             <Button
               className="w-full"
               onClick={handleRegister}
