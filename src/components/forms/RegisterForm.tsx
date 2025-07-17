@@ -11,6 +11,7 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { Eye, EyeOff } from "lucide-react";
+import { Logo } from "../specifics/Logo";
 
 export default function RegisterForm() {
   //* Hooks
@@ -61,7 +62,8 @@ export default function RegisterForm() {
     <div className="w-full max-w-md mx-auto mt-12 px-4 space-y-6">
       {/* Titre de l’app */}
       <div className="text-center">
-        <h1 className="text-3xl font-bold">WalletWiz</h1>
+        <Logo />
+        <h1>WalletWiz</h1>
         <p className="text-muted-foreground text-sm mt-1">
           L’app pour gérer ton budget au quotidien
         </p>

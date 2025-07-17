@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff } from "lucide-react";
+import { Logo } from "../specifics/Logo";
 
 export default function LoginForm() {
   //* Hooks
@@ -39,7 +40,8 @@ export default function LoginForm() {
   return (
     <div className="w-full max-w-md mx-auto mt-12 px-4 space-y-6">
       <div className="text-center">
-        <h1 className="text-3xl font-bold">WalletWiz</h1>
+        <Logo />
+        <h1>WalletWiz</h1>
         <p className="text-muted-foreground text-sm mt-1">
           Accède à ton tableau de bord
         </p>
