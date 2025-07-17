@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/stores/authStore";
 import { useAuthService } from "@/lib/service/auth.service";
 import { toast } from 'sonner'
@@ -38,7 +38,9 @@ export default function LoginForm() {
     <div className="w-full max-w-md mx-auto mt-12 px-4 space-y-6">
       <div className="text-center">
         <h1 className="text-3xl font-bold">WalletWiz</h1>
-        <p className="text-muted-foreground text-sm mt-1">Accède à ton tableau de bord</p>
+        <p className="text-muted-foreground text-sm mt-1">
+          Accède à ton tableau de bord
+        </p>
       </div>
 
       <div className="space-y-4">
@@ -59,9 +61,18 @@ export default function LoginForm() {
           onClick={handleLogin}
           disabled={loading || !email || !password}
         >
-          {loading ? 'Connexion...' : 'Se connecter'}
+          {loading ? "Connexion..." : "Se connecter"}
         </Button>
       </div>
+      <p className="text-sm text-center text-muted-foreground mt-4">
+        Pas encore de compte ?{" "}
+        <Link
+          to="/auth/register"
+          className="text-primary underline hover:opacity-80"
+        >
+          Créer un compte
+        </Link>
+      </p>
     </div>
   );
 }
