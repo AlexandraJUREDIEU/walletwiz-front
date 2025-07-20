@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useProfileStore } from "@/stores/profileStore";
-import { useAuthStore } from '@/stores/authStore'
+import { useAuthStore } from "@/stores/authStore";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -19,19 +19,19 @@ export const ProfileForm = () => {
   const { user } = useAuthStore();
 
   const [formData, setFormData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     status: "single",
     avatarUrl: "",
   });
 
-
-
   useEffect(() => {
     if (profile) {
-      console.log('[Hydration] Loading profile:', profile);
+      console.log("[Hydration] Loading profile:", profile);
       setFormData({
-        name: profile.name,
+        firstName: profile.firstName ?? "",
+        lastName: profile.lastName ?? "",
         email: profile.email,
         status: profile.status,
         avatarUrl: profile.avatarUrl ?? "",
@@ -45,7 +45,8 @@ export const ProfileForm = () => {
     e.preventDefault();
     const newProfile: Profile = {
       id: profile?.id ?? crypto.randomUUID(),
-      name: formData.name,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
       email: formData.email,
       status: formData.status as Profile["status"],
       avatarUrl: formData.avatarUrl,
@@ -54,98 +55,120 @@ export const ProfileForm = () => {
     console.log("Submitted profile:", newProfile);
   };
 
-const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  const file = e.target.files?.[0]
-  if (!file) return
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-  if (file.size > 3000 * 1024) { // 3 Mo
-    alert("Image too large. Please choose a file under 3MB.")
-    return
-  }
+    if (file.size > 3000 * 1024) {
+      // 3 Mo
+      alert("Image trop volumineuse. Veuillez choisir un fichier de moins de 3 Mo.");
+      return;
+    }
 
-  const reader = new FileReader()
-  reader.onload = () => {
-    const base64 = reader.result as string
-    setFormData((prev) => ({ ...prev, avatarUrl: base64 }))
-  }
-  reader.readAsDataURL(file)
-}
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64 = reader.result as string;
+      setFormData((prev) => ({ ...prev, avatarUrl: base64 }));
+    };
+    reader.readAsDataURL(file);
+  };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-md mx-auto">
-      <div className="space-y-1 text-center">
-        <div className="flex justify-center">
-          <div
-            className="w-24 h-24 rounded-full bg-muted overflow-hidden border hover:opacity-80 transition cursor-pointer"
-            onClick={() => fileRef.current?.click()}
-          >
-            {formData.avatarUrl ? (
-              <img
-                src={formData.avatarUrl}
-                alt="Avatar"
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <div className="flex items-center justify-center h-full text-muted-foreground">
-                Add
-              </div>
-            )}
-          </div>
+    <form onSubmit={handleSubmit} className="space-y-4 max-w-xl mx-auto w-full">
+      {/* AVATAR */}
+      <div className="flex items-center gap-4">
+        <div
+          className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-muted overflow-hidden border hover:opacity-80 transition cursor-pointer"
+          onClick={() => fileRef.current?.click()}
+        >
+          {formData.avatarUrl ? (
+            <img
+              src={formData.avatarUrl}
+              alt="Avatar"
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="flex items-center justify-center h-full text-muted-foreground text-sm">
+              Ajouter
+            </div>
+          )}
         </div>
-        <input
-          type="file"
-          accept="image/*"
-          ref={fileRef}
-          className="hidden"
-          onChange={handleAvatarChange}
-        />
-        <p className="text-sm text-muted-foreground">
-          Click the avatar to upload<br/>
-          Max 3MB. JPG/PNG recommended.
-        </p>
+        <div>
+          <input
+            type="file"
+            accept="image/*"
+            ref={fileRef}
+            className="hidden"
+            onChange={handleAvatarChange}
+          />
+          <p className="text-xs text-muted-foreground">
+            Cliquez l’image pour modifier <br />
+            (JPG/PNG - max 3 Mo)
+          </p>
+        </div>
       </div>
 
-      <div>
-        <Label htmlFor="name" className="pb-2">Name</Label>
-        <Input
-          id="name"
-          value={formData.name}
-          onChange={(e) => setFormData((p) => ({ ...p, name: e.target.value }))}
-        />
+      {/* NAME */}
+      <div className="flex flex-col md:flex-row gap-4">
+        <div className="flex-1 space-y-2">
+          <Label htmlFor="firstName">Prénom</Label>
+          <Input
+            id="firstName"
+            placeholder="Alexandra"
+            value={formData.firstName}
+            onChange={(e) =>
+              setFormData((p) => ({ ...p, firstName: e.target.value }))
+            }
+          />
+        </div>
+        <div className="flex-1 space-y-2">
+          <Label htmlFor="lastName">Nom</Label>
+          <Input
+            id="lastName"
+            placeholder="Juredieu"
+            value={formData.lastName}
+            onChange={(e) =>
+              setFormData((p) => ({ ...p, lastName: e.target.value }))
+            }
+          />
+        </div>
       </div>
 
-      <div>
-        <Label htmlFor="email" className="pb-2">Email</Label>
+      {/* EMAIL */}
+      <div className="space-y-2">
+        <Label htmlFor="email">Email</Label>
         <Input
           id="email"
           value={formData.email}
           readOnly
-          className="cursor-not-allowed opacity-80"
+          className="cursor-not-allowed opacity-70"
         />
       </div>
 
-      <div>
-        <Label htmlFor="status" className="pb-2">Status</Label>
+      {/* STATUS */}
+      <div className="space-y-2">
+        <Label htmlFor="status">Statut</Label>
         <Select
-          value={formData.status ?? "single"}
+          value={formData.status}
           onValueChange={(value) =>
-            setFormData((p) => ({ ...p, status: value as Profile["status"] }))
+            setFormData((p) => ({ ...p, status: value as any }))
           }
         >
           <SelectTrigger>
-             <SelectValue placeholder={profile?.status ?? "Select a status"} />
+            <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="single">Single</SelectItem>
-            <SelectItem value="in couple">In couple</SelectItem>
-            <SelectItem value="married">Married</SelectItem>
+            <SelectItem value="single">Célibataire</SelectItem>
+            <SelectItem value="in couple">En couple</SelectItem>
+            <SelectItem value="married">Marié(e)</SelectItem>
           </SelectContent>
         </Select>
       </div>
 
-      <div className="flex gap-2">
-        <Button type="submit" className="w-full" >
-          {profile ? "Update" : "Create"}
+      {/* BOUTONS */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pt-2">
+        <Button type="submit" className="w-full sm:w-auto">
+          {profile ? "Mettre à jour" : "Créer mon profil"}
         </Button>
         {profile && (
           <Button
@@ -153,13 +176,14 @@ const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             type="button"
             onClick={() => {
               if (
-                window.confirm("Are you sure you want to delete your profile?")
+                window.confirm("Voulez-vous vraiment supprimer votre profil ?")
               ) {
                 clearProfile();
               }
             }}
+            className="w-full sm:w-auto"
           >
-            Delete
+            Supprimer
           </Button>
         )}
       </div>

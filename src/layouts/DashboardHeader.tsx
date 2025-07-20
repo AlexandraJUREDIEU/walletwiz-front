@@ -16,7 +16,7 @@ export default function DashboardHeader() {
   // ** Handlers
   // Détermination du nom à afficher
   const displayName =
-    profile?.name?.trim() ||
+    profile?.firstName?.trim() ||
     user?.email ||
     '👤'
 
