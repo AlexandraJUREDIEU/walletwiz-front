@@ -27,6 +27,8 @@ const links = [
   { to: "/dashboard/budgets", label: "Budgets", icon: CalendarCheck },
 ];
 
+
+
 export default function Sidebar({
   isOpen,
   onClose,
@@ -39,7 +41,7 @@ export default function Sidebar({
   return (
     <aside
       className={cn(
-        "fixed inset-y-0 left-0 z-40 w-64 bg-white border-r p-4 flex flex-col justify-between transition-transform md:static md:translate-x-0 md:flex",
+        " fixed inset-y-0 left-0 z-40 w-64 bg-white border-r p-4 flex flex-col justify-between duration-300 ease-in-out transition-transform lg:static lg:translate-x-0 lg:flex",
         isOpen ? "translate-x-0" : "-translate-x-full"
       )}
     >

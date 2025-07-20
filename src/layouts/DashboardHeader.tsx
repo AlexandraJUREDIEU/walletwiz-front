@@ -32,7 +32,7 @@ export default function DashboardHeader() {
         {/* Bouton burger visible uniquement en mobile */}
       <button
         onClick={toggleSidebar}
-        className="lg:hidden p-2 rounded-md hover:bg-muted"
+        className="block lg:hidden p-2 rounded-md hover:bg-muted"
       >
         <Menu size={20} />
       </button>
