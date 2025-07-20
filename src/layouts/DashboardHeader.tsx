@@ -1,13 +1,19 @@
 import { useProfileStore } from '@/stores/profileStore'
+import { useSidebarStore } from '@/stores/sidebarStore';
 import { useAuthStore } from '@/stores/authStore'
 import { getMonthKey, getMonthLabel } from '@/lib/dateUtils'
+import { Menu } from 'lucide-react';
 
 export default function DashboardHeader() {
+  // ** Hooks
   const currentMonthKey = getMonthKey();
+
+  // ** Stores
   const user = useAuthStore((state) => state.user)
   const profile = useProfileStore((state) => state.profile)
+  const toggleSidebar = useSidebarStore((state) => state.toggle);
   
-
+  // ** Handlers
   // Détermination du nom à afficher
   const displayName =
     profile?.name?.trim() ||
@@ -21,6 +27,15 @@ export default function DashboardHeader() {
           Bonjour {displayName}
         </p>
         <h1 className="text-xl font-bold">Budget de {getMonthLabel(currentMonthKey)}</h1>
+      </div>
+      <div>
+        {/* Bouton burger visible uniquement en mobile */}
+      <button
+        onClick={toggleSidebar}
+        className="lg:hidden p-2 rounded-md hover:bg-muted"
+      >
+        <Menu size={20} />
+      </button>
       </div>
     </header>
   )
