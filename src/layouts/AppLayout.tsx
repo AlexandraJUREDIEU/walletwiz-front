@@ -8,6 +8,7 @@ export default function AppLayout() {
   const { isOpen, close } = useSidebarStore();
 
   useEffect(() => {
+  window.scrollTo(0, 0);
   if (isOpen) {
     document.body.style.overflow = 'hidden';
   } else {
