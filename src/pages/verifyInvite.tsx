@@ -4,12 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useSessionService } from "@/lib/service/session.service";
-import { useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 
 export default function VerifyInvitePage() {
   // Extraire le token d'invitation de l'URL (`https://wallet-wiz.alexandrajuredieu.fr/invite?token=${inviteToken}`)
-  const { token } = useParams<{ token: string }>();
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token");
   const { verifyInviteLink } = useSessionService();
 
   // Vérifier le lien d'invitation
