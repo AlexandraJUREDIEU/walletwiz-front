@@ -1,5 +1,5 @@
 import { useApi } from '@/lib/useApi'
-import type { CreatePayload, Session } from '@/types/session'
+import type { CreatePayload, InvitePayload, Session } from '@/types/session'
 
 
 export function useSessionService() {
@@ -20,10 +20,18 @@ export function useSessionService() {
     })
   }
 
+  // 🔹 Service pour la mise à jour d'une session
+  const inviteToSession = async (sessionId: string, payload: InvitePayload) => {
+    return await request<Session>(`/sessions/${sessionId}/invite`, {
+      method: 'POST',
+      data: payload,
+    })
+  }
 
   // 🔹 Retourne les méthodes du service
   return {
     getSessions,
-    createSession
+    createSession,
+    inviteToSession
   }
 }
