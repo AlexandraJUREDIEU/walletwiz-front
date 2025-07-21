@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { useMemberStore } from '@/stores/memberStore';
 import type { Member } from '@/types/members';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { MemberForm } from '@/components/forms/MemberForm';
+
 import { Badge } from '@/components/ui/badge';
 
 export function MemberList() {
@@ -80,17 +79,7 @@ export function MemberList() {
         ))}
       </div>
 
-      {/* Dialog d'édition */}
-      <Dialog open={!!editingMember} onOpenChange={() => setEditingMember(null)}>
-        <DialogContent>
-          {editingMember && (
-            <MemberForm
-              defaultValues={editingMember}
-              onSubmitCallback={() => setEditingMember(null)}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
+      
     </>
   );
 }

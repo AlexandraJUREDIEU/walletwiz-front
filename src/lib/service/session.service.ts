@@ -28,10 +28,18 @@ export function useSessionService() {
     })
   }
 
+  // 🔹 Verifier un lien d'invitation
+  const verifyInviteLink = async (token: string) => {
+    return await request<Session>(`/sessions/verify/${token}`, {
+      method: 'GET',
+    })
+  }
+
   // 🔹 Retourne les méthodes du service
   return {
     getSessions,
     createSession,
-    inviteToSession
+    inviteToSession,
+    verifyInviteLink,
   }
 }
