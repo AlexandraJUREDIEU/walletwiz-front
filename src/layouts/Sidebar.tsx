@@ -77,15 +77,25 @@ export default function Sidebar({
           ))}
         </nav>
       </div>
-
-      <Button
-        onClick={logout}
-        variant="ghost"
-        className="w-full justify-start text-red-600 hover:bg-red-50"
-      >
+      <div className="mt-4">
+        {/* //DEV:  Bouton pour page de test */}
+        <Button
+          variant="outline"
+          className="w-full mb-2"
+          onClick={() => window.location.href = "/dashboard/test"}
+        >
+          Page de test
+        </Button>
+        <Button
+          onClick={logout}
+          variant="ghost"
+          className="w-full justify-start text-red-600 hover:bg-red-50"
+        >
         <LogOut size={16} className="mr-2" />
         Se déconnecter
       </Button>
+        <p className="text-xs text-center text-gray-500 mb-2">Version 1.0.0</p> 
+      </div>
     </aside>
   );
 }

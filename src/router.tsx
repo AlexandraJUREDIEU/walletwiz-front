@@ -20,6 +20,7 @@ import BudgetsPage from '@/pages/budgets/budgets'
 import DashboardPage from '@/pages/dashboard'
 import BudgetInitPage from '@/pages/budgets/init/budgetInitPage'
 import CurrentBudgetPage from './pages/budgets/currentBudgetPage'
+import Test from './pages/Test'
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,6 +30,7 @@ export const router = createBrowserRouter(
       <Route path="auth/register" element={<RegisterPage />} />
       <Route path="auth/login" element={<LoginPage />} />
 
+
       {/* Protected routes */}
       <Route path="/dashboard" 
       element={
@@ -37,6 +39,7 @@ export const router = createBrowserRouter(
           </ProtectedRoute>
         }
       >
+        <Route path="test" element={<Test />} />
         <Route path="home" element={<DashboardPage />} />
         <Route path="profile" element={<ProfilePage />} />
         <Route path="members" element={<MembersPage />} />
