@@ -30,8 +30,15 @@ export function useSessionService() {
 
   // 🔹 Verifier un lien d'invitation
   const verifyInviteLink = async (token: string) => {
-    return await request<Session>(`/sessions/verify/${token}`, {
+    return await request<Session>(`/sessions/invite/${token}`, {
       method: 'GET',
+    })
+  }
+
+  // 🔹 Accepter une invitation
+  const acceptInvite = async (token: string) => {
+    return await request<Session>(`/sessions/invite/${token}`, {
+      method: 'POST',
     })
   }
 
@@ -41,5 +48,6 @@ export function useSessionService() {
     createSession,
     inviteToSession,
     verifyInviteLink,
+    acceptInvite,
   }
 }
