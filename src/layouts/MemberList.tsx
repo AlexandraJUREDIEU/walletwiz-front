@@ -1,17 +1,43 @@
-import { useState } from 'react';
-import { useMemberStore } from '@/stores/memberStore';
-import type { Member } from '@/types/members';
-import { Button } from '@/components/ui/button';
-
-import { Badge } from '@/components/ui/badge';
+import { useEffect, useState } from "react";
+import { useMemberService } from "@/lib/service/member.service";
+import type { Member } from "@/types/members";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { toast } from "sonner";
+import { useSessionStore } from "@/stores/sessionStore";
 
 export function MemberList() {
-  const { members, deleteMember, inviteMember } = useMemberStore();
-  const [editingMember, setEditingMember] = useState<Member | null>(null);
+  // * Récupération des membres depuis le backend
+  const { getMembersBySession } = useMemberService();
+  // * Recuperation de l'ID de session depuis le store
+  const currentSession = useSessionStore((s) => s.currentSession);
 
-  if (!members.length) {
-    return <p className="text-sm text-muted-foreground">Aucun membre ajouté pour le moment.</p>;
-  }
+  // * State pour les membres
+  const [members, setMembers] = useState<Member[]>([]);
+  const session = currentSession;
+
+  // * Handlers
+  const MembersList = async (sessionId: string) => {
+    const { data, error } = await getMembersBySession(sessionId);
+    if (error) {
+      toast.error("Erreur lors de la récupération des membres:");
+      console.error("Error fetching members:", error);
+    } else if (data) {
+      toast.success("Membres récupérés avec succès:");
+      console.log("Fetched Members:", data);
+      setMembers(data);
+    }
+    return data;
+  };
+
+  useEffect(() => {
+    console.log("Fetching members for session ID:", session?.id);
+    if (session?.id) {
+      MembersList(session.id);
+    } else {
+      toast.error("Session ID is required to fetch members.");
+    }
+  }, [session?.id]);
 
   return (
     <>
@@ -19,58 +45,57 @@ export function MemberList() {
         {members.map((member: Member) => (
           <div
             key={member.id}
-            className="flex justify-between items-center border p-3 rounded"
+            className="flex flex-row justify-between items-center border p-3 rounded"
           >
             <div>
-              <p className="font-semibold">
+              <div className="flex flex-wrap items-center gap-2">
+              <p className="text-xs md:text-sm font-semibold">
                 {member.firstName} {member.lastName} ({member.role})
               </p>
-              {member.email && (
-                <p className="text-sm text-muted-foreground">{member.email}</p>
-              )}
-              {!member.isReal && (
-                <span className="text-xs italic text-muted-foreground">Fictif</span>
-              )}
-            </div>
-
-            <div className="flex items-center gap-2">
-              {/* Invitation */}
-              {member.isReal && !member.invited && (
-                <Button
-                  variant="secondary"
-                  onClick={() => inviteMember(member.id)}
-                  disabled={!member.email}
+              {/*Etat des Invitation */}
+              {member.status === "PENDING" && (
+                <Badge
+                  variant="outline"
+                  className="text-[0.65em] md:text-xs text-yellow-600 border-yellow-400"
                 >
-                  Inviter
-                </Button>
-              )}
-
-              {member.invitationStatus === 'pending' && (
-                <Badge variant="outline" className="text-yellow-600 border-yellow-400">
                   ⏳ En attente
                 </Badge>
               )}
-              {member.invitationStatus === 'accepted' && (
-                <Badge variant="outline" className="text-green-600 border-green-400">
+              {member.status === "ACCEPTED" && (
+                <Badge
+                  variant="outline"
+                  className="text-[0.65em] md:text-xs text-green-600 border-green-400"
+                >
                   ✅ Acceptée
                 </Badge>
               )}
-              {member.invitationStatus === 'declined' && (
-                <Badge variant="outline" className="text-red-600 border-red-400">
+              {member.status === "DECLINED" && (
+                <Badge
+                  variant="outline"
+                  className="text-[0.65em] md:text-xs text-red-600 border-red-400"
+                >
                   ❌ Refusée
                 </Badge>
               )}
+              </div>
+              {member.email && (
+                <p className="text-xs md:text-sm text-muted-foreground">{member.email}</p>
+              )}
+            </div>
 
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
               {/* Actions */}
               <Button
+                className="text-xs md:text-sm px-2"
                 variant="outline"
-                onClick={() => setEditingMember(member)}
+                onClick={() => console.log(`Modifier le membre ${member.id}`)}
               >
                 Modifier
               </Button>
               <Button
-                variant="destructive"
-                onClick={() => deleteMember(member.id)}
+                className="text-xs md:text-sm px-2"
+                variant="secondary"
+                onClick={() => console.log(`Supprimer le membre ${member.id}`)}
               >
                 Supprimer
               </Button>
@@ -78,8 +103,6 @@ export function MemberList() {
           </div>
         ))}
       </div>
-
-      
     </>
   );
 }

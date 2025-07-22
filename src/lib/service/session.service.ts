@@ -1,5 +1,5 @@
 import { useApi } from '@/lib/useApi'
-import type { CreatePayload, InvitePayload, Session } from '@/types/session'
+import type { CreatePayload, Invite, InvitePayload, Session } from '@/types/session'
 
 
 export function useSessionService() {
@@ -30,14 +30,14 @@ export function useSessionService() {
 
   // 🔹 Verifier un lien d'invitation
   const verifyInviteLink = async (token: string) => {
-    return await request<Session>(`/sessions/invite/${token}`, {
+    return await request<Invite>(`/sessions/invite/${token}`, {
       method: 'GET',
     })
   }
 
   // 🔹 Accepter une invitation
   const acceptInvite = async (token: string) => {
-    return await request<Session>(`/sessions/invite/${token}`, {
+    return await request<Invite>(`/sessions/invite/${token}`, {
       method: 'POST',
     })
   }

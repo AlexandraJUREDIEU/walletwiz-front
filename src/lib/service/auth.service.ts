@@ -1,9 +1,11 @@
 import { useApi } from '@/lib/useApi'
 import type { AuthPayload, OtpPayload, User } from '@/types/auth'
+import type { Session } from 'react-router-dom'
 
 type AuthResponse = {
   accessToken: string
   user: User
+  sessions: Session[]
 }
 
 //* 🔹 Service d'authentification

@@ -1,4 +1,4 @@
-export type Session = {
+export interface Session {
   id: string
   name: string
   ownerId: string
@@ -6,6 +6,13 @@ export type Session = {
 }
 
 
+export type Invite = {
+  invitedEmail: string
+  role: 'OWNER' | 'ADULT' | 'CHILD'
+  sessionId: string
+  sessionName: string
+  invitationStatus: 'PENDING' | 'ACCEPTED' | 'REJECTED'
+}
 
 export type CreatePayload = {
   name: string

@@ -7,11 +7,14 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff } from "lucide-react";
 import { Logo } from "../specifics/Logo";
+import { useSessionStore } from "@/stores/sessionStore";
+import {  Session as WalletwizSession } from "@/types/session";
 
 export default function LoginForm() {
   //* Hooks
   const navigate = useNavigate();
   const setAuth = useAuthStore((s) => s.setAuth);
+  const setCurrentSession = useSessionStore((s) => s.setCurrentSession);
   const { login } = useAuthService();
 
   //* State management
@@ -32,8 +35,21 @@ export default function LoginForm() {
     } else if (data) {
       console.log("➡️ login response:", data);
       setAuth(data.user, data.accessToken);
-      toast.success("Connexion réussie !");
-      navigate("/dashboard/profile");
+      if (data.sessions && Array.isArray(data.sessions) && data.sessions.length > 0) {
+        // On s'assure que l'objet correspond bien au type WalletwizSession attendu
+        const sessionApi = data.sessions[0];
+        const session: WalletwizSession = {
+          id: sessionApi.id,
+          name: sessionApi.name,
+          ownerId: sessionApi.ownerId || data.user.id, // fallback si ownerId absent
+          createdAt: sessionApi.createdAt,
+        };
+        setCurrentSession(session);
+        toast.success("Connexion réussie !");
+        navigate("/dashboard/profile");
+      } else {
+        toast.error("Aucune session trouvée pour cet utilisateur.");
+      }
     }
   };
 
