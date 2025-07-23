@@ -5,8 +5,9 @@ import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useSessionService } from "@/lib/service/session.service";
 import { useAuthStore } from "@/stores/authStore";
+import { CheckCircle } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 
 export default function VerifyInvitePage() {
@@ -17,14 +18,7 @@ export default function VerifyInvitePage() {
   const { verifyInviteLink, acceptInvite } = useSessionService();
   const [message, setMessage] = useState("");
   const [userInvited, setUserInvited] = useState("");
-
-  //  // Email de l'utilisateur connecté
-  //  if (userInvited === user?.email) {
-  //   setMessage(`Vous êtes connecté avec l'email de l'invitation : ${userInvited}`);
-    
-  // }else {
-  //   setMessage(`Vous n'êtes pas connecté avec l'email de l'invitation : ${userInvited}`);
-  // }
+  const navigate = useNavigate();
 
   // Vérifier le lien d'invitation
   const verifyInvite = async () => {
@@ -51,7 +45,7 @@ export default function VerifyInvitePage() {
         toast.error("Erreur lors de l'acceptation de l'invitation:");
       } else if (data) {
         toast.success("Invitation acceptée avec succès:");
-        setMessage(`Invitation acceptée pour : ${data.invitedEmail}`);
+        navigate("/dashboard/home");
       }
     } else {
       toast.error("Vous devez être connecté avec l'email de l'invitation pour l'accepter.");
@@ -62,7 +56,7 @@ export default function VerifyInvitePage() {
     if (token) {
       verifyInvite();
     } else {
-      setMessage("Aucun token d'invitation trouvé dans l'URL.");
+      setMessage("Invitation invalide ou expirée.");
     }
   }, []);
 
@@ -71,18 +65,21 @@ export default function VerifyInvitePage() {
       <div className="flex flex-col text-center justify-center md:border-r md:pr-6 gap-3 md:w-1/3">
         <h1>Rejoignez-nous !</h1>
         <p className="text-xs md:text-sm text-muted-foreground">
-          Vous avez reçu une <strong>invitation</strong> pour rejoindre un budget. <strong>Connectez vous ou inscrivez vous </strong>pour vérifier votre invitation.
+          Vous avez reçu une <strong>invitation</strong> pour rejoindre un budget. <strong>Connectez vous</strong> ou <strong>inscrivez vous</strong> pour vérifier votre invitation.
         </p>
         <p className="text-xs md:text-sm text-muted-foreground">{message}</p>
 
-
-        <p className="text-xs md:text-sm text-muted-foreground">Token: {token}<br/>
-        User: {user?.email} - {user?.id}</p>
-        <Button onClick={acceptInvitation} className="hidden md:block mt-12 w-full">
-          Vérifier l'invitation
-        </Button>
       </div>
         {/* toggle bouton 'j'ai un compte' 'nouveau compte' */}
+        {(userInvited === user?.email) ? (
+          <div className="flex flex-col items-center justify-center gap-4 md:w-1/3">
+            <CheckCircle className="w-16 h-16 text-primary mb-4 animate-success-pop" />
+            <h2 className="text-xl font-bold mb-2 animate-fade-in">Invitation acceptée !</h2>
+            <Button onClick={acceptInvitation} className="mt-4 w-full">
+              Rejoindre la session
+            </Button>
+          </div>
+        ) : (
         <Tabs defaultValue="register" >
           <TabsList className="w-full">
             <TabsTrigger value="login">Je me connecte</TabsTrigger>
@@ -98,7 +95,8 @@ export default function VerifyInvitePage() {
               <RegisterForm onRegisterSuccess={() => setMessage("Inscription réussie.")} />
             </Card>
           </TabsContent>
-        </Tabs>
+        </Tabs>)
+        }
       </div>
 
   );
