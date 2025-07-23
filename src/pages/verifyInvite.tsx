@@ -90,12 +90,12 @@ export default function VerifyInvitePage() {
           </TabsList>
           <TabsContent value="login">
             <Card>
-              <LoginForm />
+              <LoginForm onLoginSuccess={() => setMessage("Vous êtes connecté avec succès.")}/>
             </Card>
           </TabsContent>
           <TabsContent value="register">
             <Card>
-              <RegisterForm />
+              <RegisterForm onRegisterSuccess={() => setMessage("Inscription réussie.")} />
             </Card>
           </TabsContent>
         </Tabs>

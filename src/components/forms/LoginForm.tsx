@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuthStore } from "@/stores/authStore";
 import { useAuthService } from "@/lib/service/auth.service";
 import { toast } from "sonner";
@@ -8,11 +8,10 @@ import { Button } from "@/components/ui/button";
 import { Eye, EyeOff } from "lucide-react";
 import { Logo } from "../specifics/Logo";
 import { useSessionStore } from "@/stores/sessionStore";
-import {  Session as WalletwizSession } from "@/types/session";
+import type {  Session as WalletwizSession } from "@/types/session";
 
-export default function LoginForm() {
+export default function LoginForm({ onLoginSuccess }: { onLoginSuccess?: () => void }) {
   //* Hooks
-  const navigate = useNavigate();
   const setAuth = useAuthStore((s) => s.setAuth);
   const setCurrentSession = useSessionStore((s) => s.setCurrentSession);
   const { login } = useAuthService();
@@ -46,7 +45,9 @@ export default function LoginForm() {
         };
         setCurrentSession(session);
         toast.success("Connexion réussie !");
-        navigate("/dashboard/profile");
+        if (onLoginSuccess) {
+          onLoginSuccess();
+        }
       } else {
         toast.error("Aucune session trouvée pour cet utilisateur.");
       }

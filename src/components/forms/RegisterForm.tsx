@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { useAuthService } from "@/lib/service/auth.service";
 import { useAuthStore } from "@/stores/authStore";
 import { toast } from "sonner";
@@ -13,9 +13,8 @@ import {
 import { Eye, EyeOff } from "lucide-react";
 import { Logo } from "../specifics/Logo";
 
-export default function RegisterForm() {
+export default function RegisterForm({onRegisterSuccess}: { onRegisterSuccess?: () => void }) {
   //* Hooks
-  const navigate = useNavigate();
   const setAuth = useAuthStore((s) => s.setAuth);
   const { register, verifyOtp } = useAuthService();
 
@@ -54,7 +53,9 @@ export default function RegisterForm() {
       console.log("➡️ login response:", data);
       setAuth(data.user, data.accessToken);
       toast.success("Inscription réussie !");
-      navigate("/dashboard/profile");
+      if (onRegisterSuccess) {
+        onRegisterSuccess();
+      }
     }
   };
 
