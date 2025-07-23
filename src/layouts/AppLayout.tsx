@@ -5,7 +5,17 @@ import { Outlet } from "react-router-dom";
 import { useEffect } from "react";
 
 export default function AppLayout() {
-  const { isOpen, close } = useSidebarStore();
+  const { isOpen, close, open, autoOpenIfDesktop } = useSidebarStore();
+
+  useEffect(() => {
+    autoOpenIfDesktop();
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) open();
+      else close();
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [open, close, autoOpenIfDesktop]);
 
   useEffect(() => {
   window.scrollTo(0, 0);
