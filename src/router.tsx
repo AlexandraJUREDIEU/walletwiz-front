@@ -5,6 +5,7 @@ import {
 } from "react-router-dom";
 
 import ProtectedRoute from "@/lib/ProtectedRoute";
+import PublicRoute from "@/lib/PublicRoute";
 import LoginPage from "@/pages/auth/LoginPage";
 import RegisterPage from "@/pages/auth/RegisterPage";
 import AppLayout from "@/layouts/AppLayout";
@@ -23,18 +24,27 @@ import CurrentBudgetPage from "./pages/budgets/currentBudgetPage";
 import Test from "./pages/Test";
 import VerifyInvitePage from "./pages/verifyInvite";
 
+// Définition des routes publiques
+const publicRoutes = [
+  { path: '/', element: <LoginPage /> },
+  { path: 'auth/register', element: <RegisterPage /> },
+  { path: 'auth/login', element: <LoginPage /> },
+  { path: 'verify-invite', element: <VerifyInvitePage /> },
+];
+
 export const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      {/* Public routes */}
-      <Route path="/" element={<LoginPage />} />
-      <Route path="auth/register" element={<RegisterPage />} />
-      <Route path="auth/login" element={<LoginPage />} />
-      <Route path="verify-invite" element={<VerifyInvitePage />} />
+      {/* Routes publiques */}
+      {publicRoutes.map(({ path, element }) => (
+        <Route key={path} path={path} element={
+          path === 'verify-invite'
+            ? element
+            : <PublicRoute>{element}</PublicRoute>
+        } />
+      ))}
 
-      {/* Redirect root to login */}
-
-      {/* Protected routes */}
+      {/* Routes protégées */}
       <Route
         path="/dashboard"
         element={
