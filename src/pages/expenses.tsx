@@ -3,12 +3,7 @@ import { useExpenseStore } from '@/stores/expenseStore';
 import { useMemberStore } from '@/stores/memberStore';
 import { useBankStore } from '@/stores/bankStore';
 
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-} from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import {
   Dialog,
   DialogContent,
@@ -35,7 +30,7 @@ export default function ExpensesPage() {
     setOpenEdit(true);
   };
 
-    return (
+  return (
     <div className="space-y-8">
       <h1 className="text-2xl font-semibold">Charges fixes</h1>
 
@@ -71,21 +66,17 @@ export default function ExpensesPage() {
       <Card>
         <CardHeader>
           <CardTitle>Liste des charges ({expenses.length})</CardTitle>
-          <p className="text-sm text-muted-foreground">
-            Total mensuel : {total.toFixed(2)} €
-          </p>
+          <p className="text-sm text-muted-foreground">Total mensuel : {total.toFixed(2)} €</p>
         </CardHeader>
         <CardContent className="space-y-4">
-          {expenses.length === 0 && (
-            <p className="text-sm">Aucune charge enregistrée.</p>
-          )}
+          {expenses.length === 0 && <p className="text-sm">Aucune charge enregistrée.</p>}
           {expenses.map((exp) => {
             const memberNames = exp.memberIds
               .map((id) => members.find((m) => m.id === id)?.firstName)
               .filter(Boolean)
-              .join(", ");
+              .join(', ');
 
-            const bankName = banks.find((b) => b.id === exp.bankId)?.name ?? "—";
+            const bankName = banks.find((b) => b.id === exp.bankId)?.name ?? '—';
 
             return (
               <div
@@ -97,20 +88,14 @@ export default function ExpensesPage() {
                   <p className="text-sm text-muted-foreground">
                     {exp.amount.toFixed(2)} € • {exp.category} • jour {exp.dueDay} • {exp.frequency}
                   </p>
-                  <p className="text-sm text-muted-foreground">
-                    Responsables : {memberNames}
-                  </p>
+                  <p className="text-sm text-muted-foreground">Responsables : {memberNames}</p>
                   <p className="text-sm text-muted-foreground">Banque : {bankName}</p>
                 </div>
                 <div className="flex gap-2 self-start md:self-center">
                   <Button size="sm" variant="outline" onClick={() => handleEditClick(exp)}>
                     Modifier
                   </Button>
-                  <Button
-                    size="sm"
-                    variant="destructive"
-                    onClick={() => removeExpense(exp.id)}
-                  >
+                  <Button size="sm" variant="destructive" onClick={() => removeExpense(exp.id)}>
                     Supprimer
                   </Button>
                 </div>

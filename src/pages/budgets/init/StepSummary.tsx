@@ -1,9 +1,9 @@
-import { useBudgetStore } from "@/stores/budgetStore";
-import { Button } from "@/components/ui/button";
-import type { Allocation } from "@/types/budgets";
-import { useNavigate } from "react-router-dom";
-import { toast } from "sonner"
-import dayjs from "@/lib/dayjs";
+import { useBudgetStore } from '@/stores/budgetStore';
+import { Button } from '@/components/ui/button';
+import type { Allocation } from '@/types/budgets';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
+import dayjs from '@/lib/dayjs';
 
 type Props = {
   data: {
@@ -25,8 +25,8 @@ export default function StepSummary({ data, onPrev }: Props) {
 
   const handleValidate = () => {
     create(data.month, data.allocations);
-    toast.success(`Budget de ${dayjs(data.month).format("MMMM YYYY")} créé avec succès !`);
-    navigate("/dashboard/budgets", { replace: true });
+    toast.success(`Budget de ${dayjs(data.month).format('MMMM YYYY')} créé avec succès !`);
+    navigate('/dashboard/budgets', { replace: true });
   };
 
   return (
@@ -58,13 +58,9 @@ export default function StepSummary({ data, onPrev }: Props) {
             </p>
           );
         })}
-        <p
-          className={
-            Math.abs(remaining) <= 0.01 ? "text-green-600" : "text-red-500"
-          }
-        >
+        <p className={Math.abs(remaining) <= 0.01 ? 'text-green-600' : 'text-red-500'}>
           {Math.abs(remaining) <= 0.01
-            ? "Répartition équilibrée ✅"
+            ? 'Répartition équilibrée ✅'
             : `Attention : reste non réparti de ${remaining.toFixed(2)} €`}
         </p>
       </div>

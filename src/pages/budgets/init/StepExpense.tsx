@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { useExpenseStore } from "@/stores/expenseStore";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import type { Expense } from "@/types/expenses";
-import { v4 as uuidv4 } from "uuid";
+import { useEffect, useState } from 'react';
+import { useExpenseStore } from '@/stores/expenseStore';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import type { Expense } from '@/types/expenses';
+import { v4 as uuidv4 } from 'uuid';
 
 type StepExpenseProps = {
   onUpdate: (partial: Partial<{ expenses: number }>) => void;
@@ -11,25 +11,13 @@ type StepExpenseProps = {
   onNext: () => void;
 };
 
-export default function StepExpense({
-  onUpdate,
-  onPrev,
-  onNext,
-}: StepExpenseProps) {
+export default function StepExpense({ onUpdate, onPrev, onNext }: StepExpenseProps) {
   const defaultExpenses = useExpenseStore((s) => s.expenses);
 
-  const [expenses, setExpenses] = useState<Expense[]>(
-    defaultExpenses.map((e) => ({ ...e }))
-  );
+  const [expenses, setExpenses] = useState<Expense[]>(defaultExpenses.map((e) => ({ ...e })));
 
-  const handleChange = (
-    id: string,
-    field: keyof Expense,
-    value: string | number
-  ) => {
-    setExpenses((prev) =>
-      prev.map((e) => (e.id === id ? { ...e, [field]: value } : e))
-    );
+  const handleChange = (id: string, field: keyof Expense, value: string | number) => {
+    setExpenses((prev) => prev.map((e) => (e.id === id ? { ...e, [field]: value } : e)));
   };
 
   const handleAddExpense = () => {
@@ -37,13 +25,13 @@ export default function StepExpense({
       ...prev,
       {
         id: uuidv4(),
-        label: "",
+        label: '',
         amount: 0,
         dueDay: 1,
-        frequency: "monthly",
-        category: "other",
+        frequency: 'monthly',
+        category: 'other',
         memberIds: [],
-        bankId: "",
+        bankId: '',
         createdAt: new Date().toISOString(),
       },
     ]);
@@ -58,24 +46,20 @@ export default function StepExpense({
   return (
     <div className="p-4">
       <h2 className="text-lg font-semibold mb-4">Étape 2 : Dépenses</h2>
-      <p className="mb-2">
-        Indiquez vos dépenses mensuelles pour initialiser votre budget.
-      </p>
+      <p className="mb-2">Indiquez vos dépenses mensuelles pour initialiser votre budget.</p>
       <div className="space-y-4">
         {expenses.map((e) => (
           <div key={e.id} className="flex flex-col gap-1">
             <Input
               placeholder="Intitulé (ex : Loyer, Netflix...)"
               value={e.label}
-              onChange={(ev) => handleChange(e.id, "label", ev.target.value)}
+              onChange={(ev) => handleChange(e.id, 'label', ev.target.value)}
             />
             <Input
               type="number"
               step="0.01"
               value={e.amount}
-              onChange={(ev) =>
-                handleChange(e.id, "amount", parseFloat(ev.target.value) || 0)
-              }
+              onChange={(ev) => handleChange(e.id, 'amount', parseFloat(ev.target.value) || 0)}
             />
           </div>
         ))}

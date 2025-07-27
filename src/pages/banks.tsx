@@ -1,21 +1,18 @@
-import { useBankStore } from '@/stores/bankStore'
-import { BankForm } from '@/components/forms/BankForm'
-import { useState } from 'react'
-import type { BankAccount } from '@/types/banks'
-import { Button } from '@/components/ui/button'
+import { useBankStore } from '@/stores/bankStore';
+import { BankForm } from '@/components/forms/BankForm';
+import { useState } from 'react';
+import type { BankAccount } from '@/types/banks';
+import { Button } from '@/components/ui/button';
 
 export default function BanksPage() {
-  const { banks, deleteBank } = useBankStore()
-  const [editing, setEditing] = useState<BankAccount | null>(null)
+  const { banks, deleteBank } = useBankStore();
+  const [editing, setEditing] = useState<BankAccount | null>(null);
 
   return (
     <div className="p-4 space-y-8">
       <h1 className="text-xl font-bold">Comptes bancaires</h1>
 
-      <BankForm
-        initialData={editing || undefined}
-        onSubmitCallback={() => setEditing(null)}
-      />
+      <BankForm initialData={editing || undefined} onSubmitCallback={() => setEditing(null)} />
 
       <div className="space-y-4">
         {banks.map((bank) => (
@@ -39,5 +36,5 @@ export default function BanksPage() {
         ))}
       </div>
     </div>
-  )
+  );
 }

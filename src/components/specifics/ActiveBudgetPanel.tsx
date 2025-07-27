@@ -1,19 +1,8 @@
-import { useBudgetStore } from "@/stores/budgetStore";
-import { useNavigate } from "react-router-dom";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  getMonthKey,
-  getNextMonthKey,
-  getMonthLabel
-} from "@/lib/dateUtils"
-import { Button } from "@/components/ui/button";
-
+import { useBudgetStore } from '@/stores/budgetStore';
+import { useNavigate } from 'react-router-dom';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { getMonthKey, getNextMonthKey, getMonthLabel } from '@/lib/dateUtils';
+import { Button } from '@/components/ui/button';
 
 export function ActiveBudgetPanel() {
   const navigate = useNavigate();
@@ -25,27 +14,17 @@ export function ActiveBudgetPanel() {
   const nextBudget = budgets.find((b) => b.month === nextMonthKey);
 
   const nextMonthLabel = getMonthLabel(nextMonthKey);
-  
-  
-  
-  
-  
+
   if (!currentBudget) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Card>
           <CardHeader>
             <CardTitle>Aucun budget actif pour le mois en cours</CardTitle>
-            <CardDescription>
-              Vous pouvez en créer un dès maintenant.
-            </CardDescription>
+            <CardDescription>Vous pouvez en créer un dès maintenant.</CardDescription>
           </CardHeader>
           <CardContent>
-            <Button
-              onClick={() =>
-                navigate(`/dashboard/budgets/init?month=${currentMonthKey}`)
-              }
-            >
+            <Button onClick={() => navigate(`/dashboard/budgets/init?month=${currentMonthKey}`)}>
               ➕ Créer le budget de {getMonthLabel(currentMonthKey)}
             </Button>
           </CardContent>
@@ -56,16 +35,11 @@ export function ActiveBudgetPanel() {
             <CardHeader>
               <CardTitle>Budget de {nextMonthLabel} déjà renseigné</CardTitle>
               <CardDescription>
-                Il sera actif à partir du 1er. Vous pouvez le modifier si
-                besoin.
+                Il sera actif à partir du 1er. Vous pouvez le modifier si besoin.
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Button
-                onClick={() =>
-                  navigate(`/dashboard/budgets/init?month=${nextMonthKey}`)
-                }
-              >
+              <Button onClick={() => navigate(`/dashboard/budgets/init?month=${nextMonthKey}`)}>
                 ✏️ Modifier le budget de {nextMonthLabel}
               </Button>
             </CardContent>
@@ -91,9 +65,7 @@ export function ActiveBudgetPanel() {
 
   return (
     <div className="p-4 bg-white rounded shadow space-y-4">
-      <h2 className="text-lg font-bold">
-        Budget en cours – {getMonthLabel(currentBudget?.month)}
-      </h2>
+      <h2 className="text-lg font-bold">Budget en cours – {getMonthLabel(currentBudget?.month)}</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {Object.entries(byCategory || {}).map(([cat, val]) => {
@@ -103,7 +75,7 @@ export function ActiveBudgetPanel() {
               <h3 className="capitalize font-medium">{cat}</h3>
               <p>Total : {val.total.toFixed(2)} €</p>
               <p>Dépensé : {val.spent.toFixed(2)} €</p>
-              <p className={remaining < 0 ? "text-red-600" : ""}>
+              <p className={remaining < 0 ? 'text-red-600' : ''}>
                 Reste : {remaining.toFixed(2)} €
               </p>
             </div>
@@ -114,16 +86,13 @@ export function ActiveBudgetPanel() {
       <div>
         <h3 className="font-semibold mt-4">Transactions</h3>
         {currentBudget?.transactions.length === 0 ? (
-          <p className="text-muted-foreground">
-            Aucune transaction enregistrée.
-          </p>
+          <p className="text-muted-foreground">Aucune transaction enregistrée.</p>
         ) : (
           <ul className="mt-2 space-y-1">
             {currentBudget?.transactions.map((tx) => (
               <li key={tx.id} className="text-sm">
-                📅 {new Date(tx.date).toLocaleDateString()} –{" "}
-                <strong>{tx.label}</strong> → {tx.amount.toFixed(2)} € (
-                {tx.category})
+                📅 {new Date(tx.date).toLocaleDateString()} – <strong>{tx.label}</strong> →{' '}
+                {tx.amount.toFixed(2)} € ({tx.category})
               </li>
             ))}
           </ul>

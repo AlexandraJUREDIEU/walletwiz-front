@@ -25,9 +25,7 @@ export const useExpenseStore = create<ExpenseStore>()(
       },
       updateExpense: (id, data) => {
         set((state) => ({
-          expenses: state.expenses.map((exp) =>
-            exp.id === id ? { ...exp, ...data } : exp
-          ),
+          expenses: state.expenses.map((exp) => (exp.id === id ? { ...exp, ...data } : exp)),
         }));
       },
       removeExpense: (id) => {

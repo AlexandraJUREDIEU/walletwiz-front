@@ -4,5 +4,5 @@ export interface Income {
   amount: number;
   day: number; // 1 à 31
   memberId: string; // 'self' ou ID membre
-  bankId: string;   // ID du compte bancaire
+  bankId: string; // ID du compte bancaire
 }

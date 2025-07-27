@@ -1,53 +1,52 @@
-import { useApi } from '@/lib/useApi'
-import type { CreatePayload, Invite, InvitePayload, Session } from '@/types/session'
-
+import { useApi } from '@/lib/useApi';
+import type { CreatePayload, Invite, InvitePayload, Session } from '@/types/session';
 
 export function useSessionService() {
-  const { request } = useApi()
+  const { request } = useApi();
 
   // 🔹 Service pour la consultation des sessions
   const getSessions = async () => {
     return await request<Session[]>('/sessions', {
-      method: 'GET'
-      })
-    }
+      method: 'GET',
+    });
+  };
 
   // 🔹 Service pour la création d'une session
   const createSession = async (payload: CreatePayload) => {
     return await request<Session>('/sessions', {
       method: 'POST',
       data: payload,
-    })
-  }
+    });
+  };
 
   // 🔹 Service pour la mise à jour d'une session
   const inviteToSession = async (sessionId: string, payload: InvitePayload) => {
     return await request<Session>(`/sessions/${sessionId}/invite`, {
       method: 'POST',
       data: payload,
-    })
-  }
+    });
+  };
 
   // 🔹 Verifier un lien d'invitation
   const verifyInviteLink = async (token: string) => {
     return await request<Invite>(`/sessions/invite/${token}`, {
       method: 'GET',
-    })
-  }
+    });
+  };
 
   // 🔹 Accepter une invitation
   const acceptInvite = async (token: string) => {
     return await request<Invite>(`/sessions/invite/${token}`, {
       method: 'POST',
-    })
-  }
+    });
+  };
 
   // 🔹 Refuser une invitation
   const declineInvite = async (token: string) => {
     return await request<Invite>(`/sessions/invite/${token}/declined`, {
       method: 'POST',
-    })
-  }
+    });
+  };
 
   // 🔹 Retourne les méthodes du service
   return {
@@ -57,5 +56,5 @@ export function useSessionService() {
     verifyInviteLink,
     acceptInvite,
     declineInvite,
-  }
+  };
 }

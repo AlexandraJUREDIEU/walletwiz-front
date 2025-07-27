@@ -1,28 +1,26 @@
-import { CreateSessionForm } from "@/components/forms/SessionForm";
-import { useSessionService } from "@/lib/service/session.service";
-import type { Session } from "@/types/session";
-import { Separator } from "@/components/ui/separator";
-import { useEffect, useState } from "react";
-import { Checkbox } from "@/components/ui/checkbox";
-import { useSessionStore } from "@/stores/sessionStore";
+import { CreateSessionForm } from '@/components/forms/SessionForm';
+import { useSessionService } from '@/lib/service/session.service';
+import type { Session } from '@/types/session';
+import { Separator } from '@/components/ui/separator';
+import { useEffect, useState } from 'react';
+import { Checkbox } from '@/components/ui/checkbox';
+import { useSessionStore } from '@/stores/sessionStore';
 
 export default function SettingsPage() {
   const { getSessions } = useSessionService();
   const [sessions, setSessions] = useState<Session[]>([]);
   const currentSession = useSessionStore((state) => state.currentSession);
   const setCurrentSession = useSessionStore((state) => state.setCurrentSession);
-  
 
   const loadingSessions = async () => {
     const { data, error } = await getSessions();
     if (error) {
-      console.error("Error loading sessions:", error);
+      console.error('Error loading sessions:', error);
     } else if (data) {
-      console.log("Sessions loaded successfully:", data);
+      console.log('Sessions loaded successfully:', data);
       setSessions(data);
-
     }
-  }
+  };
 
   useEffect(() => {
     loadingSessions();
@@ -31,7 +29,9 @@ export default function SettingsPage() {
   return (
     <>
       <h1 className="text-2xl font-bold">Préférences de répartition</h1>
-      <p className="text-sm text-muted-foreground mt-2">Veuillez choisir votre session par défaut :</p>
+      <p className="text-sm text-muted-foreground mt-2">
+        Veuillez choisir votre session par défaut :
+      </p>
       {sessions.length > 0 && (
         <div className="mt-4 w-full max-w-2xl mx-auto">
           <h2 className="text-lg md:text-xl font-semibold mb-2">Mes Sessions</h2>
@@ -48,7 +48,10 @@ export default function SettingsPage() {
                       onCheckedChange={() => setCurrentSession(session)}
                       id={`session-checkbox-${session.id}`}
                     />
-                    <label htmlFor={`session-checkbox-${session.id}`} className="text-sm font-medium cursor-pointer truncate">
+                    <label
+                      htmlFor={`session-checkbox-${session.id}`}
+                      className="text-sm font-medium cursor-pointer truncate"
+                    >
                       {session.name}
                     </label>
                   </div>
@@ -61,8 +64,8 @@ export default function SettingsPage() {
           </div>
         </div>
       )}
-       <Separator className="my-4" />
-       <CreateSessionForm onCreated={() => loadingSessions()} />
+      <Separator className="my-4" />
+      <CreateSessionForm onCreated={() => loadingSessions()} />
     </>
-  )
+  );
 }

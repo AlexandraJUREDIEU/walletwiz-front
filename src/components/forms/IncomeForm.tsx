@@ -7,8 +7,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { useEffect, useState } from 'react';
 import type { Income } from '@/types/incomes';
 
-
-
 interface IncomeFormProps {
   initial?: Income;
   onSubmitCallback?: () => void;
@@ -28,18 +26,18 @@ export const IncomesForm = ({ initial, onSubmitCallback }: IncomeFormProps) => {
   });
 
   useEffect(() => {
-  if (initial) {
-    setForm({
-      label: initial.label,
-      amount: initial.amount.toString(),
-      day: initial.day.toString(),
-      memberId: initial.memberId,
-      bankId: initial.bankId,
-    });
-  }
-}, [initial]);
+    if (initial) {
+      setForm({
+        label: initial.label,
+        amount: initial.amount.toString(),
+        day: initial.day.toString(),
+        memberId: initial.memberId,
+        bankId: initial.bankId,
+      });
+    }
+  }, [initial]);
 
-    const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!form.bankId) {

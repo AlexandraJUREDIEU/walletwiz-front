@@ -1,60 +1,49 @@
-import { useState } from 'react'
+import { useState } from 'react';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from '@/components/ui/dialog'
-import {
-  Button
-} from '@/components/ui/button'
-import {
-  Input
-} from '@/components/ui/input'
-import {
-  Label
-} from '@/components/ui/label'
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectTrigger,
   SelectContent,
   SelectItem,
   SelectValue,
-} from '@/components/ui/select'
-import { Calendar } from '@/components/ui/calendar'
-import { useTransactionStore } from '@/stores/transactionStore'
-import type { TransactionType, TransactionCategory } from '@/types/transactions'
+} from '@/components/ui/select';
+import { Calendar } from '@/components/ui/calendar';
+import { useTransactionStore } from '@/stores/transactionStore';
+import type { TransactionType, TransactionCategory } from '@/types/transactions';
 
 type Props = {
-  open: boolean
-  onClose: () => void
-  currentBudgetMonth: string
-  bankAccounts: { id: string; name: string }[] // Tu peux adapter
-}
+  open: boolean;
+  onClose: () => void;
+  currentBudgetMonth: string;
+  bankAccounts: { id: string; name: string }[]; // Tu peux adapter
+};
 
-export const TransactionModal = ({
-  open,
-  onClose,
-  currentBudgetMonth,
-  bankAccounts,
-}: Props) => {
-  const addTransaction = useTransactionStore((s) => s.addTransaction)
+export const TransactionModal = ({ open, onClose, currentBudgetMonth, bankAccounts }: Props) => {
+  const addTransaction = useTransactionStore((s) => s.addTransaction);
 
-  const [label, setLabel] = useState('')
-  const [amount, setAmount] = useState('')
-  const [type, setType] = useState<TransactionType>('expense')
-  const [category, setCategory] = useState<TransactionCategory>('vital')
-  const [date, setDate] = useState<Date | undefined>(new Date())
-  const [bankAccountId, setBankAccountId] = useState(bankAccounts[0]?.id ?? '')
+  const [label, setLabel] = useState('');
+  const [amount, setAmount] = useState('');
+  const [type, setType] = useState<TransactionType>('expense');
+  const [category, setCategory] = useState<TransactionCategory>('vital');
+  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [bankAccountId, setBankAccountId] = useState(bankAccounts[0]?.id ?? '');
 
   const handleClose = () => {
-      onClose()
-      resetForm()
- }
+    onClose();
+    resetForm();
+  };
 
   const handleSubmit = () => {
-    if (!label || !amount || !date || !bankAccountId) return
+    if (!label || !amount || !date || !bankAccountId) return;
 
     addTransaction({
       label,
@@ -64,20 +53,19 @@ export const TransactionModal = ({
       date: date.toISOString(),
       bankAccountId,
       budgetMonth: currentBudgetMonth,
-    })
+    });
 
-    handleClose()
-
-  }
+    handleClose();
+  };
 
   const resetForm = () => {
-    setLabel('')
-    setAmount('')
-    setType('expense')
-    setCategory('vital')
-    setDate(new Date())
-    setBankAccountId(bankAccounts[0]?.id ?? '')
-  }
+    setLabel('');
+    setAmount('');
+    setType('expense');
+    setCategory('vital');
+    setDate(new Date());
+    setBankAccountId(bankAccounts[0]?.id ?? '');
+  };
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
@@ -94,11 +82,7 @@ export const TransactionModal = ({
 
           <div>
             <Label>Montant</Label>
-            <Input
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-            />
+            <Input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} />
           </div>
 
           <div>
@@ -139,10 +123,7 @@ export const TransactionModal = ({
 
           <div>
             <Label>Compte</Label>
-            <Select
-              value={bankAccountId}
-              onValueChange={(val) => setBankAccountId(val)}
-            >
+            <Select value={bankAccountId} onValueChange={(val) => setBankAccountId(val)}>
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
@@ -162,5 +143,5 @@ export const TransactionModal = ({
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
-}
+  );
+};

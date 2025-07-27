@@ -21,7 +21,9 @@ export const DialogEditIncome = ({ income }: Props) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm">Modifier</Button>
+        <Button variant="outline" size="sm">
+          Modifier
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

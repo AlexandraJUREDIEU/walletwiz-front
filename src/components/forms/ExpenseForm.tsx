@@ -1,27 +1,23 @@
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useExpenseStore } from "@/stores/expenseStore";
-import { useMemberStore } from "@/stores/memberStore";
-import { useBankStore } from "@/stores/bankStore";
-import type {
-  Expense,
-  ExpenseCategory,
-  ExpenseFrequency,
-} from "@/types/expenses";
-import type { BankAccount } from "@/types/banks";
-import type { Member } from "@/types/members";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { useExpenseStore } from '@/stores/expenseStore';
+import { useMemberStore } from '@/stores/memberStore';
+import { useBankStore } from '@/stores/bankStore';
+import type { Expense, ExpenseCategory, ExpenseFrequency } from '@/types/expenses';
+import type { BankAccount } from '@/types/banks';
+import type { Member } from '@/types/members';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { toast } from "sonner";
+} from '@/components/ui/select';
+import { toast } from 'sonner';
 
 type FormValues = {
   label: string;
@@ -34,13 +30,13 @@ type FormValues = {
 };
 
 const defaultValues: FormValues = {
-  label: "",
+  label: '',
   amount: 0,
   dueDay: 1,
-  frequency: "monthly",
-  category: "other",
+  frequency: 'monthly',
+  category: 'other',
   memberIds: [],
-  bankId: "",
+  bankId: '',
 };
 
 export function ExpenseForm({
@@ -50,14 +46,13 @@ export function ExpenseForm({
   expenseToEdit?: Expense;
   onSuccess?: (shouldClose: boolean) => void;
 }) {
-  const { register, handleSubmit, reset, setValue, watch } =
-    useForm<FormValues>({ defaultValues });
+  const { register, handleSubmit, reset, setValue, watch } = useForm<FormValues>({ defaultValues });
   const addExpense = useExpenseStore((s) => s.addExpense);
   const updateExpense = useExpenseStore((s) => s.updateExpense);
 
   const members = useMemberStore((s) => s.members);
   const banks = useBankStore((s) => s.banks);
-  const memberIds = watch("memberIds");
+  const memberIds = watch('memberIds');
 
   useEffect(() => {
     if (expenseToEdit) {
@@ -88,44 +83,31 @@ export function ExpenseForm({
 
   const toggleMember = (id: string) => {
     const isSelected = memberIds.includes(id);
-    const updated = isSelected
-      ? memberIds.filter((m) => m !== id)
-      : [...memberIds, id];
-    setValue("memberIds", updated);
+    const updated = isSelected ? memberIds.filter((m) => m !== id) : [...memberIds, id];
+    setValue('memberIds', updated);
   };
 
   return (
     <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
       <div>
         <Label className="pb-2">Label</Label>
-        <Input {...register("label")} />
+        <Input {...register('label')} />
       </div>
 
       <div>
         <Label className="pb-2">Amount (€)</Label>
-        <Input
-          type="number"
-          step="0.01"
-          {...register("amount", { valueAsNumber: true })}
-        />
+        <Input type="number" step="0.01" {...register('amount', { valueAsNumber: true })} />
       </div>
 
       <div>
         <Label className="pb-2">Due Day (1-31)</Label>
-        <Input
-          type="number"
-          min="1"
-          max="31"
-          {...register("dueDay", { valueAsNumber: true })}
-        />
+        <Input type="number" min="1" max="31" {...register('dueDay', { valueAsNumber: true })} />
       </div>
 
       <div>
         <Label className="pb-2">Frequency</Label>
         <Select
-          onValueChange={(val) =>
-            setValue("frequency", val as ExpenseFrequency)
-          }
+          onValueChange={(val) => setValue('frequency', val as ExpenseFrequency)}
           defaultValue="monthly"
         >
           <SelectTrigger>
@@ -142,7 +124,7 @@ export function ExpenseForm({
       <div>
         <Label className="pb-2">Category</Label>
         <Select
-          onValueChange={(val) => setValue("category", val as ExpenseCategory)}
+          onValueChange={(val) => setValue('category', val as ExpenseCategory)}
           defaultValue="other"
         >
           <SelectTrigger>
@@ -176,13 +158,12 @@ export function ExpenseForm({
 
       <div>
         <Label className="pb-2">Bank</Label>
-        <Select
-          value={watch("bankId")}
-          onValueChange={(val) => setValue("bankId", val)}
-        >
+        <Select value={watch('bankId')} onValueChange={(val) => setValue('bankId', val)}>
           <SelectTrigger>
             <SelectValue
-              placeholder={banks.find((b) => b.id === watch("bankId"))?.name ?? "Sélectionner une banque"}
+              placeholder={
+                banks.find((b) => b.id === watch('bankId'))?.name ?? 'Sélectionner une banque'
+              }
             />
           </SelectTrigger>
           <SelectContent>
@@ -201,13 +182,10 @@ export function ExpenseForm({
           type="button"
           onClick={() => handleSubmit((d) => submit(d, false))()}
         >
-          {expenseToEdit ? "Modifier & continuer" : "Ajouter & continuer"}
+          {expenseToEdit ? 'Modifier & continuer' : 'Ajouter & continuer'}
         </Button>
-        <Button
-          type="button"
-          onClick={() => handleSubmit((d) => submit(d, true))()}
-        >
-          {expenseToEdit ? "Modifier" : "Ajouter"}
+        <Button type="button" onClick={() => handleSubmit((d) => submit(d, true))()}>
+          {expenseToEdit ? 'Modifier' : 'Ajouter'}
         </Button>
       </div>
     </form>

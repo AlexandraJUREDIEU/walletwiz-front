@@ -1,13 +1,13 @@
-import type { Profile } from '@/types/profile'
-import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+import type { Profile } from '@/types/profile';
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 type ProfileStore = {
-  profile: Profile | null
-  setProfile: (data: Profile) => void
-  updateProfile: (data: Partial<Profile>) => void
-  clearProfile: () => void
-}
+  profile: Profile | null;
+  setProfile: (data: Profile) => void;
+  updateProfile: (data: Partial<Profile>) => void;
+  clearProfile: () => void;
+};
 
 export const useProfileStore = create<ProfileStore>()(
   persist(
@@ -24,4 +24,4 @@ export const useProfileStore = create<ProfileStore>()(
       name: 'walletwiz-profile',
     }
   )
-)
+);

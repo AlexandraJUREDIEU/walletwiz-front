@@ -1,19 +1,19 @@
-import { useRef, useState } from "react";
-import { useProfileStore } from "@/stores/profileStore";
+import { useRef, useState } from 'react';
+import { useProfileStore } from '@/stores/profileStore';
 import { useAuthStore } from '@/stores/authStore';
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { toast } from "sonner";
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { toast } from 'sonner';
 import {
   Select,
   SelectTrigger,
   SelectValue,
   SelectContent,
   SelectItem,
-} from "@/components/ui/select";
-import { useUserService } from "@/lib/service/user.service";
-import type { Profile } from "@/types/profile";
+} from '@/components/ui/select';
+import { useUserService } from '@/lib/service/user.service';
+import type { Profile } from '@/types/profile';
 
 export const ProfileForm = () => {
   const fileRef = useRef<HTMLInputElement | null>(null);
@@ -28,14 +28,14 @@ export const ProfileForm = () => {
     firstName: string;
     lastName: string;
     email: string;
-    status: Profile["status"];
+    status: Profile['status'];
     avatarUrl: string;
   }>({
-    firstName: profile?.firstName || "",
-    lastName: profile?.lastName || "",
-    email: profile?.email || user?.email || "",
-    status: profile?.status || "single",
-    avatarUrl: profile?.avatarUrl || "",
+    firstName: profile?.firstName || '',
+    lastName: profile?.lastName || '',
+    email: profile?.email || user?.email || '',
+    status: profile?.status || 'single',
+    avatarUrl: profile?.avatarUrl || '',
   });
 
   // * Handlers
@@ -44,7 +44,7 @@ export const ProfileForm = () => {
     if (!file) return;
 
     if (file.size > 3 * 1024 * 1024) {
-      alert("Image trop volumineuse. Max 3 Mo.");
+      alert('Image trop volumineuse. Max 3 Mo.');
       return;
     }
 
@@ -58,20 +58,20 @@ export const ProfileForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const id = user?.id ?? "";
-    console.log("🚀 ~ handleSubmit ~ user.id:", id )
+    const id = user?.id ?? '';
+    console.log('🚀 ~ handleSubmit ~ user.id:', id);
     const data: Partial<typeof formData> = {
-    firstName: formData.firstName,
-    lastName: formData.lastName,
-    status: formData.status,
-  };
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      status: formData.status,
+    };
     const { error } = await updateUser(data, id);
 
     if (error) {
       toast.error(error);
     } else {
-      toast.success("Profil mis à jour avec succès ✅" );
-      setProfile({ ...profile, ...formData, id: profile?.id ?? "" });
+      toast.success('Profil mis à jour avec succès ✅');
+      setProfile({ ...profile, ...formData, id: profile?.id ?? '' });
     }
   };
 
@@ -84,11 +84,7 @@ export const ProfileForm = () => {
             onClick={() => fileRef.current?.click()}
           >
             {formData.avatarUrl ? (
-              <img
-                src={formData.avatarUrl}
-                alt="Avatar"
-                className="w-full h-full object-cover"
-              />
+              <img src={formData.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
             ) : (
               <div className="flex items-center justify-center h-full text-muted-foreground">
                 Ajouter
@@ -104,7 +100,8 @@ export const ProfileForm = () => {
           onChange={handleAvatarChange}
         />
         <p className="text-sm text-muted-foreground">
-          Cliquez sur l’avatar pour le changer<br />
+          Cliquez sur l’avatar pour le changer
+          <br />
           Max 3 Mo. JPG/PNG recommandé.
         </p>
       </div>
@@ -142,11 +139,11 @@ export const ProfileForm = () => {
         <Select
           value={formData.status}
           onValueChange={(value) =>
-            setFormData((p) => ({ ...p, status: value as Profile["status"] }))
+            setFormData((p) => ({ ...p, status: value as Profile['status'] }))
           }
         >
           <SelectTrigger>
-            <SelectValue placeholder={profile?.status || "Sélectionnez un statut"} />
+            <SelectValue placeholder={profile?.status || 'Sélectionnez un statut'} />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="single">Célibataire</SelectItem>
@@ -157,8 +154,8 @@ export const ProfileForm = () => {
       </div>
 
       <div className="flex gap-2">
-        <Button type="submit" className={profile ? "w-1/2" : "w-full"}>
-          {profile ? "Mettre à jour" : "Créer"}
+        <Button type="submit" className={profile ? 'w-1/2' : 'w-full'}>
+          {profile ? 'Mettre à jour' : 'Créer'}
         </Button>
         {profile && (
           <Button
@@ -166,7 +163,7 @@ export const ProfileForm = () => {
             variant="destructive"
             type="button"
             onClick={() => {
-              if (window.confirm("Voulez-vous vraiment supprimer votre profil ?")) {
+              if (window.confirm('Voulez-vous vraiment supprimer votre profil ?')) {
                 clearProfile();
               }
             }}

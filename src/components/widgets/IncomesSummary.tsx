@@ -6,9 +6,7 @@ export const IncomesSummary = () => {
   const members = useMemberStore((s) => s.members);
 
   const getTotalByMember = (memberId: string) =>
-    incomes
-      .filter((i) => i.memberId === memberId)
-      .reduce((acc, i) => acc + i.amount, 0);
+    incomes.filter((i) => i.memberId === memberId).reduce((acc, i) => acc + i.amount, 0);
 
   const total = incomes.reduce((acc, i) => acc + i.amount, 0);
 
@@ -23,8 +21,7 @@ export const IncomesSummary = () => {
         </p>
         {members.map((m) => (
           <p key={m.id}>
-            {m.firstName} :{' '}
-            <strong>{getTotalByMember(m.id).toFixed(2)} €</strong>
+            {m.firstName} : <strong>{getTotalByMember(m.id).toFixed(2)} €</strong>
           </p>
         ))}
       </div>

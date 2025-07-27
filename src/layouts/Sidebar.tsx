@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 import {
   User,
   Users,
@@ -10,47 +10,39 @@ import {
   Home,
   LogOut,
   X,
-} from "lucide-react";
-import { useAuthStore } from "@/stores/authStore";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { Logo } from "@/components/specifics/Logo";
+} from 'lucide-react';
+import { useAuthStore } from '@/stores/authStore';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { Logo } from '@/components/specifics/Logo';
 
 const links = [
-  { to: "/dashboard/home", label: "Accueil", icon: Home },
-  { to: "/dashboard/profile", label: "Profil", icon: User },
-  { to: "/dashboard/members", label: "Membres", icon: Users },
-  { to: "/dashboard/banks", label: "Banques", icon: Banknote },
-  { to: "/dashboard/incomes", label: "Revenus", icon: Coins },
-  { to: "/dashboard/expenses", label: "Charges fixes", icon: FileBarChart },
-  { to: "/dashboard/settings", label: "Paramètres", icon: Settings },
-  { to: "/dashboard/budgets", label: "Budgets", icon: CalendarCheck },
+  { to: '/dashboard/home', label: 'Accueil', icon: Home },
+  { to: '/dashboard/profile', label: 'Profil', icon: User },
+  { to: '/dashboard/members', label: 'Membres', icon: Users },
+  { to: '/dashboard/banks', label: 'Banques', icon: Banknote },
+  { to: '/dashboard/incomes', label: 'Revenus', icon: Coins },
+  { to: '/dashboard/expenses', label: 'Charges fixes', icon: FileBarChart },
+  { to: '/dashboard/settings', label: 'Paramètres', icon: Settings },
+  { to: '/dashboard/budgets', label: 'Budgets', icon: CalendarCheck },
 ];
 
-
-
-export default function Sidebar({
-  isOpen,
-  onClose,
-}: {
-  isOpen: boolean;
-  onClose: () => void;
-}) {
+export default function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const logout = useAuthStore((state) => state.logout);
 
   return (
     <aside
       className={cn(
-        " fixed inset-y-0 left-0 z-40 w-64 bg-white border-r p-4 flex flex-col justify-between duration-300 ease-in-out transition-transform lg:static lg:translate-x-0 lg:flex",
-        isOpen ? "translate-x-0" : "-translate-x-full"
+        ' fixed inset-y-0 left-0 z-40 w-64 bg-white border-r p-4 flex flex-col justify-between duration-300 ease-in-out transition-transform lg:static lg:translate-x-0 lg:flex',
+        isOpen ? 'translate-x-0' : '-translate-x-full'
       )}
     >
       <div className="flex-1">
         <div className="flex items-center justify-between mb-4 md:mb-6">
-        <div className="flex items-center gap-2">
-          <Logo variant="small" />
-          <h1 className="text-xl font-bold">WalletWiz</h1>
-        </div>
+          <div className="flex items-center gap-2">
+            <Logo variant="small" />
+            <h1 className="text-xl font-bold">WalletWiz</h1>
+          </div>
           {/* Bouton de fermeture pour mobile */}
           <button className="md:hidden" onClick={onClose}>
             <X className="h-5 w-5" />
@@ -65,9 +57,7 @@ export default function Sidebar({
               onClick={onClose}
               className={({ isActive }) =>
                 `flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  isActive
-                    ? "bg-black text-white"
-                    : "text-gray-700 hover:bg-muted hover:text-black"
+                  isActive ? 'bg-black text-white' : 'text-gray-700 hover:bg-muted hover:text-black'
                 }`
               }
             >
@@ -82,7 +72,7 @@ export default function Sidebar({
         <Button
           variant="outline"
           className="w-full mb-2"
-          onClick={() => window.location.href = "/dashboard/test"}
+          onClick={() => (window.location.href = '/dashboard/test')}
         >
           Page de test
         </Button>
@@ -91,10 +81,10 @@ export default function Sidebar({
           variant="ghost"
           className="w-full justify-start text-red-600 hover:bg-red-50"
         >
-        <LogOut size={16} className="mr-2" />
-        Se déconnecter
-      </Button>
-        <p className="text-xs text-center text-gray-500 mb-2">Version 1.0.0</p> 
+          <LogOut size={16} className="mr-2" />
+          Se déconnecter
+        </Button>
+        <p className="text-xs text-center text-gray-500 mb-2">Version 1.0.0</p>
       </div>
     </aside>
   );

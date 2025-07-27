@@ -1,13 +1,13 @@
-import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
-import type { BankAccount } from '@/types/banks'
-import { v4 as uuid } from 'uuid'
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+import type { BankAccount } from '@/types/banks';
+import { v4 as uuid } from 'uuid';
 
 interface BankState {
-  banks: BankAccount[]
-  addBank: (bank: Omit<BankAccount, 'id' | 'createdAt' | 'updatedAt'>) => void
-  updateBank: (id: string, bank: Partial<BankAccount>) => void
-  deleteBank: (id: string) => void
+  banks: BankAccount[];
+  addBank: (bank: Omit<BankAccount, 'id' | 'createdAt' | 'updatedAt'>) => void;
+  updateBank: (id: string, bank: Partial<BankAccount>) => void;
+  deleteBank: (id: string) => void;
 }
 
 export const useBankStore = create<BankState>()(
@@ -29,9 +29,7 @@ export const useBankStore = create<BankState>()(
       updateBank: (id, bank) =>
         set((state) => ({
           banks: state.banks.map((b) =>
-            b.id === id
-              ? { ...b, ...bank, updatedAt: new Date().toISOString() }
-              : b
+            b.id === id ? { ...b, ...bank, updatedAt: new Date().toISOString() } : b
           ),
         })),
       deleteBank: (id) =>
@@ -43,4 +41,4 @@ export const useBankStore = create<BankState>()(
       name: 'walletwiz-banks',
     }
   )
-)
+);

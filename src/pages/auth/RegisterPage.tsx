@@ -1,4 +1,4 @@
-import RegisterForm from '@/components/forms/RegisterForm'
+import RegisterForm from '@/components/forms/RegisterForm';
 import { useNavigate } from 'react-router-dom';
 
 export default function RegisterPage() {
@@ -6,7 +6,7 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-muted">
-      <RegisterForm onRegisterSuccess={() => navigate("/dashboard/profile")} />
+      <RegisterForm onRegisterSuccess={() => navigate('/dashboard/profile')} />
     </div>
-  )
+  );
 }

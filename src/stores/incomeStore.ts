@@ -14,8 +14,7 @@ export const useIncomeStore = create<IncomesState>()(
   persist(
     (set, get) => ({
       incomes: [],
-      addIncome: (income) =>
-        set((state) => ({ incomes: [...state.incomes, income] })),
+      addIncome: (income) => set((state) => ({ incomes: [...state.incomes, income] })),
       updateIncome: (id, updated) =>
         set((state) => ({
           incomes: state.incomes.map((income) =>
@@ -26,8 +25,7 @@ export const useIncomeStore = create<IncomesState>()(
         set((state) => ({
           incomes: state.incomes.filter((income) => income.id !== id),
         })),
-      getTotal: () =>
-        get().incomes.reduce((total, income) => total + income.amount, 0),
+      getTotal: () => get().incomes.reduce((total, income) => total + income.amount, 0),
     }),
     {
       name: 'walletwiz-incomes',

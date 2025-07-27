@@ -1,20 +1,19 @@
-import { TransactionModal } from "@/components/dialog/TransactionModal";
-import { ActiveBudgetPanel } from "@/components/specifics/ActiveBudgetPanel";
-import { PreviousBudgets } from "@/components/specifics/PreviousBudgets";
-import { UpcomingBudgetAlert } from "@/components/specifics/UpcomingBudgetAlert";
-import { Button } from "@/components/ui/button";
-import { useBankStore } from "@/stores/bankStore";
-import dayjs from "dayjs";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
+import { TransactionModal } from '@/components/dialog/TransactionModal';
+import { ActiveBudgetPanel } from '@/components/specifics/ActiveBudgetPanel';
+import { PreviousBudgets } from '@/components/specifics/PreviousBudgets';
+import { UpcomingBudgetAlert } from '@/components/specifics/UpcomingBudgetAlert';
+import { Button } from '@/components/ui/button';
+import { useBankStore } from '@/stores/bankStore';
+import dayjs from 'dayjs';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function BudgetsPage() {
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false);
   const bankAccounts = useBankStore((s) => s.banks);
-  const budgetMonth = dayjs().format("YYYY-MM");
-  
+  const budgetMonth = dayjs().format('YYYY-MM');
+
   return (
     <div className="space-y-8">
       <div>
@@ -26,8 +25,10 @@ export default function BudgetsPage() {
           bankAccounts={bankAccounts}
         />
         <div>
-        <Button onClick={() => navigate(`/dashboard/budgets/${budgetMonth}`)}>Voir le budget</Button>
-        <Button onClick={() => setShowModal(true)}>Ajouter une transaction</Button>
+          <Button onClick={() => navigate(`/dashboard/budgets/${budgetMonth}`)}>
+            Voir le budget
+          </Button>
+          <Button onClick={() => setShowModal(true)}>Ajouter une transaction</Button>
         </div>
       </div>
       <UpcomingBudgetAlert />

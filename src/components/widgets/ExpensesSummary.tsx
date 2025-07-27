@@ -1,20 +1,18 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { useExpenseStore } from "@/stores/expenseStore";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { useExpenseStore } from '@/stores/expenseStore';
 
 export const ExpensesSummary = () => {
   const expenses = useExpenseStore((s) => s.expenses);
   const total = useExpenseStore((s) => s.getTotalAmount());
-  
+
   const totalCharges = total.toFixed(2);
   return (
     <Card>
       <CardHeader>
         <CardTitle>Charges fixes</CardTitle>
-        <CardDescription>
-          Résumé mensuel des dépenses récurrentes
-        </CardDescription>
+        <CardDescription>Résumé mensuel des dépenses récurrentes</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>

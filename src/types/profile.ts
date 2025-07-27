@@ -4,5 +4,5 @@ export type Profile = {
   lastName: string;
   email: string;
   status: 'single' | 'in couple' | 'married';
-  avatarUrl?: string
-}
+  avatarUrl?: string;
+};

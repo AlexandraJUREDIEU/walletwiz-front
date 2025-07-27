@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 type SidebarState = {
   isOpen: boolean;
@@ -14,7 +14,7 @@ export const useSidebarStore = create<SidebarState>((set) => ({
   close: () => set({ isOpen: false }),
   toggle: () => set((state) => ({ isOpen: !state.isOpen })),
   autoOpenIfDesktop: () => {
-    if (typeof window !== "undefined" && window.innerWidth >= 1024) {
+    if (typeof window !== 'undefined' && window.innerWidth >= 1024) {
       set({ isOpen: true });
     } else {
       set({ isOpen: false });

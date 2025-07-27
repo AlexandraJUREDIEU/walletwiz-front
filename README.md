@@ -1,6 +1,7 @@
 # 💸 WalletWiz - Frontend
 
 **WalletWiz** est une application budgétaire permettant à l’utilisateur de saisir ses revenus et charges fixes, puis de répartir automatiquement le reste de son budget dans plusieurs catégories personnalisables :
+
 - 🛒 Vital (alimentaire, médical…)
 - 🚗 Voiture (essence, parking, péages…)
 - 🎉 Loisirs (sorties, restaurants, shopping…)
@@ -66,12 +67,12 @@ walletwiz-front/
 
 ## 🛠 En cours de développement
 
-* [ ] Setup complet Tailwind + shadcn/ui
-* [ ] Mise en place du design système
-* [ ] Routing des pages (React Router)
-* [ ] Création du store global avec Zustand
-* [ ] Connexion au backend (NestJS)
-* [ ] Responsive & accessibilité
+- [ ] Setup complet Tailwind + shadcn/ui
+- [ ] Mise en place du design système
+- [ ] Routing des pages (React Router)
+- [ ] Création du store global avec Zustand
+- [ ] Connexion au backend (NestJS)
+- [ ] Responsive & accessibilité
 
 ---
 
@@ -95,4 +96,3 @@ Projet open-source pour une gestion budgétaire simple, claire et efficace.
 ## 📝 Licence
 
 Ce projet est sous licence [MIT](./LICENSE).
-

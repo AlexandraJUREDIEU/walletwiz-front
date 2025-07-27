@@ -1,18 +1,17 @@
-import { useBankStore } from '@/stores/bankStore'
-import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Wallet } from 'lucide-react'
-
+import { useBankStore } from '@/stores/bankStore';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Wallet } from 'lucide-react';
 
 export default function BankSummary() {
-  const { banks } = useBankStore()
+  const { banks } = useBankStore();
 
   if (banks.length === 0) {
     return (
       <div className="p-4 bg-muted rounded-lg text-sm text-muted-foreground">
         Aucun compte bancaire renseigné pour le moment.
       </div>
-    )
+    );
   }
 
   return (
@@ -39,5 +38,5 @@ export default function BankSummary() {
         ))}
       </div>
     </div>
-  )
+  );
 }
