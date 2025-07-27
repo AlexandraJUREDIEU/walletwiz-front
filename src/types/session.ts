@@ -1,4 +1,4 @@
-export interface Session {
+export type Session = {
   id: string;
   name: string;
   ownerId: string;
