@@ -23,6 +23,7 @@ import BudgetInitPage from "@/pages/budgets/init/budgetInitPage";
 import CurrentBudgetPage from "./pages/budgets/currentBudgetPage";
 import Test from "./pages/Test";
 import VerifyInvitePage from "./pages/verifyInvite";
+import DeclinedInvitePage from "./pages/DeclinedInvite";
 
 // Définition des routes publiques
 const publicRoutes = [
@@ -30,6 +31,7 @@ const publicRoutes = [
   { path: 'auth/register', element: <RegisterPage /> },
   { path: 'auth/login', element: <LoginPage /> },
   { path: 'verify-invite', element: <VerifyInvitePage /> },
+  { path: 'invite-declined', element: <DeclinedInvitePage /> },
 ];
 
 export const router = createBrowserRouter(

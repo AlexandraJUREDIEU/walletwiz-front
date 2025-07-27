@@ -42,6 +42,13 @@ export function useSessionService() {
     })
   }
 
+  // 🔹 Refuser une invitation
+  const declineInvite = async (token: string) => {
+    return await request<Invite>(`/sessions/invite/${token}/declined`, {
+      method: 'POST',
+    })
+  }
+
   // 🔹 Retourne les méthodes du service
   return {
     getSessions,
@@ -49,5 +56,6 @@ export function useSessionService() {
     inviteToSession,
     verifyInviteLink,
     acceptInvite,
+    declineInvite,
   }
 }
