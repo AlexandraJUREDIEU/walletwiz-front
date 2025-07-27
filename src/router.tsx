@@ -40,7 +40,7 @@ export const router = createBrowserRouter(
       {/* Routes publiques */}
       {publicRoutes.map(({ path, element }) => (
         <Route key={path} path={path} element={
-          path === 'verify-invite'
+          path === 'verify-invite' || path === 'invite-declined'
             ? element
             : <PublicRoute>{element}</PublicRoute>
         } />
