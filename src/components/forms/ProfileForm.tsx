@@ -14,9 +14,11 @@ import {
 } from '@/components/ui/select';
 import { useUserService } from '@/lib/service/user.service';
 import type { Profile } from '@/types/profile';
+import { useNavigate } from 'react-router-dom';
 
 export const ProfileForm = () => {
   const fileRef = useRef<HTMLInputElement | null>(null);
+  const navigate = useNavigate();
 
   // * Stores
   const { user } = useAuthStore();
@@ -126,12 +128,15 @@ export const ProfileForm = () => {
 
       <div>
         <Label htmlFor="email">Email</Label>
-        <Input
-          id="email"
-          value={formData.email}
-          readOnly
-          className="cursor-not-allowed opacity-80"
-        />
+        <div className="flex flex-col items-center gap-2 md:flex-row">
+          <Input
+            id="email"
+            value={formData.email}
+            readOnly
+            className="cursor-not-allowed opacity-80"
+          />
+          <Button type="button" className='w-full md:w-auto' onClick={() => navigate('/auth/forgot-password')}>Modifier mot de passe</Button>
+        </div>
       </div>
 
       <div>
