@@ -1,6 +1,6 @@
 import { useApi } from '@/lib/useApi';
 import type { AuthPayload, OtpPayload, User } from '@/types/auth';
-import type { Session } from 'react-router-dom';
+import type { Session } from '@/types/session';
 
 type AuthResponse = {
   accessToken: string;

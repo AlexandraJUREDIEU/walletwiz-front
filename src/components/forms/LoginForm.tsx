@@ -84,11 +84,17 @@ export default function LoginForm({ onLoginSuccess }: { onLoginSuccess?: () => v
             {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
           </button>
         </div>
-        <Button className="w-full" onClick={handleLogin} disabled={loading || !email || !password}>
+        <Button className="w-full mb-0" onClick={handleLogin} disabled={loading || !email || !password}>
           {loading ? 'Connexion...' : 'Se connecter'}
         </Button>
+        <Link
+          to="/auth/forgot-password"
+          className="text-[0.75em] mt-1 text-primary flex justify-center hover:underline"
+        >
+          Mot de passe oublié ?
+        </Link>
       </div>
-      <p className="text-sm text-center text-muted-foreground mt-4">
+      <p className="text-sm  text-center text-muted-foreground mt-4">
         Pas encore de compte ?{' '}
         <Link to="/auth/register" className="text-primary underline hover:opacity-80">
           Créer un compte

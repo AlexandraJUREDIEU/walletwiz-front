@@ -20,12 +20,14 @@ import CurrentBudgetPage from './pages/budgets/currentBudgetPage';
 import Test from './pages/Test';
 import VerifyInvitePage from './pages/verifyInvite';
 import DeclinedInvitePage from './pages/DeclinedInvite';
+import ResetPage from './pages/auth/ResetPage';
 
 // Définition des routes publiques
 const publicRoutes = [
   { path: '/', element: <LoginPage /> },
   { path: 'auth/register', element: <RegisterPage /> },
   { path: 'auth/login', element: <LoginPage /> },
+  { path: 'auth/forgot-password', element: <ResetPage /> },
   { path: 'verify-invite', element: <VerifyInvitePage /> },
   { path: 'invite-declined', element: <DeclinedInvitePage /> },
 ];
@@ -39,7 +41,7 @@ export const router = createBrowserRouter(
           key={path}
           path={path}
           element={
-            path === 'verify-invite' || path === 'invite-declined' ? (
+            path === 'verify-invite' || path === 'invite-declined' || path === 'auth/forgot-password' ? (
               element
             ) : (
               <PublicRoute>{element}</PublicRoute>
