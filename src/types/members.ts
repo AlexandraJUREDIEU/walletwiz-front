@@ -4,6 +4,7 @@ export interface Member {
   firstName: string;
   lastName: string;
   role: 'OWNER' | 'ADULT' | 'CHILD';
+  isReal?: boolean; // fictif ou réel
   status: 'PENDING' | 'ACCEPTED' | 'DECLINED';
 }
 
