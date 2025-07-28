@@ -36,10 +36,28 @@ export function useAuthService() {
     });
   };
 
+  // 🔹 Service pour demander la réinitialisation du mot de passe
+  const forgetPassword = async (email: string) => {
+    return await request<{ message: string }>('/auth/forgot-password', {
+      method: 'POST',
+      data: { email },
+    });
+  };
+
+  // 🔹 Service pour réinitialiser le mot de passe
+  const resetPassword = async (token: string, newPassword: string) => {
+    return await request<{ message: string }>('/auth/reset-password', {
+      method: 'POST',
+      data: { token, newPassword },
+    });
+  };
+
   // 🔹 Retourne les méthodes du service
   return {
     register,
     verifyOtp,
     login,
+    forgetPassword,
+    resetPassword,    
   };
 }
