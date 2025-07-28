@@ -22,12 +22,16 @@ import VerifyInvitePage from './pages/verifyInvite';
 import DeclinedInvitePage from './pages/DeclinedInvite';
 import ResetPage from './pages/auth/ResetPage';
 
+
 // Définition des routes publiques
 const publicRoutes = [
   { path: '/', element: <LoginPage /> },
   { path: 'auth/register', element: <RegisterPage /> },
   { path: 'auth/login', element: <LoginPage /> },
+  // Route pour la réinitialisation du mot de passe
   { path: 'auth/forgot-password', element: <ResetPage /> },
+  { path: 'auth/reset-password', element: <ResetPage /> },
+  // Routes pour la vérification d'invitation
   { path: 'verify-invite', element: <VerifyInvitePage /> },
   { path: 'invite-declined', element: <DeclinedInvitePage /> },
 ];
@@ -41,7 +45,7 @@ export const router = createBrowserRouter(
           key={path}
           path={path}
           element={
-            path === 'verify-invite' || path === 'invite-declined' || path === 'auth/forgot-password' ? (
+            path === 'verify-invite' || path === 'invite-declined' || path === 'auth/forgot-password' || path === 'auth/reset-password' ? (
               element
             ) : (
               <PublicRoute>{element}</PublicRoute>
