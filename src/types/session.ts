@@ -1,8 +1,15 @@
+import type { Member } from "./members";
+
 export type Session = {
   id: string;
   name: string;
   ownerId: string;
   createdAt: string;
+  members : Member[];
+  owner: {
+    id: string;
+    email: string;
+  };
 }
 
 export type Invite = {
