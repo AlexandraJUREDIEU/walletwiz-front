@@ -3,13 +3,19 @@ import type { Member } from './members';
 
 // Représente un compte bancaire
 export type BankAccount = {
-  id: string;
+  id?: string;
   name: string;
   bankName: string;
   members: Member[];
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 };
+
+export type AddBankPayload ={
+  name: string;
+  bankName: string;
+  members: string[]; // au lieu de { id: string }[]
+}
 
 // Représente une liste de banques
 export type BankList = {
