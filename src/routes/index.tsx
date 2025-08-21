@@ -6,6 +6,7 @@ import AuthLayout from "@/layouts/AuthLayout";
 
 // Pages (placeholders si besoin)
 import LoginPage from "@/pages/login";
+import SignupPage from "@/pages/signup";
 import DashboardHome from "@/pages/dashboard/home";
 
 export default function AppRouter() {
@@ -16,7 +17,7 @@ export default function AppRouter() {
         <Route element={<PublicRoute />}>
           <Route element={<AuthLayout />}>
             <Route path="/login" element={<LoginPage />} />
-            {/* Exemple: <Route path="/register" element={<RegisterPage />} /> */}
+            <Route path="/signup" element={<SignupPage />} />
           </Route>
         </Route>
 
