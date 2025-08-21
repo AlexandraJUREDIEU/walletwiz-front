@@ -4,7 +4,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuthService } from "@/lib/service/auth.service";
 import { useAuthStore } from "@/stores/authStore";
-import { useSearchParams, Link } from "react-router-dom";
+import { useSearchParams, Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,6 +22,7 @@ const authSchema = z.object({
 type Props = { mode: "login" | "signup" };
 
 export default function AuthForm({ mode }: Props) {
+  const navigate = useNavigate();
   const { login, signup, me } = useAuthService();
   const setAuth = useAuthStore((s) => s.setAuth);
   const setUser = useAuthStore((s) => s.setUser);
@@ -56,7 +57,7 @@ export default function AuthForm({ mode }: Props) {
       setUser(user);
 
       toast.success(mode === "login" ? "Bienvenue !" : "Compte créé, bienvenue !");
-      window.location.href = from; // redirection vers la page d’origine ou /dashboard/home
+      navigate(from); // redirection vers la page d’origine ou /dashboard/home
     } catch {
       // useApi affiche déjà le toast d'erreur, on peut compléter si besoin
     } finally {

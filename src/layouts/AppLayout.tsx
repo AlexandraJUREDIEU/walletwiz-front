@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { Sidebar } from "@/layouts/Sidebar";
 import { MobileSidebar } from "@/layouts/MobileSidebar";
 import { SidebarTrigger } from "@/layouts/SidebarTrigger";
@@ -8,6 +8,7 @@ import { useAuthStore } from "@/stores/authStore";
 import { useState } from "react";
 
 export default function AppLayout() {
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const logout = useAuthStore((s) => s.logout);
 
@@ -29,7 +30,7 @@ export default function AppLayout() {
               <LanguageSwitcher />
               <ThemeToggle />
               <button
-                onClick={() => { logout(); window.location.href = "/login"; }}
+                onClick={() => { logout(); navigate("/login"); }}
                 className="text-sm px-3 py-2 rounded-md border hover:bg-muted"
               >
                 Logout
