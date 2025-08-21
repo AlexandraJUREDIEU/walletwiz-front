@@ -6,7 +6,7 @@ export default function AppLayout() {
     <div className="min-h-dvh flex">
       {/* Sidebar placeholder */}
       <aside className="flex flex-col justify-between w-56 border-r p-4">
-        <h1 className="text-lg font-semibold">WalletWiz</h1>
+        <h1 className="text-lg">WalletWiz</h1>
         <LanguageSwitcher />
       </aside>
       

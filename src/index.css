@@ -43,24 +43,24 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --background: rgba(253, 251, 240);
+  --foreground: rgba(74,73,71);
+  --card: rgba(253, 251, 240);;
+  --card-foreground: rgba(74,73,71);
+  --popover: rgba(253, 251, 240);;
+  --popover-foreground: rgba(74,73,71);
+  --primary: rgba(31,58,38);
+  --primary-foreground: rgb(253,251,240);
+  --secondary: rgba(144,153,127);
+  --secondary-foreground: rgb(253,251,240);
+  --muted: rgba(229,221,209);
+  --muted-foreground: rgba(74,73,71);
+  --accent: rgba(229,221,209);
+  --accent-foreground: rgba(74,73,71);
+  --destructive: rgba(190,54,36);
+  --border: rgba(229,221,209);
+  --input: rgba(229,221,209);
+  --ring: rgba(31,58,38);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -74,6 +74,11 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  --radius: 12px;
+
+  --font-sans: "Poppins";
+  --font-serif: "MuseoModerno";
 }
 
 .dark {
@@ -112,9 +117,9 @@
 
 @layer base {
   * {
+    font-family: var(--font-sans);
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
+  body { @apply bg-background text-foreground font-sans; }
+  h1, h2, h3 { @apply font-serif; }
 }
