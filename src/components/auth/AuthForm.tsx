@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,20 +8,20 @@ import { useSearchParams, Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
-
-//* Zod Schemas
-const authSchema = z.object({
-  email: z.email("Email invalide"),
-  password: z.string().min(6, "6 caractères minimum"),
-  firstName: z.string().optional(),
-  lastName: z.string().optional(),
-});
-
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
+import { useTranslation } from "react-i18next";
 
 type Props = { mode: "login" | "signup" };
 
 export default function AuthForm({ mode }: Props) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { login, signup, me } = useAuthService();
   const setAuth = useAuthStore((s) => s.setAuth);
@@ -29,8 +29,16 @@ export default function AuthForm({ mode }: Props) {
   const [params] = useSearchParams();
   const from = params.get("from") || "/dashboard/home";
   const [submitting, setSubmitting] = useState(false);
+  
+  //* Zod Schemas
+    const authSchema = useMemo(() => z.object({
+      email: z.email(t("form.validations.emailInvalid")),
+      password: z.string().min(6, t("form.validations.passwordMin")),
+      firstName: z.string().optional(),
+      lastName: z.string().optional(),
+    }), [t]);
 
-  // 4) RHF relié à Zod
+  //* RHF relié à Zod
   const form = useForm({
     resolver: zodResolver(authSchema),
     defaultValues:
@@ -40,13 +48,14 @@ export default function AuthForm({ mode }: Props) {
     mode: "onSubmit", // tu peux mettre "onChange" si tu veux valider au fil de l'eau
   });
 
-  // 5) Submit
+  //* Submit
   const onSubmit = async (values: any) => {
     try {
       setSubmitting(true);
 
       // a) login/signup -> token
-      const resp = mode === "login" ? await login(values) : await signup(values);
+      const resp =
+        mode === "login" ? await login(values) : await signup(values);
       const token = resp.access_token;
 
       // b) stocke le token (user null temporairement)
@@ -56,7 +65,9 @@ export default function AuthForm({ mode }: Props) {
       const user = await me();
       setUser(user);
 
-      toast.success(mode === "login" ? "Bienvenue !" : "Compte créé, bienvenue !");
+      toast.success(
+        mode === "login" ? t("toast.welcome") : t("toast.accountCreated")
+      );
       navigate(from); // redirection vers la page d’origine ou /dashboard/home
     } catch {
       // useApi affiche déjà le toast d'erreur, on peut compléter si besoin
@@ -70,17 +81,21 @@ export default function AuthForm({ mode }: Props) {
       {/* Titre + lien alternatif */}
       <div className="space-y-1">
         <h1 className="text-xl font-semibold">
-          {mode === "login" ? "Se connecter" : "Créer un compte"}
+          {mode === "login" ? t("auth.login") : t("auth.signup")}
         </h1>
         {mode === "login" ? (
           <p className="text-sm text-muted-foreground">
-            Pas encore de compte ?{" "}
-            <Link to="/signup" className="underline">Inscrivez-vous</Link>
+            {t("auth.noAccount")}{" "}
+            <Link to="/signup" className="underline">
+              {t("nav.signup")}
+            </Link>
           </p>
         ) : (
           <p className="text-sm text-muted-foreground">
-            Déjà un compte ?{" "}
-            <Link to="/login" className="underline">Connectez-vous</Link>
+            {t("auth.haveAccount")}{" "}
+            <Link to="/login" className="underline">
+              {t("nav.login")}
+            </Link>
           </p>
         )}
       </div>
@@ -95,9 +110,9 @@ export default function AuthForm({ mode }: Props) {
                 name="firstName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Prénom</FormLabel>
+                    <FormLabel>{t("form.firstName")}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Alex" {...field} />
+                      <Input placeholder={t("form.placeholders.firstName")} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -108,9 +123,9 @@ export default function AuthForm({ mode }: Props) {
                 name="lastName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Nom</FormLabel>
+                    <FormLabel>{t("form.lastName")}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Dupont" {...field} />
+                      <Input placeholder={t("form.placeholders.lastName")} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -124,9 +139,13 @@ export default function AuthForm({ mode }: Props) {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>{t("form.email")}</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="vous@exemple.com" {...field} />
+                  <Input
+                    type="email"
+                    placeholder={t("form.placeholders.email")}
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -138,9 +157,9 @@ export default function AuthForm({ mode }: Props) {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Mot de passe</FormLabel>
+                <FormLabel>{t("form.password")}</FormLabel>
                 <FormControl>
-                  <Input type="password" placeholder="••••••••" {...field} />
+                  <Input type="password" placeholder={t("form.placeholders.password")} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -148,7 +167,11 @@ export default function AuthForm({ mode }: Props) {
           />
 
           <Button type="submit" className="w-full" disabled={submitting}>
-            {submitting ? "Chargement..." : mode === "login" ? "Se connecter" : "Créer le compte"}
+            {submitting
+              ? t("cta.loading")
+              : mode === "login"
+              ? t("cta.signIn")
+              : t("cta.createAccount")}
           </Button>
         </form>
       </Form>

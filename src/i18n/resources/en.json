@@ -6,7 +6,9 @@
   },
   "auth": {
     "login": "Sign in",
-    "logout": "Sign out",
+    "signup": "Create an account",
+    "noAccount": "Don’t have an account?",
+    "haveAccount": "Already have an account?",
     "sessionExpired": "Session expired, please sign in again."
   },
   "nav": {
@@ -17,11 +19,38 @@
     "incomes": "Incomes",
     "expenses": "Expenses",
     "budgets": "Budgets",
-    "settings": "Settings"
+    "settings": "Settings",
+    "signup": "Sign up",
+    "login": "Log in"
   },
   "settings": {
     "language": "Language",
     "french": "French",
     "english": "English"
+  },
+  "form": {
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "password": "Password",
+    "placeholders": {
+      "firstName": "Alex",
+      "lastName": "Smith",
+      "email": "you@example.com",
+      "password": "••••••••"
+    },
+    "validations": {
+      "emailInvalid": "Invalid email",
+      "passwordMin": "6 characters minimum"
+    }
+  },
+  "cta": {
+    "createAccount": "Create account",
+    "signIn": "Sign in",
+    "loading": "Loading..."
+  },
+  "toast": {
+    "welcome": "Welcome!",
+    "accountCreated": "Account created, welcome!"
   }
 }
