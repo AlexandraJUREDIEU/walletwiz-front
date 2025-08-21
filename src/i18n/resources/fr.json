@@ -1,0 +1,27 @@
+{
+  "app": {
+    "name": "WalletWiz",
+    "loading": "Chargement…",
+    "welcome": "Bienvenue dans WalletWiz."
+  },
+  "auth": {
+    "login": "Se connecter",
+    "logout": "Se déconnecter",
+    "sessionExpired": "Session expirée, merci de vous reconnecter."
+  },
+  "nav": {
+    "dashboard": "Tableau de bord",
+    "profile": "Profil",
+    "members": "Membres",
+    "banks": "Comptes",
+    "incomes": "Ressources",
+    "expenses": "Charges",
+    "budgets": "Budgets",
+    "settings": "Paramètres"
+  },
+  "settings": {
+    "language": "Langue",
+    "french": "Français",
+    "english": "Anglais"
+  }
+}

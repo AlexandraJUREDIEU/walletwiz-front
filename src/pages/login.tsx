@@ -1,8 +1,10 @@
 import { useAuthStore } from "@/stores/authStore";
 import { Button } from "@/components/ui/button";
 import { useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function LoginPage() {
+  const { t } = useTranslation();
   const setAuth = useAuthStore((s) => s.setAuth);
   const [params] = useSearchParams();
   const from = params.get("from") || "/dashboard/home";
@@ -13,13 +15,15 @@ export default function LoginPage() {
     window.location.href = from; // simple redirection
   };
 
+  const expired = params.get("reason") === "expired";
+
   return (
     <div className="space-y-4">
-      <h1 className="text-xl font-semibold">Connexion</h1>
+      <h1 className="text-xl font-semibold">{t("auth.login")}</h1>
       <p className="text-sm text-muted-foreground">
-        {params.get("reason") === "expired" ? "Session expirée, merci de vous reconnecter." : "Merci de vous connecter pour accéder à votre tableau de bord."}
+        {expired ? t("auth.sessionExpired") : t("app.welcome")}
       </p>
-      <Button onClick={fakeLogin}>Se connecter (placeholder)</Button>
+      <Button onClick={fakeLogin}>{t("auth.login")}</Button>
     </div>
   );
 }

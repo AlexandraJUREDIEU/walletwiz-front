@@ -4,6 +4,7 @@ import AppRouter from './routes/index.tsx'
 import GlobalLoader from './components/system/GlobalLoader.tsx';
 import './index.css'
 import { Toaster } from "sonner";
+import '@/i18n'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

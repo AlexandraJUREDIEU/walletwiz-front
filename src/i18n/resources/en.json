@@ -1,0 +1,27 @@
+{
+  "app": {
+    "name": "WalletWiz",
+    "loading": "Loading…",
+    "welcome": "Welcome to WalletWiz."
+  },
+  "auth": {
+    "login": "Sign in",
+    "logout": "Sign out",
+    "sessionExpired": "Session expired, please sign in again."
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "members": "Members",
+    "banks": "Banks",
+    "incomes": "Incomes",
+    "expenses": "Expenses",
+    "budgets": "Budgets",
+    "settings": "Settings"
+  },
+  "settings": {
+    "language": "Language",
+    "french": "French",
+    "english": "English"
+  }
+}
