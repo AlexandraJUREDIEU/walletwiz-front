@@ -1,69 +1,67 @@
-# React + TypeScript + Vite
+# WalletWiz — Frontend (MVP)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Application budgétaire : revenus, charges fixes, répartition (Vital, Voiture, Loisirs, Épargne), budgets mensuels et transactions.
 
-Currently, two official plugins are available:
+## ⚙️ Stack
+- Vite + React + TypeScript
+- Tailwind CSS + shadcn/ui
+- Zustand (state, persistance localStorage pour MVP)
+- React Router
+- ESLint
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🚀 Démarrage
+```bash
+npm i        # ou npm i / yarn
+cp .env.example .env.local
+npm run dev      # http://localhost:5173
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🔑 Variables d’environnement (Vite)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+`VITE_API_URL` : URL de l’API NestJS
+`VITE_APP_NAME` : nom de l’app (titre, toasts…)
+`VITE_I18N_DEFAULT_LOCALE` : langue par défaut (ex: fr)
+`VITE_I18N_FALLBACK_LOCALE` : langue fallback (ex: en)
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 📂 Structure (extrait)
 ```
+src/
+  components/
+  lib/
+    api/           # client http, interceptors (à venir J0)
+  pages/
+  stores/
+  layouts/         # AppLayout, AuthLayout (à venir J0)
+  routes/          # guards (à venir J0)
+```
+
+## 📜 Scripts
+
+`npm dev` : serveur dev
+`npm build` : build production
+`npm preview` : prévisualisation
+`npm lint` : lint
+
+## 🧭 Roadmap MVP (validée)
+
+- J0–J3: socle, auth, sessions, routes
+- J4 Banks → J5 Members → J6 Incomes → J7 Expenses
+- J8 Budgets (summary) → J9 Transactions → J10 Dashboard
+- J11 Profil → J12 Finitions → J13 Tests → J14 CI/CD
+
+## 🧱 Conventions
+
+**Branches**: main (prod), dev (intégration), feat/*
+**Commits**: Conventional Commits (ex: chore(init): base app)
+**Qualité**: ESLint (et Prettier si configuré) 
+
+---
+
+## 🔮 Prochaines étapes (J0)
+
+1. Client API (src/lib/api/client.ts) avec interceptors JWT et 401
+2. AuthGuard / PublicRoute + routes
+3. Layouts : AppLayout (sidebar+header), AuthLayout
+4. Toaster global + loader
+5. Store auth minimal (Zustand)
+6. i18n fr/en
