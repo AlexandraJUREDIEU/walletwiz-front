@@ -7,9 +7,9 @@ import { useApi } from "@/lib/api/useApi";
 import type { User } from "@/stores/authStore";
 
 //* DTO attendus par le backend */
-export type LoginDto = { 
-    email: string; 
-    password: string 
+export type LoginDto = {
+  email: string;
+  password: string;
 };
 export type SignupDto = {
   email: string;

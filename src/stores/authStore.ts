@@ -11,7 +11,7 @@ export type User = {
 type AuthState = {
   user: User | null;
   token: string | null;
-  setAuth: (user: User, token: string) => void;
+  setAuth: (user: User | null, token: string | null) => void;
   setUser: (user: User | null) => void;
   logout: () => void;
 };
