@@ -6,7 +6,9 @@
   },
   "auth": {
     "login": "Se connecter",
-    "logout": "Se déconnecter",
+    "signup": "Créer un compte",
+    "noAccount": "Pas encore de compte ?",
+    "haveAccount": "Déjà un compte ?",
     "sessionExpired": "Session expirée, merci de vous reconnecter."
   },
   "nav": {
@@ -17,11 +19,38 @@
     "incomes": "Ressources",
     "expenses": "Charges",
     "budgets": "Budgets",
-    "settings": "Paramètres"
+    "settings": "Paramètres",
+    "signup": "Inscrivez-vous",
+    "login": "Connectez-vous"
   },
   "settings": {
     "language": "Langue",
     "french": "Français",
     "english": "Anglais"
+  },
+  "form": {
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "Email",
+    "password": "Mot de passe",
+    "placeholders": {
+      "firstName": "Alex",
+      "lastName": "Dupont",
+      "email": "vous@exemple.com",
+      "password": "••••••••"
+    },
+    "validations": {
+      "emailInvalid": "Email invalide",
+      "passwordMin": "6 caractères minimum"
+    }
+  },
+  "cta": {
+    "createAccount": "Créer le compte",
+    "signIn": "Se connecter",
+    "loading": "Chargement..."
+  },
+  "toast": {
+    "welcome": "Bienvenue !",
+    "accountCreated": "Compte créé, bienvenue !"
   }
 }
