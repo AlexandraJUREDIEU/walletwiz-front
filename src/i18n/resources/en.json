@@ -52,5 +52,40 @@
   "toast": {
     "welcome": "Welcome!",
     "accountCreated": "Account created, welcome!"
+  },
+  "common": {
+    "create": "Create",
+    "cancel": "Cancel",
+    "delete": "Delete"
+  },
+  "sessions": {
+    "selector": {
+      "title": "Active session",
+      "placeholder": "Choose a session",
+      "empty": "No sessions"
+    },
+    "actions": {
+      "create": "New session",
+      "setDefault": "Set as default"
+    },
+    "create": {
+      "label": "Session name",
+      "placeholder": "e.g. Family Budget"
+    },
+    "list": {
+      "title": "My sessions",
+      "empty": "No sessions yet."
+    },
+    "settings": {
+      "title": "Sessions",
+      "subtitle": "Manage your sessions (create, default, delete)."
+    },
+    "toasts": {
+      "created": "Session created.",
+      "deleted": "Session deleted.",
+      "setDefault": "Session set as default.",
+      "loadError": "Unable to load sessions.",
+      "membersLoadError": "Unable to load members."
+    }
   }
 }

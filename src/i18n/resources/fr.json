@@ -52,5 +52,40 @@
   "toast": {
     "welcome": "Bienvenue !",
     "accountCreated": "Compte créé, bienvenue !"
+  },
+  "common": {
+    "create": "Créer",
+    "cancel": "Annuler",
+    "delete": "Supprimer"
+  },
+  "sessions": {
+    "selector": {
+      "title": "Session active",
+      "placeholder": "Choisir une session",
+      "empty": "Aucune session"
+    },
+    "actions": {
+      "create": "Nouvelle session",
+      "setDefault": "Définir par défaut"
+    },
+    "create": {
+      "label": "Nom de la session",
+      "placeholder": "Ex. Budget Famille"
+    },
+    "list": {
+      "title": "Mes sessions",
+      "empty": "Aucune session pour le moment."
+    },
+    "settings": {
+      "title": "Sessions",
+      "subtitle": "Gérez vos sessions (création, défaut, suppression)."
+    },
+    "toasts": {
+      "created": "Session créée.",
+      "deleted": "Session supprimée.",
+      "setDefault": "Session définie par défaut.",
+      "loadError": "Impossible de charger les sessions.",
+      "membersLoadError": "Impossible de charger les membres."
+    }
   }
 }
