@@ -6,11 +6,13 @@ import LanguageSwitcher from "@/i18n/components/settings/LanguageSwitcher";
 import ThemeToggle from "@/components/theme/ThemeToggle";
 import { useAuthStore } from "@/stores/authStore";
 import { useState } from "react";
+import { useSessionsBootstrap } from "@/hooks/useSessionsBootstrap";
 
 export default function AppLayout() {
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const logout = useAuthStore((s) => s.logout);
+  useSessionsBootstrap();
 
   return (
     <div className="min-h-dvh grid md:grid-cols-[240px_1fr] overflow-x-hidden">

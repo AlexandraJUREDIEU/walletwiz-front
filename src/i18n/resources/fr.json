@@ -4,6 +4,16 @@
     "loading": "Chargement…",
     "welcome": "Bienvenue dans WalletWiz."
   },
+  "pages": {
+    "common": {
+      "empty": "Contenu à venir.",
+      "noSession": "Aucune session active.",
+      "sessionBound": "Données liées à la session : {{id}}",
+      "emptyTitle": "Contenu à venir",
+      "emptyDesc": "Cette section sera bientôt alimentée.",
+      "createAction": "Créer un élément"
+    }
+  },
   "auth": {
     "login": "Se connecter",
     "signup": "Créer un compte",
@@ -21,7 +31,10 @@
     "budgets": "Budgets",
     "settings": "Paramètres",
     "signup": "Inscrivez-vous",
-    "login": "Connectez-vous"
+    "login": "Connectez-vous",
+     "home": "Accueil",
+    "transactions": "Transactions",
+    "sessions": "Sessions"
   },
   "settings": {
     "language": "Langue",

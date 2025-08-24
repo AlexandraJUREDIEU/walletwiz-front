@@ -4,6 +4,16 @@
     "loading": "Loading…",
     "welcome": "Welcome to WalletWiz."
   },
+  "pages": {
+    "common": {
+      "empty": "Content coming soon.",
+      "noSession": "No active session.",
+      "sessionBound": "Data bound to session: {{id}}",
+      "emptyTitle": "Content coming soon",
+      "emptyDesc": "This section will be populated shortly.",
+      "createAction": "Create item"
+    }
+  },
   "auth": {
     "login": "Sign in",
     "signup": "Create an account",
@@ -21,7 +31,10 @@
     "budgets": "Budgets",
     "settings": "Settings",
     "signup": "Sign up",
-    "login": "Log in"
+    "login": "Log in",
+    "home": "Home",
+    "transactions": "Transactions",
+    "sessions": "Sessions"
   },
   "settings": {
     "language": "Language",
