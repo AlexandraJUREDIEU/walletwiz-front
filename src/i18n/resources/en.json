@@ -4,6 +4,13 @@
     "loading": "Loading…",
     "welcome": "Welcome to WalletWiz."
   },
+  "pages": {
+    "common": {
+      "empty": "Content coming soon.",
+      "noSession": "No active session.",
+      "sessionBound": "Data bound to session: {{id}}"
+    }
+  },
   "auth": {
     "login": "Sign in",
     "signup": "Create an account",

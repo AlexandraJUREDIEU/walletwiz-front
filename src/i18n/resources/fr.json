@@ -4,6 +4,13 @@
     "loading": "Chargement…",
     "welcome": "Bienvenue dans WalletWiz."
   },
+  "pages": {
+    "common": {
+      "empty": "Contenu à venir.",
+      "noSession": "Aucune session active.",
+      "sessionBound": "Données liées à la session : {{id}}"
+    }
+  },
   "auth": {
     "login": "Se connecter",
     "signup": "Créer un compte",
