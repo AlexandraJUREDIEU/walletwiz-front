@@ -21,7 +21,10 @@
     "budgets": "Budgets",
     "settings": "Paramètres",
     "signup": "Inscrivez-vous",
-    "login": "Connectez-vous"
+    "login": "Connectez-vous",
+     "home": "Accueil",
+    "transactions": "Transactions",
+    "sessions": "Sessions"
   },
   "settings": {
     "language": "Langue",
