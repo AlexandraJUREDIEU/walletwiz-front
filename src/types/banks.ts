@@ -5,7 +5,7 @@ export type BankAccount = {
   label: string;
   bankName?: string | null;
   sessionId: string;
-  initialBalance?: number | null;
+  initialBalance?: string | number | null ;
   isArchived?: boolean;
   createdAt?: string;
   updatedAt?: string;
