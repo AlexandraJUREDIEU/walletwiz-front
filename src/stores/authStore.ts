@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { useSessionStore } from "./sessionStore";
 
 export type User = {
   id: string;
@@ -23,7 +24,14 @@ export const useAuthStore = create<AuthState>()(
       token: null,
       setAuth: (user, token) => set({ user, token }),
       setUser: (user) => set({ user }),
-      logout: () => set({ user: null, token: null }),
+      logout: () => {
+        set({ token: null, user: null });
+        // Nettoyage du store sessions + localStorage persist
+        try {
+          useSessionStore.getState().reset();
+          localStorage.removeItem("walletwiz-session");
+        } catch {}
+      },
     }),
     {
       name: "walletwiz-auth", // localStorage key
