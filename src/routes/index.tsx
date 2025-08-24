@@ -8,6 +8,7 @@ import AuthLayout from "@/layouts/AuthLayout";
 import LoginPage from "@/pages/login";
 import SignupPage from "@/pages/signup";
 import DashboardHome from "@/pages/dashboard/home";
+import SessionSettingsPage from "@/pages/settings/SessionSettingsPage";
 
 export default function AppRouter() {
   return (
@@ -27,6 +28,7 @@ export default function AppRouter() {
             <Route path="/dashboard/home" element={<DashboardHome />} />
             {/* Tu ajouteras ici: /dashboard/profile, /members, /banks, etc. */}
             <Route path="/dashboard" element={<Navigate to="/dashboard/home" replace />} />
+            <Route path="/dashboard/settings/session" element={<SessionSettingsPage />} />
           </Route>
         </Route>
 

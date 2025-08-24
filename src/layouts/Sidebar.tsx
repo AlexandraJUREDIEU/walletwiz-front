@@ -1,4 +1,5 @@
 import { NavList } from "./NavList";
+import { SessionSelector } from "@/components/sessions/SessionSelector";
 
 export function Sidebar() {
   return (
@@ -7,6 +8,7 @@ export function Sidebar() {
       aria-label="Primary"
     >
       <div className="px-4 py-3 text-xl font-semibold h-display">WalletWiz</div>
+      <SessionSelector />
       <NavList />
     </aside>
   );
