@@ -9,12 +9,7 @@ export type BankAccount = {
   isArchived?: boolean;
   createdAt?: string;
   updatedAt?: string;
-  members?: [
-    {
-      memberId: string;
-      member: Member;
-    }
-  ];
+  members?: { memberId: string; member: Member }[];
 };
 
 export type CreateBankAccountDto = {
