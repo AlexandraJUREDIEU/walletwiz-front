@@ -72,7 +72,7 @@ export default function SessionSettingsPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="p-3 sm:p-4 lg:p-6 space-y-3 sm:space-y-4 lg:space-y-6">
       <div>
         <h1 className="text-2xl font-semibold">{t("sessions.settings.title")}</h1>
         <p className="text-sm text-muted-foreground">{t("sessions.settings.subtitle")}</p>

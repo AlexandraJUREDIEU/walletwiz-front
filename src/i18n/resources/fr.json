@@ -8,7 +8,10 @@
     "common": {
       "empty": "Contenu à venir.",
       "noSession": "Aucune session active.",
-      "sessionBound": "Données liées à la session : {{id}}"
+      "sessionBound": "Données liées à la session : {{id}}",
+      "emptyTitle": "Contenu à venir",
+      "emptyDesc": "Cette section sera bientôt alimentée.",
+      "createAction": "Créer un élément"
     }
   },
   "auth": {

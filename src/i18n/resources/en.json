@@ -8,7 +8,10 @@
     "common": {
       "empty": "Content coming soon.",
       "noSession": "No active session.",
-      "sessionBound": "Data bound to session: {{id}}"
+      "sessionBound": "Data bound to session: {{id}}",
+      "emptyTitle": "Content coming soon",
+      "emptyDesc": "This section will be populated shortly.",
+      "createAction": "Create item"
     }
   },
   "auth": {

@@ -4,12 +4,14 @@ import AuthGuard from "./AuthGuard";
 import PublicRoute from "./PublicRoute";
 import AppLayout from "@/layouts/AppLayout";
 import AuthLayout from "@/layouts/AuthLayout";
+import PageSkeleton from "@/components/system/PageSkeleton";
 
 // Pages (placeholders si besoin)
 import LoginPage from "@/pages/login";
 import SignupPage from "@/pages/signup";
 import DashboardHome from "@/pages/dashboard/home";
 import SessionSettingsPage from "@/pages/settings/SessionSettingsPage";
+import DashboardNotFound from "@/pages/dashboard/NotFound";
 
 const BanksPage = lazy(() => import("@/pages/banks"));
 const MembersPage = lazy(() => import("@/pages/members"));
@@ -18,10 +20,6 @@ const ExpensesPage = lazy(() => import("@/pages/expenses"));
 const BudgetsPage = lazy(() => import("@/pages/budgets"));
 const TransactionsPage = lazy(() => import("@/pages/transactions"));
 const ProfilePage = lazy(() => import("@/pages/profile"));
-
-function Fallback() {
-  return <div className="p-6 text-sm text-muted-foreground">Chargement…</div>;
-}
 
 export default function AppRouter() {
   return (
@@ -44,7 +42,7 @@ export default function AppRouter() {
             <Route
               path="/dashboard/banks"
               element={
-                <Suspense fallback={<Fallback />}>
+                <Suspense fallback={<PageSkeleton />}>
                   <BanksPage />
                 </Suspense>
               }
@@ -52,7 +50,7 @@ export default function AppRouter() {
             <Route
               path="/dashboard/members"
               element={
-                <Suspense fallback={<Fallback />}>
+                <Suspense fallback={<PageSkeleton />}>
                   <MembersPage />
                 </Suspense>
               }
@@ -60,7 +58,7 @@ export default function AppRouter() {
             <Route
               path="/dashboard/incomes"
               element={
-                <Suspense fallback={<Fallback />}>
+                <Suspense fallback={<PageSkeleton />}>
                   <IncomesPage />
                 </Suspense>
               }
@@ -68,7 +66,7 @@ export default function AppRouter() {
             <Route
               path="/dashboard/expenses"
               element={
-                <Suspense fallback={<Fallback />}>
+                <Suspense fallback={<PageSkeleton />}>
                   <ExpensesPage />
                 </Suspense>
               }
@@ -76,7 +74,7 @@ export default function AppRouter() {
             <Route
               path="/dashboard/budgets"
               element={
-                <Suspense fallback={<Fallback />}>
+                <Suspense fallback={<PageSkeleton />}>
                   <BudgetsPage />
                 </Suspense>
               }
@@ -84,7 +82,7 @@ export default function AppRouter() {
             <Route
               path="/dashboard/transactions"
               element={
-                <Suspense fallback={<Fallback />}>
+                <Suspense fallback={<PageSkeleton />}>
                   <TransactionsPage />
                 </Suspense>
               }
@@ -92,7 +90,7 @@ export default function AppRouter() {
             <Route
               path="/dashboard/settings/profile"
               element={
-                <Suspense fallback={<Fallback />}>
+                <Suspense fallback={<PageSkeleton />}>
                   <ProfilePage />
                 </Suspense>
               }
@@ -103,6 +101,7 @@ export default function AppRouter() {
 
             {/* réglages sessions (existant) */}
             <Route path="/dashboard/settings/session" element={<SessionSettingsPage />} />
+            <Route path="/dashboard/*" element={<DashboardNotFound />} />
           </Route>
         </Route>
 
