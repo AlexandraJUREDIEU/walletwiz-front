@@ -151,5 +151,87 @@
       "memberAdded": "Membre ajouté au compte.",
       "memberRemoved": "Membre retiré du compte."
     }
+  },
+  "members": {
+    "actions": {
+      "invite": "Inviter",
+      "revoke": "Révoquer",
+      "remove": "Retirer",
+      "generateLink": "Générer un lien"
+    },
+    "roles": {
+      "owner": "Propriétaire",
+      "collaborator": "Collaborateur",
+      "viewer": "Lecteur"
+    },
+    "status": {
+      "pending": "En attente",
+      "accepted": "Accepté",
+      "declined": "Refusé"
+    },
+    "invite": {
+      "title": "Inviter un membre",
+      "desc": "Ajoute un membre existant, fictif, ou génère un lien à partager."
+    },
+    "form": {
+      "tabs": { "existing": "Existant", "placeholder": "Fictif", "link": "Lien" },
+      "userId": "ID utilisateur",
+      "userIdRequired": "ID utilisateur requis",
+      "name": "Nom",
+      "namePh": "Ex. Alex Dupont",
+      "nameRequired": "Nom requis",
+      "role": "Rôle",
+      "emailMemo": "E-mail (mémo, optionnel)",
+      "emailMemoHint": "Juste pour mémoire (pas d'envoi d'e-mail)."
+    },
+    "share": {
+      "title": "Partage ce lien avec l’invité :",
+      "copy": "Copier le lien",
+      "open": "Ouvrir",
+      "copied": "Lien copié."
+    },
+    "table": {
+      "member": "Membre",
+      "role": "Rôle",
+      "status": "Statut",
+      "actions": "Actions"
+    },
+    "empty": {
+      "noSessionTitle": "Aucune session active",
+      "noSessionDesc": "Sélectionne ou crée une session pour gérer les membres.",
+      "title": "Aucun membre",
+      "desc": "Invite un premier membre pour collaborer."
+    },
+    "toasts": {
+      "invited": "Invitation créée.",
+      "noToken": "Aucun token renvoyé par le serveur.",
+      "revoked": "Invitation révoquée.",
+      "removed": "Membre retiré.",
+      "roleChanged": "Rôle mis à jour.",
+      "errorRole": "Impossible de changer le rôle.",
+      "errorRemove": "Impossible de retirer le membre."
+    },
+    "guards": {
+      "lastOwner": "Impossible : cela supprimerait le dernier propriétaire de la session."
+    }
+  },
+  "invite": {
+    "enter": {
+      "title": "Rejoindre une session",
+      "desc": "Colle ici le token reçu (ou ouvre directement le lien partagé).",
+      "placeholder": "Token d'invitation…",
+      "submit": "Continuer"
+    },
+    "accept": {
+      "loading": "Chargement de l'invitation…",
+      "invalid": "Invitation invalide ou expirée.",
+      "title": "Accepter l'invitation",
+      "desc": "Tu es invité à rejoindre cette session.",
+      "session": "Session",
+      "email": "E-mail",
+      "cta": "Accepter l'invitation",
+      "success": "Invitation acceptée.",
+      "error": "Échec de l'acceptation."
+    }
   }
 }

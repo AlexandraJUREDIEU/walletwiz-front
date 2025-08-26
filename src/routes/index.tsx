@@ -12,6 +12,8 @@ import SignupPage from "@/pages/signup";
 import DashboardHome from "@/pages/dashboard/home";
 import SessionSettingsPage from "@/pages/settings/SessionSettingsPage";
 import DashboardNotFound from "@/pages/dashboard/NotFound";
+import EnterInviteToken from "@/pages/invite/EnterInviteToken";
+import AcceptInviteView from "@/pages/invite/AcceptInviteView";
 
 const BanksPage = lazy(() => import("@/pages/banks"));
 const MembersPage = lazy(() => import("@/pages/members"));
@@ -31,6 +33,8 @@ export default function AppRouter() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
           </Route>
+            <Route path="/invite" element={<EnterInviteToken />} />
+            <Route path="/invite/:token" element={<AcceptInviteView />} />
         </Route>
 
         {/* Zone privée */}
