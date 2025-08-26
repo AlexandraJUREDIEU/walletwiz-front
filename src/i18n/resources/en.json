@@ -70,7 +70,8 @@
     "create": "Create",
     "cancel": "Cancel",
     "delete": "Delete",
-    "save": "Save"
+    "save": "Save",
+    "edit": "Edit"
   },
   "sessions": {
     "selector": {
@@ -232,6 +233,47 @@
       "cta": "Accept invitation",
       "success": "Invitation accepted.",
       "error": "Failed to accept."
+    }
+  },
+  "incomes": {
+    "actions": { "new": "New income" },
+    "fields": { "day": "Day" },
+    "form": {
+      "createTitle": "New planned income",
+      "createDesc": "Add a monthly recurring income.",
+      "editTitle": "Edit income",
+      "editDesc": "Update income details.",
+      "label": "Label",
+      "labelPh": "e.g. Salary",
+      "amount": "Amount",
+      "day": "Day of month",
+      "bank": "Bank account",
+      "bankPh": "Select an account…",
+      "member": "Member",
+      "memberPh": "Select a member…"
+    },
+    "table": {
+      "day": "Day",
+      "label": "Label",
+      "amount": "Amount",
+      "bank": "Account",
+      "member": "Member",
+      "actions": "Actions"
+    },
+    "empty": {
+      "noSessionTitle": "No active session",
+      "noSessionDesc": "Select or create a session to manage incomes.",
+      "title": "No planned income",
+      "desc": "Create your first income to get started."
+    },
+    "delete": {
+      "title": "Delete this income?",
+      "desc": "This action is irreversible. \"{{label}}\" will be deleted."
+    },
+    "toasts": {
+      "created": "Income created.",
+      "updated": "Income updated.",
+      "deleted": "Income deleted."
     }
   }
 }
