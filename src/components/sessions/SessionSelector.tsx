@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-import { useSessionsBootstrap } from "@/hooks/useSessionsBootstrap";
 import { useSessionService } from "@/lib/service/session.service";
 import { useSessionStore } from "@/stores/sessionStore";
 import { Button } from "@/components/ui/button";
@@ -18,7 +17,6 @@ import { Heart } from "lucide-react";
 
 export function SessionSelector() {
   const { t } = useTranslation();
-  useSessionsBootstrap();
 
   const { getMySessions, createSession, setDefaultSession, getSessionMembers } =
     useSessionService();
