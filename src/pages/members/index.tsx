@@ -5,12 +5,12 @@ import PageHeader from "@/components/system/PageHeader";
 import EmptyState from "@/components/system/EmptyState";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import { Trash2, Link as LinkIcon } from "lucide-react";
 import { useMembers } from "@/hooks/useMembers";
 import InviteDialog from "@/components/members/InviteDialog";
 import RoleSelect from "@/components/members/RoleSelect";
+import MemberCardItem from "@/components/members/MemberCardItem";
 import type { Member } from "@/types";
 
 export default function MembersPage() {
@@ -35,12 +35,6 @@ export default function MembersPage() {
     return list;
   }, [members]);
 
-  function statusBadge(s?: Member["invitationStatus"]) {
-    if (s === "PENDING") return <Badge variant="secondary">{t("members.status.pending")}</Badge>;
-    if (s === "DECLINED") return <Badge variant="destructive">{t("members.status.declined")}</Badge>;
-    return <Badge>{t("members.status.accepted")}</Badge>;
-  }
-
   async function onRevoke(id: string) {
     await revokeMemberInvite(id);
     toast.success(t("members.toasts.revoked"));
@@ -62,16 +56,8 @@ export default function MembersPage() {
     <section className="p-3 sm:p-4 lg:p-6 space-y-4">
       <PageHeader
         title={t("nav.members")}
-        description={
-          hasSession
-            ? t("pages.common.sessionBound", { id: currentSessionId })
-            : t("pages.common.noSession")
-        }
-        right={
-          <Button onClick={() => setOpenInvite(true)} disabled={!hasSession}>
-            {t("members.actions.invite")}
-          </Button>
-        }
+        description={hasSession ? t("pages.common.sessionBound", { id: currentSessionId }) : t("pages.common.noSession")}
+        right={<Button onClick={() => setOpenInvite(true)} disabled={!hasSession}>{t("members.actions.invite")}</Button>}
       />
 
       {!hasSession ? (
@@ -84,15 +70,23 @@ export default function MembersPage() {
           onAction={() => setOpenInvite(true)}
         />
       ) : (
-        <Card>
-          <CardContent className="p-0">
-            <Table>
+        <>
+          {/* Mobile: cards */}
+          <div className="grid gap-2 md:hidden">
+            {sorted.map((m) => (
+              <MemberCardItem key={m.id} member={m} onRevoke={onRevoke} onRemove={onRemove} />
+            ))}
+          </div>
+
+          {/* Desktop: table */}
+          <div className="hidden md:block overflow-x-auto rounded-lg border">
+            <Table className="min-w-[720px]">
               <TableHeader>
                 <TableRow>
                   <TableHead>{t("members.table.member")}</TableHead>
                   <TableHead>{t("members.table.role")}</TableHead>
                   <TableHead>{t("members.table.status")}</TableHead>
-                  <TableHead className="w-[220px]">{t("members.table.actions")}</TableHead>
+                  <TableHead className="w-[260px]">{t("members.table.actions")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -101,13 +95,20 @@ export default function MembersPage() {
                   const canRevoke = m.invitationStatus === "PENDING";
                   const canRemove = m.invitationStatus === "ACCEPTED";
                   const canCopyLink = !!m.inviteToken && m.invitationStatus === "PENDING";
-
                   return (
                     <TableRow key={m.id}>
                       <TableCell className="font-medium">{display}</TableCell>
-                      <TableCell><RoleSelect member={m} /></TableCell>
-                      <TableCell>{statusBadge(m.invitationStatus)}</TableCell>
-                      <TableCell>
+                      <TableCell className="w-[180px]"><RoleSelect member={m} /></TableCell>
+                      <TableCell className="w-[140px]">
+                        {m.invitationStatus === "PENDING" ? (
+                          <Badge variant="secondary">{t("members.status.pending")}</Badge>
+                        ) : m.invitationStatus === "DECLINED" ? (
+                          <Badge variant="destructive">{t("members.status.declined")}</Badge>
+                        ) : (
+                          <Badge>{t("members.status.accepted")}</Badge>
+                        )}
+                      </TableCell>
+                      <TableCell className="w-[260px]">
                         <div className="flex flex-wrap gap-2">
                           {canCopyLink && (
                             <Button
@@ -140,8 +141,8 @@ export default function MembersPage() {
                 })}
               </TableBody>
             </Table>
-          </CardContent>
-        </Card>
+          </div>
+        </>
       )}
 
       <InviteDialog open={openInvite} onOpenChange={setOpenInvite} />

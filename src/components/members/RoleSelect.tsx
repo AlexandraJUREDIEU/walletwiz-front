@@ -33,10 +33,10 @@ export default function RoleSelect({ member }: Props) {
 
   return (
     <Select value={value} onValueChange={(v) => onChange(v as any)}>
-      <SelectTrigger className="w-[160px]">
+      <SelectTrigger className="w-full sm:w-[160px] h-9">
         <SelectValue />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="max-h-[60vh]">
         <SelectItem value="OWNER">{t("members.roles.owner")}</SelectItem>
         <SelectItem value="COLLABORATOR">{t("members.roles.collaborator")}</SelectItem>
         <SelectItem value="VIEWER">{t("members.roles.viewer")}</SelectItem>

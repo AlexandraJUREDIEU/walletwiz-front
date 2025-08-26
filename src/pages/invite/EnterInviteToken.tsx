@@ -17,12 +17,13 @@ export default function EnterInviteToken() {
   }
 
   return (
-    <div className="max-w-md mx-auto p-6 space-y-4">
-      <h1 className="text-2xl font-semibold">{t("invite.enter.title")}</h1>
+    <div className="max-w-md mx-auto p-4 sm:p-6 space-y-4">
+      <h1 className="text-xl sm:text-2xl font-semibold">{t("invite.enter.title")}</h1>
       <p className="text-sm text-muted-foreground">{t("invite.enter.desc")}</p>
       <form onSubmit={onSubmit} className="space-y-2">
-        <Input value={token} onChange={(e) => setToken(e.target.value)} placeholder={t("invite.enter.placeholder") ?? ""} />
-        <Button type="submit">{t("invite.enter.submit")}</Button>
+        <Input className="h-9" value={token} onChange={(e) => setToken(e.target.value)}
+               placeholder={t("invite.enter.placeholder") ?? ""} />
+        <Button type="submit" className="w-full sm:w-auto">{t("invite.enter.submit")}</Button>
       </form>
     </div>
   );

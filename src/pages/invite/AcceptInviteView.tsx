@@ -49,12 +49,15 @@ export default function AcceptInviteView() {
   if (!info) {
     return <div className="p-6 text-sm text-destructive">{t("invite.accept.invalid")}</div>;
   }
+    if (loading) {
+    return <div className="p-4 sm:p-6 text-sm text-muted-foreground">{t("invite.accept.loading")}</div>;
+  }
 
   return (
-    <div className="max-w-lg mx-auto p-6">
+    <div className="max-w-lg mx-auto p-4 sm:p-6">
       <Card>
         <CardHeader>
-          <CardTitle>{t("invite.accept.title")}</CardTitle>
+          <CardTitle className="text-xl sm:text-2xl">{t("invite.accept.title")}</CardTitle>
           <CardDescription>{t("invite.accept.desc")}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-2">
@@ -68,7 +71,7 @@ export default function AcceptInviteView() {
               <span>{info.invitedEmail}</span>
             </div>
           ) : null}
-          <Button className="mt-2" onClick={onAccept}>{t("invite.accept.cta")}</Button>
+          <Button className="mt-2 w-full sm:w-auto" onClick={onAccept}>{t("invite.accept.cta")}</Button>
         </CardContent>
       </Card>
     </div>

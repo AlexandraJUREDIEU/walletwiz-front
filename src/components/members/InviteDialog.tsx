@@ -77,14 +77,14 @@ export default function InviteDialog({ open, onOpenChange }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className="sm:max-w-lg max-w-[calc(100vw-1.5rem)]">
         <DialogHeader>
           <DialogTitle>{t("members.invite.title")}</DialogTitle>
           <DialogDescription>{t("members.invite.desc")}</DialogDescription>
         </DialogHeader>
 
         <Tabs value={tab} onValueChange={(v) => setTab(v as any)}>
-          <TabsList className="grid grid-cols-3">
+          <TabsList className="w-full grid grid-cols-3 gap-1 text-xs sm:text-sm">
             <TabsTrigger value="existing">{t("members.form.tabs.existing")}</TabsTrigger>
             <TabsTrigger value="placeholder">{t("members.form.tabs.placeholder")}</TabsTrigger>
             <TabsTrigger value="link">{t("members.form.tabs.link")}</TabsTrigger>
@@ -94,13 +94,13 @@ export default function InviteDialog({ open, onOpenChange }: Props) {
           <TabsContent value="existing" className="space-y-4 mt-4">
             <div className="space-y-2">
               <label className="text-sm font-medium">{t("members.form.userId")}</label>
-              <Input value={userId} onChange={(e) => setUserId(e.target.value)} placeholder="usr_..." />
+              <Input className="h-9 text-xs sm:text-sm" value={userId} onChange={(e) => setUserId(e.target.value)} placeholder="ID de l'utilisateur" />
             </div>
 
             <div className="space-y-2">
               <label className="text-sm font-medium">{t("members.form.role")}</label>
               <Select value={role} onValueChange={(v) => setRole(v as any)}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectTrigger className="h-9 w-full"><SelectValue /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="OWNER">{t("members.roles.owner")}</SelectItem>
                   <SelectItem value="COLLABORATOR">{t("members.roles.collaborator")}</SelectItem>
@@ -109,8 +109,8 @@ export default function InviteDialog({ open, onOpenChange }: Props) {
               </Select>
             </div>
 
-            <DialogFooter>
-              <Button onClick={onInviteExisting}>{t("members.actions.invite")}</Button>
+            <DialogFooter className="flex flex-col sm:flex-row gap-2">
+              <Button className="w-full sm:w-auto" onClick={onInviteExisting}>{t("members.actions.invite")}</Button>
             </DialogFooter>
           </TabsContent>
 
@@ -118,13 +118,13 @@ export default function InviteDialog({ open, onOpenChange }: Props) {
           <TabsContent value="placeholder" className="space-y-4 mt-4">
             <div className="space-y-2">
               <label className="text-sm font-medium">{t("members.form.name")}</label>
-              <Input value={name} onChange={(e) => setName(e.target.value)} placeholder={t("members.form.namePh") ?? ""} />
+              <Input className="h-9 text-xs sm:text-sm" value={name} onChange={(e) => setName(e.target.value)} placeholder={t("members.form.namePh") ?? ""} />
             </div>
 
             <div className="space-y-2">
               <label className="text-sm font-medium">{t("members.form.role")}</label>
               <Select value={role} onValueChange={(v) => setRole(v as any)}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectTrigger className="h-9 w-full"><SelectValue /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="OWNER">{t("members.roles.owner")}</SelectItem>
                   <SelectItem value="COLLABORATOR">{t("members.roles.collaborator")}</SelectItem>
@@ -133,8 +133,8 @@ export default function InviteDialog({ open, onOpenChange }: Props) {
               </Select>
             </div>
 
-            <DialogFooter>
-              <Button onClick={onInvitePlaceholder}>{t("members.actions.invite")}</Button>
+            <DialogFooter className="flex flex-col sm:flex-row gap-2">
+              <Button className="w-full sm:w-auto" onClick={onInvitePlaceholder}>{t("members.actions.invite")}</Button>
             </DialogFooter>
           </TabsContent>
 
@@ -143,7 +143,7 @@ export default function InviteDialog({ open, onOpenChange }: Props) {
             <div className="space-y-2">
               <label className="text-sm font-medium">{t("members.form.role")}</label>
               <Select value={role} onValueChange={(v) => setRole(v as any)}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectTrigger className="h-9 w-full"><SelectValue /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="OWNER">{t("members.roles.owner")}</SelectItem>
                   <SelectItem value="COLLABORATOR">{t("members.roles.collaborator")}</SelectItem>
@@ -154,20 +154,20 @@ export default function InviteDialog({ open, onOpenChange }: Props) {
 
             <div className="space-y-2">
               <label className="text-sm font-medium">{t("members.form.emailMemo")}</label>
-              <Input value={emailMemo} onChange={(e) => setEmailMemo(e.target.value)} placeholder="(optionnel)" />
+              <Input className="h-9 text-xs sm:text-sm" value={emailMemo} onChange={(e) => setEmailMemo(e.target.value)} placeholder="exemple@walletwiz.fr" />
               <p className="text-xs text-muted-foreground">{t("members.form.emailMemoHint")}</p>
             </div>
 
             {shareLink ? (
               <div className="rounded-md border p-3 space-y-2">
                 <div className="text-sm font-medium">{t("members.share.title")}</div>
-                <div className="text-xs break-all">{shareLink}</div>
-                <div className="flex gap-2 pt-1">
-                  <Button variant="secondary" onClick={copyLink}>
+                <div className="text-xs break-words">{shareLink}</div>
+                <div className="flex flex-col sm:flex-row gap-2 pt-1">
+                  <Button className="w-full sm:w-auto" variant="secondary" onClick={copyLink}>
                     <Copy className="h-4 w-4 mr-2" /> {t("members.share.copy")}
                   </Button>
                   <a href={shareLink} target="_blank" rel="noreferrer">
-                    <Button variant="outline">
+                    <Button className="w-full sm:w-auto" variant="outline">
                       <ExternalLink className="h-4 w-4 mr-2" /> {t("members.share.open")}
                     </Button>
                   </a>
@@ -175,8 +175,8 @@ export default function InviteDialog({ open, onOpenChange }: Props) {
               </div>
             ) : null}
 
-            <DialogFooter>
-              <Button onClick={onInviteLink}>{t("members.actions.generateLink")}</Button>
+            <DialogFooter className="flex flex-col sm:flex-row gap-2">
+              <Button className="w-full sm:w-auto" onClick={onInviteLink}>{t("members.actions.generateLink")}</Button>
             </DialogFooter>
           </TabsContent>
         </Tabs>
