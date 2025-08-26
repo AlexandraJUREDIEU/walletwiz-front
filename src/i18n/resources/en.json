@@ -69,7 +69,8 @@
   "common": {
     "create": "Create",
     "cancel": "Cancel",
-    "delete": "Delete"
+    "delete": "Delete",
+    "save": "Save"
   },
   "sessions": {
     "selector": {
@@ -99,6 +100,56 @@
       "setDefault": "Session set as default.",
       "loadError": "Unable to load sessions.",
       "membersLoadError": "Unable to load members."
+    }
+  },
+  "banks": {
+    "actions": {
+      "new": "New account",
+      "edit": "Edit",
+      "archive": "Archive"
+    },
+    "badges": {
+      "archived": "Archived"
+    },
+    "fields": {
+      "initialBalance": "Initial balance"
+    },
+    "form": {
+      "createTitle": "New bank account",
+      "createDesc": "Create an account linked to the current session.",
+      "editTitle": "Edit account",
+      "editDesc": "Update account information.",
+      "label": "Label",
+      "labelPh": "e.g. Checking",
+      "bankName": "Bank",
+      "bankNamePh": "e.g. Chase, Revolut",
+      "initialBalance": "Initial balance"
+    },
+    "members": {
+      "title": "Joint members",
+      "empty": "No joint members yet.",
+      "add": "Add",
+      "addPlaceholder": "Select a member…",
+      "noMore": "All members are already attached.",
+      "remove": "Remove"
+    },
+    "misc": {
+      "noBankName": "No bank name",
+      "id": "ID"
+    },
+    "empty": {
+      "title": "No accounts yet",
+      "desc": "Create your first account to get started.",
+      "noSessionTitle": "No active session",
+      "noSessionDesc": "Select or create a session to manage accounts."
+    },
+    "toasts": {
+      "created": "Account created.",
+      "updated": "Account updated.",
+      "archived": "Account archived.",
+      "unarchived": "Account restored.",
+      "memberAdded": "Member added to account.",
+      "memberRemoved": "Member removed from account."
     }
   }
 }

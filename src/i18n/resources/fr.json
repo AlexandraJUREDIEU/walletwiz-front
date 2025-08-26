@@ -69,7 +69,8 @@
   "common": {
     "create": "Créer",
     "cancel": "Annuler",
-    "delete": "Supprimer"
+    "delete": "Supprimer",
+    "save": "Enregistrer"
   },
   "sessions": {
     "selector": {
@@ -99,6 +100,56 @@
       "setDefault": "Session définie par défaut.",
       "loadError": "Impossible de charger les sessions.",
       "membersLoadError": "Impossible de charger les membres."
+    }
+  },
+  "banks": {
+    "actions": {
+      "new": "Nouveau compte",
+      "edit": "Éditer",
+      "archive": "Archiver"
+    },
+    "badges": {
+      "archived": "Archivé"
+    },
+    "fields": {
+      "initialBalance": "Solde initial"
+    },
+    "form": {
+      "createTitle": "Nouveau compte bancaire",
+      "createDesc": "Crée un compte rattaché à la session courante.",
+      "editTitle": "Modifier le compte",
+      "editDesc": "Met à jour les informations du compte.",
+      "label": "Intitulé",
+      "labelPh": "Ex. Compte courant",
+      "bankName": "Banque",
+      "bankNamePh": "Ex. BNP, Revolut",
+      "initialBalance": "Solde initial"
+    },
+    "members": {
+      "title": "Membres joints",
+      "empty": "Aucun membre joint pour l'instant.",
+      "add": "Ajouter",
+      "addPlaceholder": "Sélectionner un membre…",
+      "noMore": "Tous les membres sont déjà joints.",
+      "remove": "Retirer"
+    },
+    "misc": {
+      "noBankName": "Sans nom de banque",
+      "id": "ID"
+    },
+    "empty": {
+      "title": "Aucun compte pour le moment",
+      "desc": "Crée ton premier compte pour démarrer.",
+      "noSessionTitle": "Aucune session active",
+      "noSessionDesc": "Sélectionne ou crée une session pour gérer tes comptes."
+    },
+    "toasts": {
+      "created": "Compte créé.",
+      "updated": "Compte mis à jour.",
+      "archived": "Compte archivé.",
+      "unarchived": "Compte restauré.",
+      "memberAdded": "Membre ajouté au compte.",
+      "memberRemoved": "Membre retiré du compte."
     }
   }
 }
