@@ -151,5 +151,87 @@
       "memberAdded": "Member added to account.",
       "memberRemoved": "Member removed from account."
     }
+  },
+  "members": {
+    "actions": {
+      "invite": "Invite",
+      "revoke": "Revoke",
+      "remove": "Remove",
+      "generateLink": "Generate link"
+    },
+    "roles": {
+      "owner": "Owner",
+      "collaborator": "Collaborator",
+      "viewer": "Viewer"
+    },
+    "status": {
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "declined": "Declined"
+    },
+    "invite": {
+      "title": "Invite a member",
+      "desc": "Add an existing/placeholder member, or generate a share link."
+    },
+    "form": {
+      "tabs": { "existing": "Existing", "placeholder": "Placeholder", "link": "Link" },
+      "userId": "User ID",
+      "userIdRequired": "User ID is required",
+      "name": "Name",
+      "namePh": "e.g. Alex Smith",
+      "nameRequired": "Name is required",
+      "role": "Role",
+      "emailMemo": "Email (memo, optional)",
+      "emailMemoHint": "For reference only (no email will be sent)."
+    },
+    "share": {
+      "title": "Share this link with the invitee:",
+      "copy": "Copy link",
+      "open": "Open",
+      "copied": "Link copied."
+    },
+    "table": {
+      "member": "Member",
+      "role": "Role",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "empty": {
+      "noSessionTitle": "No active session",
+      "noSessionDesc": "Select or create a session to manage members.",
+      "title": "No members yet",
+      "desc": "Invite your first member to collaborate."
+    },
+    "toasts": {
+      "invited": "Invitation created.",
+      "noToken": "No token returned by the server.",
+      "revoked": "Invitation revoked.",
+      "removed": "Member removed.",
+      "roleChanged": "Role updated.",
+      "errorRole": "Unable to change role.",
+      "errorRemove": "Unable to remove member."
+    },
+    "guards": {
+      "lastOwner": "Blocked: this would remove the last session owner."
+    }
+  },
+  "invite": {
+    "enter": {
+      "title": "Join a session",
+      "desc": "Paste the invite token here (or open the shared link).",
+      "placeholder": "Invite token…",
+      "submit": "Continue"
+    },
+    "accept": {
+      "loading": "Loading invitation…",
+      "invalid": "Invalid or expired invitation.",
+      "title": "Accept invitation",
+      "desc": "You are invited to join this session.",
+      "session": "Session",
+      "email": "Email",
+      "cta": "Accept invitation",
+      "success": "Invitation accepted.",
+      "error": "Failed to accept."
+    }
   }
 }
