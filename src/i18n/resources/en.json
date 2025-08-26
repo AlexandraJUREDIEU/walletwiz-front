@@ -337,5 +337,52 @@
       "archived": "Expense archived.",
       "restored": "Expense restored."
     }
+  },
+  "budgets": {
+    "actions": {
+      "lock": "Lock",
+      "unlock": "Unlock",
+      "editOpening": "Opening balance",
+      "editNotes": "Notes"
+    },
+    "opening": {
+      "title": "Edit opening balance",
+      "desc": "Enter the opening balance for this month.",
+      "label": "Balance"
+    },
+    "notes": {
+      "title": "Edit notes",
+      "titleShort": "Notes",
+      "desc": "Add helpful context for this month.",
+      "placeholder": "Month notes…",
+      "empty": "No notes for this month."
+    },
+    "kpi": {
+      "opening": "Opening",
+      "plannedIn": "Planned (In)",
+      "plannedOut": "Planned (Out)",
+      "netPlanned": "Net planned",
+      "projectedEnd": "Projected closing",
+      "actualIn": "Actual (In)",
+      "actualOut": "Actual (Out)",
+      "netActual": "Net actual",
+      "ending": "Closing",
+      "clearedIn": "Cleared (In)",
+      "clearedOut": "Cleared (Out)",
+      "netCleared": "Net cleared"
+    },
+    "hints": {
+      "netPlanned": "Planned income − planned expense"
+    },
+    "empty": {
+      "noSessionTitle": "No active session",
+      "noSessionDesc": "Select or create a session to view budgets.",
+      "title": "No budget data",
+      "desc": "The summary will be created automatically if needed."
+    },
+    "toasts": {
+      "locked": "Budget locked.",
+      "unlocked": "Budget unlocked."
+    }
   }
 }

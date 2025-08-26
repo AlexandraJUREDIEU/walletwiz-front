@@ -1,4 +1,4 @@
-export type MonthString = `${number}-${string}`; // "YYYY-MM"
+export type MonthString = string // "YYYY-MM"
 
 export type BudgetId = string;
 

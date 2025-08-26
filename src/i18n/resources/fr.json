@@ -32,7 +32,7 @@
     "settings": "Paramètres",
     "signup": "Inscrivez-vous",
     "login": "Connectez-vous",
-     "home": "Accueil",
+    "home": "Accueil",
     "transactions": "Transactions",
     "sessions": "Sessions"
   },
@@ -337,6 +337,53 @@
       "deleted": "Dépense supprimée.",
       "archived": "Dépense archivée.",
       "restored": "Dépense restaurée."
+    }
+  },
+  "budgets": {
+    "actions": {
+      "lock": "Verrouiller",
+      "unlock": "Déverrouiller",
+      "editOpening": "Solde d’ouverture",
+      "editNotes": "Notes"
+    },
+    "opening": {
+      "title": "Modifier le solde d’ouverture",
+      "desc": "Saisis le solde d’ouverture pour ce mois.",
+      "label": "Solde"
+    },
+    "notes": {
+      "title": "Modifier les notes",
+      "titleShort": "Notes",
+      "desc": "Ajoute des informations utiles pour ce budget.",
+      "placeholder": "Notes du mois…",
+      "empty": "Aucune note pour ce mois."
+    },
+    "kpi": {
+      "opening": "Ouverture",
+      "plannedIn": "Planifié (Entrées)",
+      "plannedOut": "Planifié (Sorties)",
+      "netPlanned": "Net planifié",
+      "projectedEnd": "Clôture estimée",
+      "actualIn": "Réel (Entrées)",
+      "actualOut": "Réel (Sorties)",
+      "netActual": "Net réel",
+      "ending": "Clôture",
+      "clearedIn": "Pointé (Entrées)",
+      "clearedOut": "Pointé (Sorties)",
+      "netCleared": "Net pointé"
+    },
+    "hints": {
+      "netPlanned": "Entrées planifiées − sorties planifiées"
+    },
+    "empty": {
+      "noSessionTitle": "Aucune session active",
+      "noSessionDesc": "Sélectionne ou crée une session pour voir le budget.",
+      "title": "Aucune donnée budgétaire",
+      "desc": "Le résumé sera généré automatiquement au besoin."
+    },
+    "toasts": {
+      "locked": "Budget verrouillé.",
+      "unlocked": "Budget déverrouillé."
     }
   }
 }
