@@ -275,5 +275,67 @@
       "updated": "Income updated.",
       "deleted": "Income deleted."
     }
+  },
+  "expenses": {
+    "actions": {
+      "new": "New expense",
+      "archive": "Archive",
+      "restore": "Restore",
+      "showArchived": "Show archived",
+      "hideArchived": "Hide archived"
+    },
+    "badges": { "archived": "Archived" },
+    "fields": { "day": "Day" },
+    "categories": {
+      "housing": "Housing",
+      "utilities": "Utilities",
+      "health": "Health",
+      "food": "Food",
+      "transport": "Transport",
+      "subscriptions": "Subscriptions",
+      "other": "Other"
+    },
+    "form": {
+      "createTitle": "New planned expense",
+      "createDesc": "Add a monthly recurring expense.",
+      "editTitle": "Edit expense",
+      "editDesc": "Update expense details.",
+      "label": "Label",
+      "labelPh": "e.g. Rent",
+      "amount": "Amount",
+      "day": "Day of month",
+      "category": "Category",
+      "categoryPh": "Select a category…",
+      "bank": "Bank account",
+      "bankPh": "Select an account…",
+      "member": "Member",
+      "memberPh": "Select a member…"
+    },
+    "table": {
+      "day": "Day",
+      "label": "Label",
+      "amount": "Amount",
+      "category": "Category",
+      "bank": "Account",
+      "member": "Member",
+      "actions": "Actions"
+    },
+    "empty": {
+      "noSessionTitle": "No active session",
+      "noSessionDesc": "Select or create a session to manage expenses.",
+      "title": "No planned expenses",
+      "desc": "Create your first expense to get started."
+    },
+    "delete": {
+      "title": "Delete this expense?",
+      "desc": "This action is irreversible. \"{{label}}\" will be deleted."
+    },
+    "toasts": {
+      "created": "Expense created.",
+      "updated": "Expense updated.",
+      "deleted": "Expense deleted.",
+      "archived": "Expense archived.",
+      "restored": "Expense restored."
+    }
   }
 }

@@ -25,11 +25,12 @@ export type CreateExpenseDto = {
   label: string;
   amount: string;
   day: number;
+  category: Expense["category"];
   isArchived?: boolean;
 };
 
 export type UpdateExpenseDto = Partial<
-  Pick<Expense, "label" | "day" | "memberId" | "bankAccountId" | "isArchived">
+  Pick<Expense, "label" | "day" | "memberId" | "bankAccountId" | "isArchived" | "category">
 > & {
   amount?: string;
 };

@@ -8,6 +8,7 @@ type CreateOrUpdatePayload = {
   label: string;
   amount: number | string; // l'UI peut fournir number
   day: number;
+  category: Expense["category"];
   bankAccountId: string;
   memberId: string;
   isArchived?: boolean;
@@ -79,6 +80,7 @@ export function useExpenses() {
       label: input.label,
       amount: toApiAmount(input.amount),
       day: input.day,
+      category: input.category,
       bankAccountId: input.bankAccountId,
       memberId: input.memberId,
       isArchived: input.isArchived,
