@@ -276,5 +276,67 @@
       "updated": "Revenu mis à jour.",
       "deleted": "Revenu supprimé."
     }
+  },
+  "expenses": {
+    "actions": {
+      "new": "Nouvelle dépense",
+      "archive": "Archiver",
+      "restore": "Restaurer",
+      "showArchived": "Afficher archivées",
+      "hideArchived": "Masquer archivées"
+    },
+    "badges": { "archived": "Archivée" },
+    "fields": { "day": "Jour" },
+    "categories": {
+      "housing": "Logement",
+      "utilities": "Charges",
+      "health": "Santé",
+      "food": "Alimentation",
+      "transport": "Transport",
+      "subscriptions": "Abonnements",
+      "other": "Autre"
+    },
+    "form": {
+      "createTitle": "Nouvelle dépense planifiée",
+      "createDesc": "Ajoute une dépense récurrente au mois.",
+      "editTitle": "Modifier la dépense",
+      "editDesc": "Mets à jour les informations de la dépense.",
+      "label": "Intitulé",
+      "labelPh": "Ex. Loyer",
+      "amount": "Montant",
+      "day": "Jour du mois",
+      "category": "Catégorie",
+      "categoryPh": "Sélectionner une catégorie…",
+      "bank": "Compte bancaire",
+      "bankPh": "Sélectionner un compte…",
+      "member": "Membre",
+      "memberPh": "Sélectionner un membre…"
+    },
+    "table": {
+      "day": "Jour",
+      "label": "Intitulé",
+      "amount": "Montant",
+      "category": "Catégorie",
+      "bank": "Compte",
+      "member": "Membre",
+      "actions": "Actions"
+    },
+    "empty": {
+      "noSessionTitle": "Aucune session active",
+      "noSessionDesc": "Sélectionne ou crée une session pour gérer les dépenses.",
+      "title": "Aucune dépense planifiée",
+      "desc": "Ajoute une première dépense pour démarrer."
+    },
+    "delete": {
+      "title": "Supprimer cette dépense ?",
+      "desc": "Cette action est définitive. \"{{label}}\" sera supprimée."
+    },
+    "toasts": {
+      "created": "Dépense créée.",
+      "updated": "Dépense mise à jour.",
+      "deleted": "Dépense supprimée.",
+      "archived": "Dépense archivée.",
+      "restored": "Dépense restaurée."
+    }
   }
 }
