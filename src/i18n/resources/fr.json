@@ -70,7 +70,8 @@
     "create": "Créer",
     "cancel": "Annuler",
     "delete": "Supprimer",
-    "save": "Enregistrer"
+    "save": "Enregistrer",
+    "edit": "Éditer"
   },
   "sessions": {
     "selector": {
@@ -232,6 +233,48 @@
       "cta": "Accepter l'invitation",
       "success": "Invitation acceptée.",
       "error": "Échec de l'acceptation."
+    }
+  },
+
+  "incomes": {
+    "actions": { "new": "Nouveau revenu" },
+    "fields": { "day": "Jour" },
+    "form": {
+      "createTitle": "Nouveau revenu planifié",
+      "createDesc": "Ajoute un revenu récurrent au mois.",
+      "editTitle": "Modifier le revenu",
+      "editDesc": "Mets à jour les informations du revenu.",
+      "label": "Intitulé",
+      "labelPh": "Ex. Salaire",
+      "amount": "Montant",
+      "day": "Jour du mois",
+      "bank": "Compte bancaire",
+      "bankPh": "Sélectionner un compte…",
+      "member": "Membre",
+      "memberPh": "Sélectionner un membre…"
+    },
+    "table": {
+      "day": "Jour",
+      "label": "Intitulé",
+      "amount": "Montant",
+      "bank": "Compte",
+      "member": "Membre",
+      "actions": "Actions"
+    },
+    "empty": {
+      "noSessionTitle": "Aucune session active",
+      "noSessionDesc": "Sélectionne ou crée une session pour gérer les revenus.",
+      "title": "Aucun revenu planifié",
+      "desc": "Ajoute ton premier revenu pour démarrer."
+    },
+    "delete": {
+      "title": "Supprimer ce revenu ?",
+      "desc": "Cette action est définitive. \"{{label}}\" sera supprimé."
+    },
+    "toasts": {
+      "created": "Revenu créé.",
+      "updated": "Revenu mis à jour.",
+      "deleted": "Revenu supprimé."
     }
   }
 }
