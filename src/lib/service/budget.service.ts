@@ -8,30 +8,47 @@ import type {
   UpdateBudgetDto,
 } from "@/types";
 
+function normId(input: string | { id?: string } | null | undefined): string {
+  if (!input) return "";
+  if (typeof input === "string") return input;
+  if (typeof input.id === "string") return input.id;
+  return ""; // on retourne "" => le client lèvera une erreur propre
+}
+
 export function useBudgetsService() {
   const { get, post, patch, del } = useApi();
 
-  // Liste des budgets d'une session
   const listBySession = (sessionId: string) =>
     get<Budget[]>(`/budgets/session/${sessionId}`);
 
-  // Lire un budget d'un mois précis (retourne Budget ou 404 si absent)
   const getByMonth = (sessionId: string, month: MonthString) =>
     get<Budget>(`/budgets/session/${sessionId}?month=${month}`);
 
-  // Créer un budget
   const create = (dto: CreateBudgetDto) =>
     post<Budget>("/budgets", dto);
 
-  // Modifier (openingBalance, notes, locked)
-  const update = (budgetId: string, dto: UpdateBudgetDto) =>
-    patch<Budget>(`/budgets/${budgetId}`, dto);
+  // ✅ tolère string OU objet {id}, évite /budgets/[object Object]
+  const update = (
+    budget: string | { id?: string },
+    dto: UpdateBudgetDto
+  ) => {
+    const id = normId(budget);
+    if (!id) {
+      // Déclenche une erreur claire (toaster géré par useApi)
+      throw new Error("Invalid budget id passed to update()");
+    }
+    return patch<Budget>(`/budgets/${id}`, dto);
+  };
 
-  // Supprimer (facultatif pour QA)
-  const remove = (budgetId: string) =>
-    del<void>(`/budgets/${budgetId}`);
+  // ✅ idem
+  const remove = (budget: string | { id?: string }) => {
+    const id = normId(budget);
+    if (!id) {
+      throw new Error("Invalid budget id passed to remove()");
+    }
+    return del<void>(`/budgets/${id}`);
+  };
 
-  // Résumé du mois (source unique pour la page) + fallback auto
   const getSummary = (
     sessionId: string,
     month: MonthString,
