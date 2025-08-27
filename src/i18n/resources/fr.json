@@ -32,7 +32,7 @@
     "settings": "Paramètres",
     "signup": "Inscrivez-vous",
     "login": "Connectez-vous",
-     "home": "Accueil",
+    "home": "Accueil",
     "transactions": "Transactions",
     "sessions": "Sessions"
   },
@@ -70,7 +70,9 @@
     "create": "Créer",
     "cancel": "Annuler",
     "delete": "Supprimer",
-    "save": "Enregistrer"
+    "save": "Enregistrer",
+    "edit": "Éditer",
+    "refresh": "Rafraîchir"
   },
   "sessions": {
     "selector": {
@@ -233,5 +235,236 @@
       "success": "Invitation acceptée.",
       "error": "Échec de l'acceptation."
     }
+  },
+
+  "incomes": {
+    "actions": { "new": "Nouveau revenu" },
+    "fields": { "day": "Jour" },
+    "form": {
+      "createTitle": "Nouveau revenu planifié",
+      "createDesc": "Ajoute un revenu récurrent au mois.",
+      "editTitle": "Modifier le revenu",
+      "editDesc": "Mets à jour les informations du revenu.",
+      "label": "Intitulé",
+      "labelPh": "Ex. Salaire",
+      "amount": "Montant",
+      "day": "Jour du mois",
+      "bank": "Compte bancaire",
+      "bankPh": "Sélectionner un compte…",
+      "member": "Membre",
+      "memberPh": "Sélectionner un membre…"
+    },
+    "table": {
+      "day": "Jour",
+      "label": "Intitulé",
+      "amount": "Montant",
+      "bank": "Compte",
+      "member": "Membre",
+      "actions": "Actions"
+    },
+    "empty": {
+      "noSessionTitle": "Aucune session active",
+      "noSessionDesc": "Sélectionne ou crée une session pour gérer les revenus.",
+      "title": "Aucun revenu planifié",
+      "desc": "Ajoute ton premier revenu pour démarrer."
+    },
+    "delete": {
+      "title": "Supprimer ce revenu ?",
+      "desc": "Cette action est définitive. \"{{label}}\" sera supprimé."
+    },
+    "toasts": {
+      "created": "Revenu créé.",
+      "updated": "Revenu mis à jour.",
+      "deleted": "Revenu supprimé."
+    }
+  },
+  "expenses": {
+    "actions": {
+      "new": "Nouvelle dépense",
+      "archive": "Archiver",
+      "restore": "Restaurer",
+      "showArchived": "Afficher archivées",
+      "hideArchived": "Masquer archivées"
+    },
+    "badges": { "archived": "Archivée" },
+    "fields": { "day": "Jour" },
+    "categories": {
+      "housing": "Logement",
+      "utilities": "Charges",
+      "health": "Santé",
+      "food": "Alimentation",
+      "transport": "Transport",
+      "subscriptions": "Abonnements",
+      "other": "Autre"
+    },
+    "form": {
+      "createTitle": "Nouvelle dépense planifiée",
+      "createDesc": "Ajoute une dépense récurrente au mois.",
+      "editTitle": "Modifier la dépense",
+      "editDesc": "Mets à jour les informations de la dépense.",
+      "label": "Intitulé",
+      "labelPh": "Ex. Loyer",
+      "amount": "Montant",
+      "day": "Jour du mois",
+      "category": "Catégorie",
+      "categoryPh": "Sélectionner une catégorie…",
+      "bank": "Compte bancaire",
+      "bankPh": "Sélectionner un compte…",
+      "member": "Membre",
+      "memberPh": "Sélectionner un membre…"
+    },
+    "table": {
+      "day": "Jour",
+      "label": "Intitulé",
+      "amount": "Montant",
+      "category": "Catégorie",
+      "bank": "Compte",
+      "member": "Membre",
+      "actions": "Actions"
+    },
+    "empty": {
+      "noSessionTitle": "Aucune session active",
+      "noSessionDesc": "Sélectionne ou crée une session pour gérer les dépenses.",
+      "title": "Aucune dépense planifiée",
+      "desc": "Ajoute une première dépense pour démarrer."
+    },
+    "delete": {
+      "title": "Supprimer cette dépense ?",
+      "desc": "Cette action est définitive. \"{{label}}\" sera supprimée."
+    },
+    "toasts": {
+      "created": "Dépense créée.",
+      "updated": "Dépense mise à jour.",
+      "deleted": "Dépense supprimée.",
+      "archived": "Dépense archivée.",
+      "restored": "Dépense restaurée."
+    }
+  },
+  "budgets": {
+    "actions": {
+      "lock": "Verrouiller",
+      "unlock": "Déverrouiller",
+      "editOpening": "Solde d’ouverture",
+      "editNotes": "Notes"
+    },
+    "opening": {
+      "title": "Modifier le solde d’ouverture",
+      "desc": "Saisis le solde d’ouverture pour ce mois.",
+      "label": "Solde"
+    },
+    "notes": {
+      "title": "Modifier les notes",
+      "titleShort": "Notes",
+      "desc": "Ajoute des informations utiles pour ce budget.",
+      "placeholder": "Notes du mois…",
+      "empty": "Aucune note pour ce mois."
+    },
+    "kpi": {
+      "opening": "Ouverture",
+      "plannedIn": "Planifié (Entrées)",
+      "plannedOut": "Planifié (Sorties)",
+      "netPlanned": "Net planifié",
+      "projectedEnd": "Clôture estimée",
+      "actualIn": "Réel (Entrées)",
+      "actualOut": "Réel (Sorties)",
+      "netActual": "Net réel",
+      "ending": "Clôture",
+      "clearedIn": "Pointé (Entrées)",
+      "clearedOut": "Pointé (Sorties)",
+      "netCleared": "Net pointé"
+    },
+    "hints": {
+      "netPlanned": "Entrées planifiées − sorties planifiées"
+    },
+    "empty": {
+      "noSessionTitle": "Aucune session active",
+      "noSessionDesc": "Sélectionne ou crée une session pour voir le budget.",
+      "title": "Aucune donnée budgétaire",
+      "desc": "Le résumé sera généré automatiquement au besoin."
+    },
+    "toasts": {
+      "locked": "Budget verrouillé.",
+      "unlocked": "Budget déverrouillé."
+    },
+    "hero": {
+      "projected": "Clôture estimée (Planned)",
+      "ending": "Clôture (Actual)",
+      "clearedEnding": "Clôture pointée (Cleared)"
+    },
+    "rows": {
+      "opening": "Ouverture",
+      "in": "Entrées",
+      "out": "Sorties",
+      "net": "Net",
+      "base": "Base (Clôture)"
+    },
+    "compare": {
+      "inflow": "Comparatif Entrées",
+      "outflow": "Comparatif Sorties"
+    }
+  },
+  "tx": {
+    "actions": { "new": "Nouvelle transaction" },
+    "filters": {
+      "search": "Recherche",
+      "searchPh": "Libellé ou note…",
+      "bank": "Compte",
+      "bankPh": "Choisir un compte",
+      "member": "Membre",
+      "memberPh": "Choisir un membre",
+      "any": "Tous",
+      "cleared": "Pointage",
+      "clearedAll": "Tous",
+      "clearedYes": "Pointées",
+      "clearedNo": "Non pointées"
+    },
+    "totals": { "in": "Entrées", "out": "Sorties", "net": "Net" },
+    "table": {
+      "date": "Date", "label": "Libellé", "account": "Compte",
+      "member": "Membre", "amount": "Montant", "category": "Catégorie",
+      "cleared": "Pointée", "actions": "Actions"
+    },
+    "form": {
+      "titleCreate": "Créer une transaction",
+      "titleEdit": "Modifier la transaction",
+      "description": "Renseigne les informations ci-dessous.",
+      "type": "Type",
+      "date": "Date",
+      "label": "Libellé",
+      "labelPh": "Ex: Courses, virement, salaire…",
+      "amount": "Montant",
+      "bank": "Compte bancaire",
+      "bankPh": "Sélectionne un compte",
+      "member": "Membre",
+      "memberPh": "Sélectionne un membre",
+      "memberNone": "Aucun",
+      "category": "Catégorie",
+      "categoryPh": "Catégorie (facultatif)",
+      "categoryNone": "Aucune",
+      "notes": "Notes"
+    },
+    "types": { "inflow": "Entrée", "outflow": "Sortie" },
+    "empty": {
+      "noSessionTitle": "Aucune session active",
+      "noSessionDesc": "Sélectionne ou crée une session pour gérer tes transactions.",
+      "title": "Aucune transaction",
+      "desc": "Crée ta première transaction ce mois-ci."
+    },
+    "delete": {
+      "title": "Supprimer la transaction ?",
+      "desc": "Cette action est irréversible."
+    },
+    "a11y": {
+      "toggleCleared": "Basculer pointage : {{label}}"
+    }
+  },
+  "categories": {
+    "FOOD": "Alimentation",
+    "HOUSING": "Logement",
+    "UTILITIES": "Charges",
+    "HEALTH": "Santé",
+    "TRANSPORT": "Transport",
+    "SUBSCRIPTIONS": "Abonnements",
+    "OTHER": "Autre"
   }
 }
