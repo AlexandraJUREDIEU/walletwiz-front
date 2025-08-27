@@ -38,7 +38,7 @@ export default function TransactionCardItem({ tx, onEdit, onDelete, onToggleClea
             {tx.isCleared && <Badge variant="secondary">Cleared</Badge>}
           </div>
           <div className="flex items-center gap-2">
-            <Switch checked={!!tx.isCleared} onCheckedChange={() => onToggleCleared(tx)} />
+            <Switch aria-label={`Toggle cleared: ${tx.label}`} checked={!!tx.isCleared} onCheckedChange={() => onToggleCleared(tx)} />
             <Button size="icon" variant="outline" onClick={() => onEdit(tx)}><Pencil className="h-4 w-4" /></Button>
             <Button size="icon" variant="destructive" onClick={() => onDelete(tx)}><Trash2 className="h-4 w-4" /></Button>
           </div>

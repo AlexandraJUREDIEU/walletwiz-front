@@ -71,7 +71,8 @@
     "cancel": "Cancel",
     "delete": "Delete",
     "save": "Save",
-    "edit": "Edit"
+    "edit": "Edit",
+    "refresh": "Refresh"
   },
   "sessions": {
     "selector": {
@@ -451,6 +452,9 @@
     "delete": {
       "title": "Delete transaction?",
       "desc": "This action cannot be undone."
+    },
+    "a11y": {
+      "toggleCleared": "Toggle cleared: {{label}}"
     }
   },
   "categories": {

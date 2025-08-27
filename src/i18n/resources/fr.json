@@ -71,7 +71,8 @@
     "cancel": "Annuler",
     "delete": "Supprimer",
     "save": "Enregistrer",
-    "edit": "Éditer"
+    "edit": "Éditer",
+    "refresh": "Rafraîchir"
   },
   "sessions": {
     "selector": {
@@ -452,6 +453,9 @@
     "delete": {
       "title": "Supprimer la transaction ?",
       "desc": "Cette action est irréversible."
+    },
+    "a11y": {
+      "toggleCleared": "Basculer pointage : {{label}}"
     }
   },
   "categories": {

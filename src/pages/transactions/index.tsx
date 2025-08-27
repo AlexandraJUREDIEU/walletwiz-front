@@ -5,11 +5,23 @@ import EmptyState from "@/components/system/EmptyState";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import {
-  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
-  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Card, CardContent } from "@/components/ui/card";
 import { Plus, Search, RefreshCw } from "lucide-react";
@@ -21,15 +33,25 @@ import { useSessionStore } from "@/stores/sessionStore";
 import { useBanks } from "@/hooks/useBanks";
 import { useSessionService } from "@/lib/service/session.service";
 import type { Transaction, TransactionCategory } from "@/types";
+import { useTxUrlState } from "@/hooks/useTxUrlState";
+import { useDebouncedValue } from "@/hooks/useDebouncedValue";
+import {
+  FiltersSkeleton,
+  ListSkeleton,
+  TableSkeleton,
+} from "@/components/transactions/TransactionsSkeleton";
 
 // utils
 function fmtEUR(v: number | string, lang: string) {
   const n = typeof v === "number" ? v : Number(String(v).replace(",", "."));
-  return new Intl.NumberFormat(lang, { style: "currency", currency: "EUR" }).format(Number.isFinite(n) ? n : 0);
+  return new Intl.NumberFormat(lang, {
+    style: "currency",
+    currency: "EUR",
+  }).format(Number.isFinite(n) ? n : 0);
 }
 function prevMonth(current: string, delta: -1 | 1) {
   const [y, m] = current.split("-").map(Number);
-  const d = new Date(y, (m - 1) + delta, 1);
+  const d = new Date(y, m - 1 + delta, 1);
   const yy = d.getFullYear();
   const mm = String(d.getMonth() + 1).padStart(2, "0");
   return `${yy}-${mm}`;
@@ -44,58 +66,73 @@ export default function TransactionsPage() {
   const { t, i18n } = useTranslation();
   const { currentSessionId } = useSessionStore();
 
-
   const {
-    visible, loading, range, setMonth,
-    bankAccountId, setBankAccountId,
-    memberId, setMemberId,
-    cleared, setCleared,
-    query, setQuery,
-    refresh, createTx, updateTx, toggleCleared, removeTx, totals
+    visible,
+    items,
+    loading,
+    range,
+    setMonth,
+    bankAccountId,
+    setBankAccountId,
+    memberId,
+    setMemberId,
+    cleared,
+    setCleared,
+    query,
+    setQuery,
+    refresh,
+    createTx,
+    updateTx,
+    toggleCleared,
+    removeTx,
+    totals,
   } = useTransactions();
 
   // Comptes → options (filtrer ids vides)
   const { banks } = useBanks();
   const bankOptions: Option[] = (banks ?? [])
-    .map((b: any) => ({ id: String(b.id ?? ""), label: b.label ?? b.bankName ?? String(b.id ?? "") }))
+    .map((b: any) => ({
+      id: String(b.id ?? ""),
+      label: b.label ?? b.bankName ?? String(b.id ?? ""),
+    }))
     .filter((o: Option) => o.id.trim().length > 0);
 
   // Membres → options (fetch via service; filtrer ids vides)
   const { getSessionMembers } = useSessionService();
   const getSessionMembersRef = useRef(getSessionMembers);
-useEffect(() => {
-  getSessionMembersRef.current = getSessionMembers;
-}, [getSessionMembers]);
+  useEffect(() => {
+    getSessionMembersRef.current = getSessionMembers;
+  }, [getSessionMembers]);
 
-const [memberOptions, setMemberOptions] = useState<Option[]>([]);
+  const [memberOptions, setMemberOptions] = useState<Option[]>([]);
 
-useEffect(() => {
-  let alive = true;
-  async function loadMembers() {
-    if (!currentSessionId) {
-      setMemberOptions([]);
-      return;
+  useEffect(() => {
+    let alive = true;
+    async function loadMembers() {
+      if (!currentSessionId) {
+        setMemberOptions([]);
+        return;
+      }
+      try {
+        const ms = await getSessionMembersRef.current(currentSessionId);
+        if (!alive) return;
+        const opts = (ms ?? [])
+          .map((m: any) => ({
+            id: String(m.id ?? ""),
+            label: m.name ?? m.invitedEmail ?? String(m.id ?? ""),
+          }))
+          .filter((o: Option) => o.id.trim().length > 0);
+        setMemberOptions(opts);
+      } catch {
+        if (alive) setMemberOptions([]);
+      }
     }
-    try {
-      const ms = await getSessionMembersRef.current(currentSessionId);
-      if (!alive) return;
-      const opts = (ms ?? [])
-        .map((m: any) => ({
-          id: String(m.id ?? ""),
-          label: m.name ?? m.invitedEmail ?? String(m.id ?? ""),
-        }))
-        .filter((o: Option) => o.id.trim().length > 0);
-      setMemberOptions(opts);
-    } catch {
-      if (alive) setMemberOptions([]);
-    }
-  }
-  void loadMembers();
-  return () => {
-    alive = false;
-  };
-  // 🔑 Dépend uniquement de la session (pas de la ref de fonction)
-}, [currentSessionId]);
+    void loadMembers();
+    return () => {
+      alive = false;
+    };
+    // 🔑 Dépend uniquement de la session (pas de la ref de fonction)
+  }, [currentSessionId]);
 
   // Dialogs
   const [openForm, setOpenForm] = useState(false);
@@ -119,11 +156,100 @@ useEffect(() => {
     setOpenForm(true);
   }
 
+  // URL <-> état
+  const [url, setUrl] = useTxUrlState({
+    month: monthString,
+    bank: bankAccountId ?? null,
+    member: memberId ?? null,
+    cleared,
+    q: query,
+  });
+
+  // Champ de recherche "contrôlé" avec debounce
+  const [queryInput, setQueryInput] = useState(query);
+  const debouncedQuery = useDebouncedValue(queryInput, 350);
+
+  // 1) À l’arrivée sur la page ou navigation Back/Forward : pousse URL -> états
+  useEffect(() => {
+    if (url.month && url.month !== monthString) setMonth(url.month);
+    setBankAccountId(url.bank ?? null);
+    setMemberId(url.member ?? null);
+    setCleared(url.cleared);
+    setQuery(url.q ?? "");
+    setQueryInput(url.q ?? "");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [url.month, url.bank, url.member, url.cleared, url.q]);
+
+  // 2) Quand l’utilisateur change des filtres : états -> URL
+  useEffect(() => {
+    setUrl({
+      month: monthString,
+      bank: bankAccountId ?? null,
+      member: memberId ?? null,
+      cleared,
+      q: debouncedQuery ?? "",
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [monthString, bankAccountId, memberId, cleared, debouncedQuery]);
+
+  // 3) Appliquer la recherche debounced au hook data
+  useEffect(() => {
+    setQuery(debouncedQuery ?? "");
+  }, [debouncedQuery, setQuery]);
+
+  function exportCsv(rows: Transaction[]) {
+    const head = [
+      "id",
+      "date",
+      "type",
+      "label",
+      "amount",
+      "bankAccountId",
+      "memberId",
+      "category",
+      "isCleared",
+      "notes",
+    ];
+    const esc = (v: any) => {
+      if (v === null || v === undefined) return "";
+      const s = String(v).replace(/"/g, '""');
+      return `"${s}"`;
+    };
+    const body = rows.map((r) =>
+      [
+        r.id,
+        r.date,
+        r.type,
+        r.label,
+        typeof r.amount === "number" ? r.amount.toFixed(2) : r.amount,
+        r.bankAccountId,
+        r.memberId ?? "",
+        (r as any).category ?? "",
+        r.isCleared ? "1" : "0",
+        r.notes ?? "",
+      ]
+        .map(esc)
+        .join(",")
+    );
+    const csv = [head.join(","), ...body].join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `transactions_${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   return (
     <section className="p-3 sm:p-4 lg:p-6 space-y-4">
       <PageHeader
         title={t("nav.transactions")}
-        description={hasSession ? t("pages.common.sessionBound", { id: currentSessionId }) : t("pages.common.noSession")}
+        description={
+          hasSession
+            ? t("pages.common.sessionBound", { id: currentSessionId })
+            : t("pages.common.noSession")
+        }
         right={
           <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
             <MonthPicker
@@ -133,18 +259,47 @@ useEffect(() => {
               onChange={(m) => setMonth(m)}
               disabled={!hasSession}
             />
-            <Button variant="default" onClick={openCreate} disabled={!hasSession}>
+            <Button
+              variant="default"
+              onClick={openCreate}
+              disabled={!hasSession}
+            >
               <Plus className="h-4 w-4 mr-2" /> {t("tx.actions.new")}
             </Button>
-            <Button variant="outline" onClick={() => refresh()} disabled={!hasSession || loading}>
-              <RefreshCw className={`h-4 w-4 mr-2 ${loading ? "animate-spin" : ""}`} /> {t("common.refresh")}
+            <Button
+              variant="outline"
+              onClick={() => refresh()}
+              disabled={!hasSession || loading}
+            >
+              <RefreshCw
+                className={`h-4 w-4 mr-2 ${loading ? "animate-spin" : ""}`}
+              />{" "}
+              {t("common.refresh")}
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => exportCsv(visible)}
+              disabled={!hasSession || visible.length === 0}
+            >
+              CSV
             </Button>
           </div>
         }
       />
 
       {!hasSession ? (
-        <EmptyState title={t("tx.empty.noSessionTitle")} description={t("tx.empty.noSessionDesc")} />
+        <EmptyState
+          title={t("tx.empty.noSessionTitle")}
+          description={t("tx.empty.noSessionDesc")}
+        />
+      ) : loading && items.length === 0 ? (
+        <>
+          <FiltersSkeleton />
+          <div className="sm:hidden">
+            <ListSkeleton />
+          </div>
+          <TableSkeleton />
+        </>
       ) : (
         <>
           {/* Filtres */}
@@ -157,8 +312,8 @@ useEffect(() => {
                   <Search className="h-4 w-4 text-muted-foreground" />
                   <Input
                     className="h-9"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
+                    value={queryInput}
+                    onChange={(e) => setQueryInput(e.target.value)}
                     placeholder={t("tx.filters.searchPh") ?? ""}
                   />
                 </div>
@@ -171,11 +326,15 @@ useEffect(() => {
                   value={bankAccountId ?? ANY}
                   onValueChange={(v) => setBankAccountId(v === ANY ? null : v)}
                 >
-                  <SelectTrigger><SelectValue placeholder={t("tx.filters.bankPh") ?? ""} /></SelectTrigger>
+                  <SelectTrigger>
+                    <SelectValue placeholder={t("tx.filters.bankPh") ?? ""} />
+                  </SelectTrigger>
                   <SelectContent>
                     <SelectItem value={ANY}>{t("tx.filters.any")}</SelectItem>
                     {bankOptions.map((o: Option) => (
-                      <SelectItem key={o.id} value={o.id}>{o.label}</SelectItem>
+                      <SelectItem key={o.id} value={o.id}>
+                        {o.label}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
@@ -188,11 +347,15 @@ useEffect(() => {
                   value={memberId ?? ANY}
                   onValueChange={(v) => setMemberId(v === ANY ? null : v)}
                 >
-                  <SelectTrigger><SelectValue placeholder={t("tx.filters.memberPh") ?? ""} /></SelectTrigger>
+                  <SelectTrigger>
+                    <SelectValue placeholder={t("tx.filters.memberPh") ?? ""} />
+                  </SelectTrigger>
                   <SelectContent>
                     <SelectItem value={ANY}>{t("tx.filters.any")}</SelectItem>
                     {memberOptions.map((o: Option) => (
-                      <SelectItem key={o.id} value={o.id}>{o.label}</SelectItem>
+                      <SelectItem key={o.id} value={o.id}>
+                        {o.label}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
@@ -201,12 +364,23 @@ useEffect(() => {
               {/* Cleared */}
               <div className="space-y-1">
                 <Label>{t("tx.filters.cleared")}</Label>
-                <Select value={cleared} onValueChange={(v) => setCleared(v as any)}>
-                  <SelectTrigger><SelectValue /></SelectTrigger>
+                <Select
+                  value={cleared}
+                  onValueChange={(v) => setCleared(v as any)}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="ALL">{t("tx.filters.clearedAll")}</SelectItem>
-                    <SelectItem value="CLEARED">{t("tx.filters.clearedYes")}</SelectItem>
-                    <SelectItem value="UNCLEARED">{t("tx.filters.clearedNo")}</SelectItem>
+                    <SelectItem value="ALL">
+                      {t("tx.filters.clearedAll")}
+                    </SelectItem>
+                    <SelectItem value="CLEARED">
+                      {t("tx.filters.clearedYes")}
+                    </SelectItem>
+                    <SelectItem value="UNCLEARED">
+                      {t("tx.filters.clearedNo")}
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -214,10 +388,15 @@ useEffect(() => {
           </Card>
 
           {/* Totaux */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <div
+            className="grid grid-cols-2 sm:grid-cols-3 gap-3"
+            aria-live="polite"
+          >
             <Card>
               <CardContent className="p-4">
-                <div className="text-xs text-muted-foreground">{t("tx.totals.in")}</div>
+                <div className="text-xs text-muted-foreground">
+                  {t("tx.totals.in")}
+                </div>
                 <div className="text-lg font-semibold text-emerald-600 dark:text-emerald-400">
                   {fmtEUR(totals.in, i18n.language)}
                 </div>
@@ -225,7 +404,9 @@ useEffect(() => {
             </Card>
             <Card>
               <CardContent className="p-4">
-                <div className="text-xs text-muted-foreground">{t("tx.totals.out")}</div>
+                <div className="text-xs text-muted-foreground">
+                  {t("tx.totals.out")}
+                </div>
                 <div className="text-lg font-semibold text-rose-600 dark:text-rose-400">
                   {fmtEUR(totals.out, i18n.language)}
                 </div>
@@ -233,8 +414,16 @@ useEffect(() => {
             </Card>
             <Card className="col-span-2 sm:col-span-1">
               <CardContent className="p-4">
-                <div className="text-xs text-muted-foreground">{t("tx.totals.net")}</div>
-                <div className={`text-lg font-semibold ${totals.in - totals.out >= 0 ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"}`}>
+                <div className="text-xs text-muted-foreground">
+                  {t("tx.totals.net")}
+                </div>
+                <div
+                  className={`text-lg font-semibold ${
+                    totals.in - totals.out >= 0
+                      ? "text-emerald-600 dark:text-emerald-400"
+                      : "text-rose-600 dark:text-rose-400"
+                  }`}
+                >
                   {fmtEUR(totals.in - totals.out, i18n.language)}
                 </div>
               </CardContent>
@@ -247,14 +436,21 @@ useEffect(() => {
               <TransactionCardItem
                 key={tx.id}
                 tx={tx}
-                fmt={(v) => (tx.type === "OUTFLOW" ? "-" : "+") + " " + fmtEUR(v, i18n.language)}
+                fmt={(v) =>
+                  (tx.type === "OUTFLOW" ? "-" : "+") +
+                  " " +
+                  fmtEUR(v, i18n.language)
+                }
                 onEdit={openEdit}
                 onDelete={(t) => setConfirmId(t.id)}
                 onToggleCleared={(t) => void toggleCleared(t.id, t.isCleared)}
               />
             ))}
             {visible.length === 0 && (
-              <EmptyState title={t("tx.empty.title")} description={t("tx.empty.desc")} />
+              <EmptyState
+                title={t("tx.empty.title")}
+                description={t("tx.empty.desc")}
+              />
             )}
           </div>
 
@@ -270,7 +466,9 @@ useEffect(() => {
                   <th className="py-2 pr-2">{t("tx.table.amount")}</th>
                   <th className="py-2 pr-2">{t("tx.table.category")}</th>
                   <th className="py-2 pr-2">{t("tx.table.cleared")}</th>
-                  <th className="py-2 pr-2 w-[120px]">{t("tx.table.actions")}</th>
+                  <th className="py-2 pr-2 w-[120px]">
+                    {t("tx.table.actions")}
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -282,17 +480,47 @@ useEffect(() => {
                       <td className="py-2 pr-2">{tx.label}</td>
                       <td className="py-2 pr-2">{tx.bankAccountId}</td>
                       <td className="py-2 pr-2">{tx.memberId ?? "-"}</td>
-                      <td className={`py-2 pr-2 font-medium whitespace-nowrap ${isOut ? "text-rose-600 dark:text-rose-400" : "text-emerald-600 dark:text-emerald-400"}`}>
-                        {(isOut ? "-" : "+") + " " + fmtEUR(tx.amount, i18n.language)}
+                      <td
+                        className={`py-2 pr-2 font-medium whitespace-nowrap ${
+                          isOut
+                            ? "text-rose-600 dark:text-rose-400"
+                            : "text-emerald-600 dark:text-emerald-400"
+                        }`}
+                      >
+                        {(isOut ? "-" : "+") +
+                          " " +
+                          fmtEUR(tx.amount, i18n.language)}
                       </td>
-                      <td className="py-2 pr-2">{(tx as any).category ?? "-"}</td>
                       <td className="py-2 pr-2">
-                        <Switch checked={!!tx.isCleared} onCheckedChange={() => void toggleCleared(tx.id, tx.isCleared)} />
+                        {(tx as any).category ?? "-"}
+                      </td>
+                      <td className="py-2 pr-2">
+                        <Switch
+                          aria-label={t("tx.a11y.toggleCleared", {
+                            label: tx.label,
+                          })}
+                          checked={!!tx.isCleared}
+                          onCheckedChange={() =>
+                            void toggleCleared(tx.id, tx.isCleared)
+                          }
+                        />
                       </td>
                       <td className="py-2 pr-2">
                         <div className="flex gap-2">
-                          <Button size="sm" variant="outline" onClick={() => openEdit(tx)}>{t("common.edit")}</Button>
-                          <Button size="sm" variant="destructive" onClick={() => setConfirmId(tx.id)}>{t("common.delete")}</Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => openEdit(tx)}
+                          >
+                            {t("common.edit")}
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="destructive"
+                            onClick={() => setConfirmId(tx.id)}
+                          >
+                            {t("common.delete")}
+                          </Button>
                         </div>
                       </td>
                     </tr>
@@ -302,7 +530,10 @@ useEffect(() => {
             </table>
             {visible.length === 0 && (
               <div className="py-6">
-                <EmptyState title={t("tx.empty.title")} description={t("tx.empty.desc")} />
+                <EmptyState
+                  title={t("tx.empty.title")}
+                  description={t("tx.empty.desc")}
+                />
               </div>
             )}
           </div>
@@ -326,28 +557,51 @@ useEffect(() => {
             bankAccountId: v.bankAccountId,
           };
           const optMember = v.memberId ? { memberId: v.memberId } : {};
-          const optCategory = v.category ? { category: v.category as TransactionCategory } : {};
+          const optCategory = v.category
+            ? { category: v.category as TransactionCategory }
+            : {};
           const optNotes = v.notes ? { notes: v.notes } : {};
 
           if (mode === "create") {
-            await createTx({ ...base, ...optMember, ...optCategory, ...optNotes });
+            await createTx({
+              ...base,
+              ...optMember,
+              ...optCategory,
+              ...optNotes,
+            });
           } else if (editing) {
-            await updateTx(editing.id, { ...base, ...optMember, ...optCategory, ...optNotes });
+            await updateTx(editing.id, {
+              ...base,
+              ...optMember,
+              ...optCategory,
+              ...optNotes,
+            });
           }
         }}
       />
 
       {/* Confirm delete */}
-      <AlertDialog open={!!confirmId} onOpenChange={(o) => !o && setConfirmId(null)}>
+      <AlertDialog
+        open={!!confirmId}
+        onOpenChange={(o) => !o && setConfirmId(null)}
+      >
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>{t("tx.delete.title")}</AlertDialogTitle>
-            <AlertDialogDescription>{t("tx.delete.desc")}</AlertDialogDescription>
+            <AlertDialogDescription>
+              {t("tx.delete.desc")}
+            </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setConfirmId(null)}>{t("common.cancel")}</AlertDialogCancel>
+            <AlertDialogCancel onClick={() => setConfirmId(null)}>
+              {t("common.cancel")}
+            </AlertDialogCancel>
             <AlertDialogAction
-              onClick={async () => { if (confirmId) await removeTx(confirmId); setConfirmId(null); }}>
+              onClick={async () => {
+                if (confirmId) await removeTx(confirmId);
+                setConfirmId(null);
+              }}
+            >
               {t("common.delete")}
             </AlertDialogAction>
           </AlertDialogFooter>
