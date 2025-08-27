@@ -71,7 +71,8 @@
     "cancel": "Cancel",
     "delete": "Delete",
     "save": "Save",
-    "edit": "Edit"
+    "edit": "Edit",
+    "refresh": "Refresh"
   },
   "sessions": {
     "selector": {
@@ -400,5 +401,69 @@
       "inflow": "Inflow comparison",
       "outflow": "Outflow comparison"
     }
+  },
+  "tx": {
+    "actions": { "new": "New transaction" },
+    "filters": {
+      "search": "Search",
+      "searchPh": "Label or note…",
+      "bank": "Account",
+      "bankPh": "Select an account",
+      "member": "Member",
+      "memberPh": "Select a member",
+      "any": "Any",
+      "cleared": "Cleared",
+      "clearedAll": "All",
+      "clearedYes": "Cleared",
+      "clearedNo": "Uncleared"
+    },
+    "totals": { "in": "Inflow", "out": "Outflow", "net": "Net" },
+    "table": {
+      "date": "Date", "label": "Label", "account": "Account",
+      "member": "Member", "amount": "Amount", "category": "Category",
+      "cleared": "Cleared", "actions": "Actions"
+    },
+    "form": {
+      "titleCreate": "Create transaction",
+      "titleEdit": "Edit transaction",
+      "description": "Fill in the fields below.",
+      "type": "Type",
+      "date": "Date",
+      "label": "Label",
+      "labelPh": "e.g. Groceries, transfer, salary…",
+      "amount": "Amount",
+      "bank": "Bank account",
+      "bankPh": "Select an account",
+      "member": "Member",
+      "memberPh": "Select a member",
+      "memberNone": "None",
+      "category": "Category",
+      "categoryPh": "Category (optional)",
+      "categoryNone": "None",
+      "notes": "Notes"
+    },
+    "types": { "inflow": "Inflow", "outflow": "Outflow" },
+    "empty": {
+      "noSessionTitle": "No active session",
+      "noSessionDesc": "Select or create a session to manage transactions.",
+      "title": "No transactions",
+      "desc": "Create your first transaction this month."
+    },
+    "delete": {
+      "title": "Delete transaction?",
+      "desc": "This action cannot be undone."
+    },
+    "a11y": {
+      "toggleCleared": "Toggle cleared: {{label}}"
+    }
+  },
+  "categories": {
+    "FOOD": "Food",
+    "HOUSING": "Housing",
+    "UTILITIES": "Utilities",
+    "HEALTH": "Health",
+    "TRANSPORT": "Transport",
+    "SUBSCRIPTIONS": "Subscriptions",
+    "OTHER": "Other"
   }
 }

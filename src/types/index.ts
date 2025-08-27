@@ -4,3 +4,4 @@ export * from "./banks";
 export * from "./incomes";
 export * from "./expenses";
 export * from "./budgets";
+export * from "./transactions";

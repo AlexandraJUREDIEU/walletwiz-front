@@ -71,7 +71,8 @@
     "cancel": "Annuler",
     "delete": "Supprimer",
     "save": "Enregistrer",
-    "edit": "Éditer"
+    "edit": "Éditer",
+    "refresh": "Rafraîchir"
   },
   "sessions": {
     "selector": {
@@ -401,5 +402,69 @@
       "inflow": "Comparatif Entrées",
       "outflow": "Comparatif Sorties"
     }
+  },
+  "tx": {
+    "actions": { "new": "Nouvelle transaction" },
+    "filters": {
+      "search": "Recherche",
+      "searchPh": "Libellé ou note…",
+      "bank": "Compte",
+      "bankPh": "Choisir un compte",
+      "member": "Membre",
+      "memberPh": "Choisir un membre",
+      "any": "Tous",
+      "cleared": "Pointage",
+      "clearedAll": "Tous",
+      "clearedYes": "Pointées",
+      "clearedNo": "Non pointées"
+    },
+    "totals": { "in": "Entrées", "out": "Sorties", "net": "Net" },
+    "table": {
+      "date": "Date", "label": "Libellé", "account": "Compte",
+      "member": "Membre", "amount": "Montant", "category": "Catégorie",
+      "cleared": "Pointée", "actions": "Actions"
+    },
+    "form": {
+      "titleCreate": "Créer une transaction",
+      "titleEdit": "Modifier la transaction",
+      "description": "Renseigne les informations ci-dessous.",
+      "type": "Type",
+      "date": "Date",
+      "label": "Libellé",
+      "labelPh": "Ex: Courses, virement, salaire…",
+      "amount": "Montant",
+      "bank": "Compte bancaire",
+      "bankPh": "Sélectionne un compte",
+      "member": "Membre",
+      "memberPh": "Sélectionne un membre",
+      "memberNone": "Aucun",
+      "category": "Catégorie",
+      "categoryPh": "Catégorie (facultatif)",
+      "categoryNone": "Aucune",
+      "notes": "Notes"
+    },
+    "types": { "inflow": "Entrée", "outflow": "Sortie" },
+    "empty": {
+      "noSessionTitle": "Aucune session active",
+      "noSessionDesc": "Sélectionne ou crée une session pour gérer tes transactions.",
+      "title": "Aucune transaction",
+      "desc": "Crée ta première transaction ce mois-ci."
+    },
+    "delete": {
+      "title": "Supprimer la transaction ?",
+      "desc": "Cette action est irréversible."
+    },
+    "a11y": {
+      "toggleCleared": "Basculer pointage : {{label}}"
+    }
+  },
+  "categories": {
+    "FOOD": "Alimentation",
+    "HOUSING": "Logement",
+    "UTILITIES": "Charges",
+    "HEALTH": "Santé",
+    "TRANSPORT": "Transport",
+    "SUBSCRIPTIONS": "Abonnements",
+    "OTHER": "Autre"
   }
 }
