@@ -23,6 +23,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Card, CardContent } from "@/components/ui/card";
 import { Plus, Search, RefreshCw } from "lucide-react";
 import MonthPicker from "@/components/budgets/MonthPicker";
@@ -40,6 +46,7 @@ import {
   ListSkeleton,
   TableSkeleton,
 } from "@/components/transactions/TransactionsSkeleton";
+import { cn } from "@/lib/utils";
 
 // utils
 function fmtEUR(v: number | string, lang: string) {
@@ -133,6 +140,51 @@ export default function TransactionsPage() {
     };
     // 🔑 Dépend uniquement de la session (pas de la ref de fonction)
   }, [currentSessionId]);
+
+  function fmtDateISOToLocal(iso: string, lang: string) {
+    // supporte "YYYY-MM-DD" ou ISO
+    const d = iso?.length === 10 ? new Date(`${iso}T00:00:00`) : new Date(iso);
+    return new Intl.DateTimeFormat(lang, {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).format(d);
+  }
+
+  function clsAmount(isOut: boolean) {
+    return isOut
+      ? "text-rose-600 dark:text-rose-400"
+      : "text-emerald-600 dark:text-emerald-400";
+  }
+
+  function categoryTone(cat?: string) {
+    switch (cat) {
+      case "FOOD":
+        return "bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-300";
+      case "HOUSING":
+        return "bg-amber-50 text-amber-700 dark:bg-amber-900/20 dark:text-amber-300";
+      case "UTILITIES":
+        return "bg-sky-50 text-sky-700 dark:bg-sky-900/20 dark:text-sky-300";
+      case "HEALTH":
+        return "bg-rose-50 text-rose-700 dark:bg-rose-900/20 dark:text-rose-300";
+      case "TRANSPORT":
+        return "bg-indigo-50 text-indigo-700 dark:bg-indigo-900/20 dark:text-indigo-300";
+      case "SUBSCRIPTIONS":
+        return "bg-fuchsia-50 text-fuchsia-700 dark:bg-fuchsia-900/20 dark:text-fuchsia-300";
+      default:
+        return "bg-muted text-foreground/80";
+    }
+  }
+
+  // maps id -> label
+  const bankMap = useMemo(
+    () => Object.fromEntries(bankOptions.map((b) => [b.id, b.label])),
+    [bankOptions]
+  );
+  const memberMap = useMemo(
+    () => Object.fromEntries(memberOptions.map((m) => [m.id, m.label])),
+    [memberOptions]
+  );
 
   // Dialogs
   const [openForm, setOpenForm] = useState(false);
@@ -240,6 +292,22 @@ export default function TransactionsPage() {
     a.click();
     URL.revokeObjectURL(url);
   }
+
+  useEffect(() => {
+  function onKey(e: KeyboardEvent) {
+    if (e.key === "/" && !e.metaKey && !e.ctrlKey) {
+      e.preventDefault();
+      const el = document.querySelector<HTMLInputElement>('input[placeholder*="Libellé"], input[placeholder*="Label"]');
+      el?.focus();
+    }
+    if ((e.key === "n" || e.key === "N") && !e.metaKey && !e.ctrlKey) {
+      e.preventDefault();
+      openCreate();
+    }
+  }
+  window.addEventListener("keydown", onKey);
+  return () => window.removeEventListener("keydown", onKey);
+  }, []);
 
   return (
     <section className="p-3 sm:p-4 lg:p-6 space-y-4">
@@ -432,32 +500,27 @@ export default function TransactionsPage() {
 
           {/* Liste MOBILE */}
           <div className="grid gap-3 sm:hidden">
-            {visible.map((tx) => (
-              <TransactionCardItem
-                key={tx.id}
-                tx={tx}
-                fmt={(v) =>
-                  (tx.type === "OUTFLOW" ? "-" : "+") +
-                  " " +
-                  fmtEUR(v, i18n.language)
-                }
-                onEdit={openEdit}
-                onDelete={(t) => setConfirmId(t.id)}
-                onToggleCleared={(t) => void toggleCleared(t.id, t.isCleared)}
-              />
-            ))}
-            {visible.length === 0 && (
-              <EmptyState
-                title={t("tx.empty.title")}
-                description={t("tx.empty.desc")}
-              />
-            )}
-          </div>
+  {visible.map((tx) => (
+    <TransactionCardItem
+      key={tx.id}
+      tx={tx}
+      fmt={(v) => (tx.type === "OUTFLOW" ? "-" : "+") + " " + fmtEUR(v, i18n.language)}
+      onEdit={openEdit}
+      onDelete={(t) => setConfirmId(t.id)}
+      onToggleCleared={(t) => void toggleCleared(t.id, t.isCleared)}
+      bankLabel={bankMap[tx.bankAccountId] ?? tx.bankAccountId}
+      memberLabel={tx.memberId ? (memberMap[tx.memberId] ?? tx.memberId) : undefined}
+      dateLabel={fmtDateISOToLocal(tx.date, i18n.language)}
+    />
+  ))}
+  {visible.length === 0 && <EmptyState title={t("tx.empty.title")} description={t("tx.empty.desc")} />}
+</div>
+
 
           {/* Liste DESKTOP */}
-          <div className="hidden sm:block overflow-x-auto">
+          <div className="hidden sm:block overflow-auto max-h-[60vh]">
             <table className="w-full text-sm">
-              <thead className="text-xs text-muted-foreground">
+              <thead className="text-xs text-muted-foreground sticky top-0 bg-background z-10">
                 <tr className="text-left border-b">
                   <th className="py-2 pr-2">{t("tx.table.date")}</th>
                   <th className="py-2 pr-2">{t("tx.table.label")}</th>
@@ -476,23 +539,38 @@ export default function TransactionsPage() {
                   const isOut = tx.type === "OUTFLOW";
                   return (
                     <tr key={tx.id} className="border-b">
-                      <td className="py-2 pr-2 whitespace-nowrap">{tx.date}</td>
+                      <td className="py-2 pr-2 whitespace-nowrap">
+                        {fmtDateISOToLocal(tx.date, i18n.language)}
+                      </td>
                       <td className="py-2 pr-2">{tx.label}</td>
-                      <td className="py-2 pr-2">{tx.bankAccountId}</td>
-                      <td className="py-2 pr-2">{tx.memberId ?? "-"}</td>
+                      <td className="py-2 pr-2">
+                        {bankMap[tx.bankAccountId] ?? tx.bankAccountId}
+                      </td>
+                      <td className="py-2 pr-2">
+                        {memberMap[tx.memberId ?? ""] ?? "-"}
+                      </td>
                       <td
-                        className={`py-2 pr-2 font-medium whitespace-nowrap ${
-                          isOut
-                            ? "text-rose-600 dark:text-rose-400"
-                            : "text-emerald-600 dark:text-emerald-400"
-                        }`}
+                        className={cn(
+                          "py-2 pr-2 font-semibold whitespace-nowrap",
+                          clsAmount(isOut)
+                        )}
                       >
                         {(isOut ? "-" : "+") +
                           " " +
                           fmtEUR(tx.amount, i18n.language)}
                       </td>
                       <td className="py-2 pr-2">
-                        {(tx as any).category ?? "-"}
+                        {(tx as any).category ? (
+                          <span
+                            className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium ${categoryTone(
+                              (tx as any).category
+                            )}`}
+                          >
+                            {(tx as any).category}
+                          </span>
+                        ) : (
+                          <span className="text-muted-foreground">-</span>
+                        )}
                       </td>
                       <td className="py-2 pr-2">
                         <Switch
@@ -506,21 +584,37 @@ export default function TransactionsPage() {
                         />
                       </td>
                       <td className="py-2 pr-2">
-                        <div className="flex gap-2">
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => openEdit(tx)}
-                          >
-                            {t("common.edit")}
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="destructive"
-                            onClick={() => setConfirmId(tx.id)}
-                          >
-                            {t("common.delete")}
-                          </Button>
+                        <div className="flex gap-2 justify-end">
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  onClick={() => openEdit(tx)}
+                                >
+                                  {t("common.edit")}
+                                </Button>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                {t("common.edit")}
+                              </TooltipContent>
+                            </Tooltip>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <Button
+                                  size="sm"
+                                  variant="destructive"
+                                  onClick={() => setConfirmId(tx.id)}
+                                >
+                                  {t("common.delete")}
+                                </Button>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                {t("common.delete")}
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
                         </div>
                       </td>
                     </tr>
@@ -610,3 +704,5 @@ export default function TransactionsPage() {
     </section>
   );
 }
+
+
