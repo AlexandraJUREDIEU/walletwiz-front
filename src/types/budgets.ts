@@ -25,7 +25,7 @@ export type UpdateBudgetDto = Partial<Pick<Budget, "openingBalance" | "notes" | 
 export type BudgetSummary = {
   sessionId: string;
   month: MonthString;
-  budget?: BudgetId | null      // présent si un budget existe déjà
+  budget?: Budget | null      // présent si un budget existe déjà
   openingBalance: string;         // "1234.56"
   plannedIncome: string;          // agrégé depuis incomes/expenses
   plannedExpense: string;         // agrégé depuis incomes/expenses

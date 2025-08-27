@@ -384,6 +384,22 @@
     "toasts": {
       "locked": "Budget verrouillé.",
       "unlocked": "Budget déverrouillé."
+    },
+    "hero": {
+      "projected": "Clôture estimée (Planned)",
+      "ending": "Clôture (Actual)",
+      "clearedEnding": "Clôture pointée (Cleared)"
+    },
+    "rows": {
+      "opening": "Ouverture",
+      "in": "Entrées",
+      "out": "Sorties",
+      "net": "Net",
+      "base": "Base (Clôture)"
+    },
+    "compare": {
+      "inflow": "Comparatif Entrées",
+      "outflow": "Comparatif Sorties"
     }
   }
 }

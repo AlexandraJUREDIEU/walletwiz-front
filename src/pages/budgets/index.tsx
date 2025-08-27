@@ -5,7 +5,6 @@ import EmptyState from "@/components/system/EmptyState";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import MonthPicker from "@/components/budgets/MonthPicker";
-import KpiCard from "@/components/budgets/KpiCard";
 import EditOpeningDialog from "@/components/budgets/EditOpeningDialog";
 import EditNotesDialog from "@/components/budgets/EditNotesDialog";
 import { Lock, Unlock, Pencil } from "lucide-react";
@@ -14,12 +13,16 @@ import { useSessionStore } from "@/stores/sessionStore";
 import { useBudgetsService } from "@/lib/service/budget.service";
 import type { Budget } from "@/types";
 import { toast } from "sonner";
+import CompareTile from "@/components/budgets/CompareTile";
+import HeroSummary from "@/components/budgets/HeroSummary";
+import ModeTabs from "@/components/budgets/ModeTabs";
 
 function fmtEUR(v: number, lang: string) {
   return new Intl.NumberFormat(lang, { style: "currency", currency: "EUR" }).format(v);
 }
 
 export default function BudgetsPage() {
+  const [mode, setMode] = useState<"planned" | "actual" | "cleared">("planned");
   const { t, i18n } = useTranslation();
   const { currentSessionId } = useSessionStore();
   const hasSession = !!currentSessionId;
@@ -57,23 +60,29 @@ export default function BudgetsPage() {
   }
 
   return (
-    <section className="p-3 sm:p-4 lg:p-6 space-y-4">
-      <PageHeader
-        title={t("nav.budgets")}
-        description={
-          hasSession
-            ? t("pages.common.sessionBound", { id: currentSessionId })
-            : t("pages.common.noSession")
-        }
-        right={
-          <div className="flex flex-wrap gap-2">
-            <MonthPicker
-              month={month}
-              onPrev={goPrevMonth}
-              onNext={goNextMonth}
-              onChange={(m) => setMonth(m)}
-              disabled={!hasSession}
-            />
+  <section className="p-3 sm:p-4 lg:p-6 space-y-4">
+    <PageHeader
+      title={t("nav.budgets")}
+      description={
+        hasSession
+          ? t("pages.common.sessionBound", { id: currentSessionId })
+          : t("pages.common.noSession")
+      }
+      right={
+        <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
+          <MonthPicker
+            month={month}
+            onPrev={goPrevMonth}
+            onNext={goNextMonth}
+            onChange={(m) => setMonth(m)}
+            disabled={!hasSession}
+          />
+          <ModeTabs
+            value={(mode as any) ?? "planned"}
+            onChange={(m) => setMode(m)}
+            disabled={!hasSession}
+          />
+          <div className="flex gap-2">
             <Button variant={locked ? "secondary" : "outline"} onClick={onToggleLock} disabled={!hasSession}>
               {locked ? <Unlock className="h-4 w-4 mr-2" /> : <Lock className="h-4 w-4 mr-2" />}
               {locked ? t("budgets.actions.unlock") : t("budgets.actions.lock")}
@@ -87,70 +96,122 @@ export default function BudgetsPage() {
               {t("budgets.actions.editNotes")}
             </Button>
           </div>
-        }
-      />
-
-      {!hasSession ? (
-        <EmptyState title={t("budgets.empty.noSessionTitle")} description={t("budgets.empty.noSessionDesc")} />
-      ) : loading && !summary ? (
-        <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <Card key={i}><CardContent className="p-4"><div className="h-4 w-24 bg-muted rounded" /><div className="h-6 w-32 bg-muted rounded mt-2" /></CardContent></Card>
-          ))}
         </div>
-      ) : !summary || !kpis ? (
-        <EmptyState title={t("budgets.empty.title")} description={t("budgets.empty.desc")} />
-      ) : (
-        <>
-          {/* KPIs */}
-          <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">
-            <KpiCard label={t("budgets.kpi.opening")} value={fmtEUR(kpis.opening, i18n.language)} />
-            <KpiCard label={t("budgets.kpi.plannedIn")} value={fmtEUR(kpis.plannedIn, i18n.language)} tone="good" />
-            <KpiCard label={t("budgets.kpi.plannedOut")} value={fmtEUR(kpis.plannedOut, i18n.language)} tone="bad" />
-            <KpiCard label={t("budgets.kpi.netPlanned")} value={fmtEUR(kpis.netPlanned, i18n.language)} tone={kpis.netPlanned >= 0 ? "good" : "bad"} hint={t("budgets.hints.netPlanned")} />
+      }
+    />
 
-            <KpiCard label={t("budgets.kpi.projectedEnd")} value={fmtEUR(kpis.projectedEndBalance, i18n.language)} />
-            <KpiCard label={t("budgets.kpi.actualIn")} value={fmtEUR(kpis.actualIn, i18n.language)} tone="good" />
-            <KpiCard label={t("budgets.kpi.actualOut")} value={fmtEUR(kpis.actualOut, i18n.language)} tone="bad" />
-            <KpiCard label={t("budgets.kpi.netActual")} value={fmtEUR(kpis.netActual, i18n.language)} tone={kpis.netActual >= 0 ? "good" : "bad"} />
-
-            <KpiCard label={t("budgets.kpi.ending")} value={fmtEUR(kpis.endingBalance, i18n.language)} />
-            <KpiCard label={t("budgets.kpi.clearedIn")} value={fmtEUR(kpis.clearedIn, i18n.language)} tone="good" />
-            <KpiCard label={t("budgets.kpi.clearedOut")} value={fmtEUR(kpis.clearedOut, i18n.language)} tone="bad" />
-            <KpiCard label={t("budgets.kpi.netCleared")} value={fmtEUR(kpis.netCleared, i18n.language)} tone={kpis.netCleared >= 0 ? "good" : "bad"} />
-          </div>
-
-          {/* Notes */}
-          <Card className="mt-2">
+    {!hasSession ? (
+      <EmptyState title={t("budgets.empty.noSessionTitle")} description={t("budgets.empty.noSessionDesc")} />
+    ) : loading && !summary ? (
+      <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2">
+        {Array.from({ length: 2 }).map((_, i) => (
+          <Card key={i}>
             <CardContent className="p-4">
-              <div className="text-xs uppercase tracking-wide text-muted-foreground">{t("budgets.notes.titleShort")}</div>
-              <div className="mt-1 text-sm text-foreground whitespace-pre-wrap min-h-[1.5rem]">
-                {budgetMeta?.notes ?? t("budgets.notes.empty")}
-              </div>
+              <div className="h-4 w-28 bg-muted rounded" />
+              <div className="h-8 w-40 bg-muted rounded mt-2" />
+              <div className="h-10 w-full bg-muted rounded mt-3" />
             </CardContent>
           </Card>
-        </>
-      )}
+        ))}
+      </div>
+    ) : !summary || !kpis ? (
+      <EmptyState title={t("budgets.empty.title")} description={t("budgets.empty.desc")} />
+    ) : (
+      <>
+        {/* HERO */}
+        <HeroSummary
+          title={
+            mode === "planned"
+              ? t("budgets.hero.projected")
+              : mode === "actual"
+              ? t("budgets.hero.ending")
+              : t("budgets.hero.clearedEnding")
+          }
+          main={
+            mode === "planned"
+              ? fmtEUR(kpis.projectedEndBalance, i18n.language)
+              : mode === "actual"
+              ? fmtEUR(kpis.endingBalance, i18n.language)
+              : fmtEUR(kpis.clearedEndingBalance, i18n.language)
+          }
+          tone={
+            (mode === "planned" ? kpis.netPlanned : mode === "actual" ? kpis.netActual : kpis.netCleared) >= 0
+              ? "good"
+              : "bad"
+          }
+          rows={
+            mode === "planned"
+              ? [
+                  { label: t("budgets.rows.opening"), value: fmtEUR(kpis.opening, i18n.language) },
+                  { label: t("budgets.rows.in"), value: fmtEUR(kpis.plannedIn, i18n.language), tone: "good" },
+                  { label: t("budgets.rows.out"), value: fmtEUR(kpis.plannedOut, i18n.language), tone: "bad" },
+                  { label: t("budgets.rows.net"), value: fmtEUR(kpis.netPlanned, i18n.language), tone: kpis.netPlanned >= 0 ? "good" : "bad" },
+                ]
+              : mode === "actual"
+              ? [
+                  { label: t("budgets.rows.opening"), value: fmtEUR(kpis.opening, i18n.language) },
+                  { label: t("budgets.rows.in"), value: fmtEUR(kpis.actualIn, i18n.language), tone: "good" },
+                  { label: t("budgets.rows.out"), value: fmtEUR(kpis.actualOut, i18n.language), tone: "bad" },
+                  { label: t("budgets.rows.net"), value: fmtEUR(kpis.netActual, i18n.language), tone: kpis.netActual >= 0 ? "good" : "bad" },
+                ]
+              : [
+                  { label: t("budgets.rows.in"), value: fmtEUR(kpis.clearedIn, i18n.language), tone: "good" },
+                  { label: t("budgets.rows.out"), value: fmtEUR(kpis.clearedOut, i18n.language), tone: "bad" },
+                  { label: t("budgets.rows.net"), value: fmtEUR(kpis.netCleared, i18n.language), tone: kpis.netCleared >= 0 ? "good" : "bad" },
+                  { label: t("budgets.rows.base"), value: fmtEUR(kpis.endingBalance, i18n.language) },
+                ]
+          }
+        />
 
-      {/* Dialogs */}
-      {summary && (
-        <>
-          <EditOpeningDialog
-            open={openOpening}
-            onOpenChange={setOpenOpening}
-            initial={summary.openingBalance}
-            onSave={async (n) => { await updateOpening(n); await reloadMeta(); }}
-            disabled={locked}
+        {/* COMPARAISONS */}
+        <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2">
+          <CompareTile
+            title={t("budgets.compare.inflow")}
+            leftLabel="Planned"
+            leftValue={fmtEUR(kpis.plannedIn, i18n.language)}
+            rightLabel="Actual"
+            rightValue={fmtEUR(kpis.actualIn, i18n.language)}
           />
-          <EditNotesDialog
-            open={openNotes}
-            onOpenChange={setOpenNotes}
-            initial={(summary as any).notes ?? null}
-            onSave={async (txt) => { await updateNotes(txt); await reloadMeta(); }}
-            disabled={locked}
+          <CompareTile
+            title={t("budgets.compare.outflow")}
+            leftLabel="Planned"
+            leftValue={fmtEUR(kpis.plannedOut, i18n.language)}
+            rightLabel="Actual"
+            rightValue={fmtEUR(kpis.actualOut, i18n.language)}
           />
-        </>
-      )}
-    </section>
-  );
+        </div>
+
+        {/* NOTES */}
+        <Card>
+          <CardContent className="p-4">
+            <div className="text-xs uppercase tracking-wide text-muted-foreground">{t("budgets.notes.titleShort")}</div>
+            <div className="mt-1 text-sm text-foreground whitespace-pre-wrap min-h-[1.5rem]">
+              {summary?.budget?.notes ?? t("budgets.notes.empty")}
+            </div>
+          </CardContent>
+        </Card>
+      </>
+    )}
+
+    {/* Dialogs */}
+    {summary && (
+      <>
+        <EditOpeningDialog
+          open={openOpening}
+          onOpenChange={setOpenOpening}
+          initial={summary.openingBalance}
+          onSave={async (n) => { await updateOpening(n); await reloadMeta(); }}
+          disabled={locked}
+        />
+        <EditNotesDialog
+          open={openNotes}
+          onOpenChange={setOpenNotes}
+          initial={budgetMeta?.notes ?? null}
+          onSave={async (txt) => { await updateNotes(txt); await reloadMeta(); }}
+          disabled={locked}
+        />
+      </>
+    )}
+  </section>
+);
 }

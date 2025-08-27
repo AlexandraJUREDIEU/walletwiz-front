@@ -383,6 +383,22 @@
     "toasts": {
       "locked": "Budget locked.",
       "unlocked": "Budget unlocked."
+    },
+     "hero": {
+      "projected": "Projected closing (Planned)",
+      "ending": "Closing (Actual)",
+      "clearedEnding": "Cleared closing"
+    },
+    "rows": {
+      "opening": "Opening",
+      "in": "Inflow",
+      "out": "Outflow",
+      "net": "Net",
+      "base": "Base (Closing)"
+    },
+    "compare": {
+      "inflow": "Inflow comparison",
+      "outflow": "Outflow comparison"
     }
   }
 }
