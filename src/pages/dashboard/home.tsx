@@ -107,18 +107,31 @@ export default function DashboardHome() {
               onChange={onChange}
               disabled={!hasSession}
             />
-            <Link to="/dashboard/transactions">
-              <Button variant="secondary">
-                <Banknote className="h-4 w-4 mr-2" />
-                {t("home.actions.toTx")}
-              </Button>
-            </Link>
-            <Link to="/dashboard/budgets">
-              <Button variant="outline">{t("home.actions.toBudget")}</Button>
-            </Link>
-          </div>
-        }
-      />
+            <Link
+        to="/dashboard/transactions"
+        state={{
+          openCreate: true,
+          prefill: {
+            type: "OUTFLOW",
+            date: new Date().toISOString().slice(0,10),
+          }
+        }}
+      >
+        <Button>
+          <Plus className="h-4 w-4 mr-2" />
+          {t("home.tx.add")} {/* réutilise "Nouvelle transaction" */}
+        </Button>
+      </Link>
+      {/* Liens existants */}
+      <Link to="/dashboard/transactions">
+        <Button variant="secondary">
+          <Banknote className="h-4 w-4 mr-2"/>{t("home.actions.toTx")}
+        </Button>
+      </Link>
+      <Link to="/dashboard/budgets"><Button variant="outline">{t("home.actions.toBudget")}</Button></Link>
+    </div>
+  }
+/>
 
       {!hasSession ? (
         <EmptyState

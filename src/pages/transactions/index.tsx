@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import PageHeader from "@/components/system/PageHeader";
 import EmptyState from "@/components/system/EmptyState";
@@ -112,6 +113,21 @@ export default function TransactionsPage() {
   }, [getSessionMembers]);
 
   const [memberOptions, setMemberOptions] = useState<Option[]>([]);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  useEffect(() => {
+    const st = location.state as any;
+    if (st?.openCreate) {
+      setMode("create");
+      setEditing(st.prefill ?? null); // { type, date, ... } accepté par TransactionFormDialog
+      setOpenForm(true);
+
+      // ⚠️ Nettoie le state pour éviter re-ouverture au Back/Forward
+      navigate(".", { replace: true, state: null });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.state]);
 
   useEffect(() => {
     let alive = true;
@@ -294,19 +310,21 @@ export default function TransactionsPage() {
   }
 
   useEffect(() => {
-  function onKey(e: KeyboardEvent) {
-    if (e.key === "/" && !e.metaKey && !e.ctrlKey) {
-      e.preventDefault();
-      const el = document.querySelector<HTMLInputElement>('input[placeholder*="Libellé"], input[placeholder*="Label"]');
-      el?.focus();
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "/" && !e.metaKey && !e.ctrlKey) {
+        e.preventDefault();
+        const el = document.querySelector<HTMLInputElement>(
+          'input[placeholder*="Libellé"], input[placeholder*="Label"]'
+        );
+        el?.focus();
+      }
+      if ((e.key === "n" || e.key === "N") && !e.metaKey && !e.ctrlKey) {
+        e.preventDefault();
+        openCreate();
+      }
     }
-    if ((e.key === "n" || e.key === "N") && !e.metaKey && !e.ctrlKey) {
-      e.preventDefault();
-      openCreate();
-    }
-  }
-  window.addEventListener("keydown", onKey);
-  return () => window.removeEventListener("keydown", onKey);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, []);
 
   return (
@@ -500,22 +518,34 @@ export default function TransactionsPage() {
 
           {/* Liste MOBILE */}
           <div className="grid gap-3 sm:hidden">
-  {visible.map((tx) => (
-    <TransactionCardItem
-      key={tx.id}
-      tx={tx}
-      fmt={(v) => (tx.type === "OUTFLOW" ? "-" : "+") + " " + fmtEUR(v, i18n.language)}
-      onEdit={openEdit}
-      onDelete={(t) => setConfirmId(t.id)}
-      onToggleCleared={(t) => void toggleCleared(t.id, t.isCleared)}
-      bankLabel={bankMap[tx.bankAccountId] ?? tx.bankAccountId}
-      memberLabel={tx.memberId ? (memberMap[tx.memberId] ?? tx.memberId) : undefined}
-      dateLabel={fmtDateISOToLocal(tx.date, i18n.language)}
-    />
-  ))}
-  {visible.length === 0 && <EmptyState title={t("tx.empty.title")} description={t("tx.empty.desc")} />}
-</div>
-
+            {visible.map((tx) => (
+              <TransactionCardItem
+                key={tx.id}
+                tx={tx}
+                fmt={(v) =>
+                  (tx.type === "OUTFLOW" ? "-" : "+") +
+                  " " +
+                  fmtEUR(v, i18n.language)
+                }
+                onEdit={openEdit}
+                onDelete={(t) => setConfirmId(t.id)}
+                onToggleCleared={(t) => void toggleCleared(t.id, t.isCleared)}
+                bankLabel={bankMap[tx.bankAccountId] ?? tx.bankAccountId}
+                memberLabel={
+                  tx.memberId
+                    ? memberMap[tx.memberId] ?? tx.memberId
+                    : undefined
+                }
+                dateLabel={fmtDateISOToLocal(tx.date, i18n.language)}
+              />
+            ))}
+            {visible.length === 0 && (
+              <EmptyState
+                title={t("tx.empty.title")}
+                description={t("tx.empty.desc")}
+              />
+            )}
+          </div>
 
           {/* Liste DESKTOP */}
           <div className="hidden sm:block overflow-auto max-h-[60vh]">
@@ -704,5 +734,3 @@ export default function TransactionsPage() {
     </section>
   );
 }
-
-
