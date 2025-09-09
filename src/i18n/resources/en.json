@@ -72,7 +72,8 @@
     "delete": "Delete",
     "save": "Save",
     "edit": "Edit",
-    "refresh": "Refresh"
+    "refresh": "Refresh",
+    "viewAll": "View all"
   },
   "sessions": {
     "selector": {
@@ -465,5 +466,15 @@
     "TRANSPORT": "Transport",
     "SUBSCRIPTIONS": "Subscriptions",
     "OTHER": "Other"
+  },
+  "home": {
+    "kpi": { "ending": "Ending balance", "in": "Inflow", "out": "Outflow", "net": "Net", "sub": { "actual": "Actual this month" } },
+    "blocks": { "accounts": "Accounts", "latestTx": "Latest transactions" },
+    "actions": { "toTx": "Transactions", "toBudget": "Budget" },
+    "unknownAccount": "Account",
+    "account": { "archived": "Archived", "active": "Active" },
+    "accounts": { "emptyTitle": "No accounts", "emptyDesc": "Add your first account.", "add": "Add account" },
+    "tx": { "emptyTitle": "No transactions", "emptyDesc": "Create your first transaction this month.", "add": "New transaction" },
+    "empty": { "noSessionTitle": "No active session", "noSessionDesc": "Select or create a session to see your dashboard." }
   }
 }

@@ -72,7 +72,8 @@
     "delete": "Supprimer",
     "save": "Enregistrer",
     "edit": "Éditer",
-    "refresh": "Rafraîchir"
+    "refresh": "Rafraîchir",
+    "viewAll": "Voir tout"
   },
   "sessions": {
     "selector": {
@@ -466,5 +467,15 @@
     "TRANSPORT": "Transport",
     "SUBSCRIPTIONS": "Abonnements",
     "OTHER": "Autre"
+  },
+  "home": {
+    "kpi": { "ending": "Solde de clôture", "in": "Entrées", "out": "Sorties", "net": "Net", "sub": { "actual": "Réel du mois" } },
+    "blocks": { "accounts": "Comptes", "latestTx": "Dernières transactions" },
+    "actions": { "toTx": "Transactions", "toBudget": "Budget" },
+    "unknownAccount": "Compte",
+    "account": { "archived": "Archivé", "active": "Actif" },
+    "accounts": { "emptyTitle": "Aucun compte", "emptyDesc": "Ajoute ton premier compte.", "add": "Ajouter un compte" },
+    "tx": { "emptyTitle": "Aucune transaction", "emptyDesc": "Crée ta première transaction ce mois-ci.", "add": "Nouvelle transaction" },
+    "empty": { "noSessionTitle": "Aucune session active", "noSessionDesc": "Sélectionne ou crée une session pour voir ton tableau de bord." }
   }
 }
